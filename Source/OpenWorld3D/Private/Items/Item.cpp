@@ -2,6 +2,7 @@
 
 
 #include "Items/Item.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 AItem::AItem()
@@ -21,6 +22,14 @@ void AItem::BeginPlay()
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(0, 30.0f, FColor::Silver, "Check me out!");
+	}
+
+	UWorld* World = GetWorld();
+
+	if (World)
+	{
+		FVector ActorLocation = GetActorLocation();
+		DrawDebugSphere(World, ActorLocation, 25.f, 36, FColor::Blue, false, 30.f);
 	}
 }
 
