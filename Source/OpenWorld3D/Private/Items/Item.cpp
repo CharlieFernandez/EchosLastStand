@@ -2,8 +2,7 @@
 
 
 #include "Items/Item.h"
-#include "DrawDebugHelpers.h"
-#include "OpenWorld3D/OpenWorld3D.h"
+#include "OpenWorld3D/DebugMacros.h"
 
 // Sets default values
 AItem::AItem()
