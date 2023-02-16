@@ -17,6 +17,11 @@ void AItem::BeginPlay()
 	Super::BeginPlay();
 	
 	UE_LOG(LogTemp, Warning, TEXT("Begin Play: ITEM!"));
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(0, 30.0f, FColor::Silver, "Check me out!");
+	}
 }
 
 // Called every frame
