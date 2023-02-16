@@ -16,6 +16,7 @@ void AItem::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	UE_LOG(LogTemp, Warning, TEXT("Begin Play: ITEM!"));
 }
 
 // Called every frame
