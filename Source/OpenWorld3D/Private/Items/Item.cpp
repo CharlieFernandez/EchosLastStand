@@ -17,36 +17,20 @@ void AItem::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UE_LOG(LogTemp, Warning, TEXT("Begin Play: ITEM!"));
-
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(0, 30.0f, FColor::Silver, "Check me out!");
-	}
-
 	UWorld* World = GetWorld();
-
+	FVector ActorLocation = GetActorLocation();
 	if (World)
 	{
-		FVector ActorLocation = GetActorLocation();
+		FVector ActorForward = GetActorForwardVector();
 		DrawDebugSphere(World, ActorLocation, 25.f, 36, FColor::Blue, false, 30.f);
+		DrawDebugLine(World, ActorLocation, ActorLocation + (ActorForward * 100), FColor::Red, true, -1.f, 0u, 1.f);
 	}
+
 }
 
 // Called every frame
 void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	UE_LOG(LogTemp, Warning, TEXT("Delta Time: %f"), DeltaTime);
-
-	if (GEngine)
-	{
-		FString Name = GetName();
-		FString Message = FString::Printf(TEXT("Item Name: %s"), *Name);
-		GEngine->AddOnScreenDebugMessage(1, 10.0f, FColor::Purple, Message);
-
-		UE_LOG(LogTemp, Warning, TEXT("Item Name: %s"), *Name);
-	}
 }
 
