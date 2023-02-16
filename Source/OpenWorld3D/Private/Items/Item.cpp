@@ -18,15 +18,14 @@ void AItem::BeginPlay()
 	Super::BeginPlay();
 	
 	UWorld* World = GetWorld();
-	FVector ActorLocation = GetActorLocation();
-	if (World)
-	{
-		FVector ActorForward = GetActorForwardVector();
 
-		DRAW_SPHERE (ActorLocation);
-		DRAW_VECTOR(ActorLocation, ActorLocation + ActorForward * 100);
-	}
+	FVector NewActorLocation = FVector(0.f, 0.f, 100.f);
+	SetActorLocation(NewActorLocation);
+	SetActorRotation(FRotator(0.f, 90.f, 0.f));
+	FVector ActorForward = GetActorForwardVector();
 
+	DRAW_SPHERE (NewActorLocation);
+	DRAW_VECTOR(NewActorLocation, NewActorLocation + ActorForward * 100);
 }
 
 // Called every frame
