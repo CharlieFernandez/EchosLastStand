@@ -1,11 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Bird.h"
+#include "Components/CapsuleComponent.h"
 
 ABird::ABird()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
+	//Capsule -> SetCapsuleRadius(15.f);
+	//Capsule -> SetCapsuleHalfHeight(20.f);
+	SetRootComponent(Capsule);
 }
 
 void ABird::BeginPlay()
