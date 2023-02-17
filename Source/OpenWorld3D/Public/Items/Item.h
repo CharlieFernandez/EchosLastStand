@@ -22,6 +22,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	//BlueprintCallable || BlueprintPure
+	UFUNCTION(BlueprintPure)
+	float TransformSine();
+
 private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;

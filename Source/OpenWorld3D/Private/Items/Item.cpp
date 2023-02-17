@@ -21,14 +21,17 @@ void AItem::BeginPlay()
 	//DRAW_VECTOR(ActorLocation, ActorLocation + ActorForward * 100);
 }
 
+float AItem::TransformSine()
+{
+	return Amplitude * FMath::Sin(RunningTime * TimeConstant);
+}
+
 // Called every frame
 void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 	RunningTime += DeltaTime;
-	float DeltaZ = Amplitude * FMath::Sin(RunningTime * TimeConstant);
-	AddActorWorldOffset(FVector(0, 0, DeltaZ));
 
 	FVector ActorLocation = GetActorLocation();
 	FVector ActorForward = GetActorForwardVector();
