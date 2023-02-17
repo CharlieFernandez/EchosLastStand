@@ -2,6 +2,7 @@
 
 #include "Bird.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 
 ABird::ABird()
 {
@@ -11,6 +12,9 @@ ABird::ABird()
 	//Capsule -> SetCapsuleRadius(15.f);
 	//Capsule -> SetCapsuleHalfHeight(20.f);
 	SetRootComponent(Capsule);
+
+	BirdMesh = CreateDefaultSubobject<USkeletalMeshComponent>("Skeleton");
+	BirdMesh->SetupAttachment(Capsule);
 }
 
 void ABird::BeginPlay()
