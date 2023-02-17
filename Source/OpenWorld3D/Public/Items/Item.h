@@ -26,6 +26,9 @@ protected:
 	UFUNCTION(BlueprintPure)
 	float TransformSine();
 
+	template<typename T>
+	T Avg(T First, T Second);
+
 private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;
@@ -37,3 +40,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
 };
+
+template<typename T>
+inline T AItem::Avg(T First, T Second)
+{
+	return (First + Second) / 2;
+}

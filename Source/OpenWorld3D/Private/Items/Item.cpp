@@ -19,6 +19,11 @@ void AItem::BeginPlay()
 
 	//DRAW_SPHERE (ActorLocation);
 	//DRAW_VECTOR(ActorLocation, ActorLocation + ActorForward * 100);
+
+	int32 AverageInt = Avg<int32>(5, 3);
+	UE_LOG(LogTemp, Warning, TEXT("Average: %d"), AverageInt);
+	FVector AverageVector = Avg<FVector>(GetActorLocation(), FVector::Zero());
+	UE_LOG(LogTemp, Warning, TEXT("Average Vector: %s"), *AverageVector.ToString());
 }
 
 float AItem::TransformSine()
