@@ -39,6 +39,9 @@ private:
 	float Amplitude;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* ItemMesh;
 };
 
 template<typename T>
