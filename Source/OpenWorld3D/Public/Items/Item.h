@@ -23,12 +23,13 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(VisibleInstanceOnly)
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;
 
-	// EditDefaultsOnly || EditInstanceOnly || EditAnywhere || VisibleDefaultsOnly || VisibleInstanceOnly || VisibleAnywhere
-	UPROPERTY(EditAnywhere)
+	// 1st Argument: EditDefaultsOnly || EditInstanceOnly || EditAnywhere || VisibleDefaultsOnly || VisibleInstanceOnly || VisibleAnywhere
+	// 2nd Argument: BlueprintReadOnly || BlueprintReadWrite
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float Amplitude;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
 };
