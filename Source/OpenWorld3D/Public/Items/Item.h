@@ -24,6 +24,10 @@ protected:
 
 private:
 	float RunningTime;
+
+	// EditDefaultsOnly || EditInstanceOnly || EditAnywhere
+	UPROPERTY(EditAnywhere)
 	float Amplitude;
+	UPROPERTY(EditAnywhere)
 	float TimeConstant;
 };
