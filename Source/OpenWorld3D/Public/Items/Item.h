@@ -23,9 +23,10 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(VisibleInstanceOnly)
 	float RunningTime;
 
-	// EditDefaultsOnly || EditInstanceOnly || EditAnywhere
+	// EditDefaultsOnly || EditInstanceOnly || EditAnywhere || VisibleDefaultsOnly || VisibleInstanceOnly || VisibleAnywhere
 	UPROPERTY(EditAnywhere)
 	float Amplitude;
 	UPROPERTY(EditAnywhere)
