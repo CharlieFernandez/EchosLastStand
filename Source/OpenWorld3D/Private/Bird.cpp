@@ -6,6 +6,8 @@
 #include "Components/InputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 
 ABird::ABird()
 {
@@ -16,8 +18,17 @@ ABird::ABird()
 	//Capsule -> SetCapsuleHalfHeight(20.f);
 	SetRootComponent(Capsule);
 
-	BirdMesh = CreateDefaultSubobject<USkeletalMeshComponent>("Skeleton");
+	BirdMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeleton"));
 	BirdMesh->SetupAttachment(Capsule);
+
+	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
+	SpringArmComponent->SetupAttachment(GetRootComponent());
+	SpringArmComponent->TargetArmLength = 300.f;
+
+	ViewCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("View Camera"));
+	ViewCamera->SetupAttachment(SpringArmComponent);
+
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 void ABird::BeginPlay()
