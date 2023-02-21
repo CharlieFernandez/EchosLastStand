@@ -64,15 +64,9 @@ void ABird::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisValue.X);
 		AddControllerPitchInput(LookAxisValue.Y);
 
-		 //CTRL + J
-		//AddControllerRollInput(LookAxisValue.X);
-
-		const double RollValue = FMath::Clamp(GetActorRotation().Roll, -30, 30);
-		const bool IsActorRotationSet = SetActorRotation(FRotator(180, 180, 180));
 		if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(1, -1.f, FColor::Cyan, GetActorRotation().ToString());
-			GEngine->AddOnScreenDebugMessage(0, -1.f, FColor::Blue, IsActorRotationSet ? "TRUE" : "FALSE");
 		}
 	}
 }
