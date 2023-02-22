@@ -63,11 +63,6 @@ void ABird::Look(const FInputActionValue& Value)
 	{
 		AddControllerYawInput(LookAxisValue.X);
 		AddControllerPitchInput(LookAxisValue.Y);
-
-		if (GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(1, -1.f, FColor::Cyan, GetActorRotation().ToString());
-		}
 	}
 }
 
@@ -86,4 +81,3 @@ void ABird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABird::Look);
 	}
 }
-
