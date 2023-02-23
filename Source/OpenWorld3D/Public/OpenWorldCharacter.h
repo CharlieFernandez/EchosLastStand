@@ -22,18 +22,22 @@ public:
 	AOpenWorldCharacter();
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void Jump() override;
 
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = Input)
+	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputMappingContext* OpenWorldCharacterContext;
 
-	UPROPERTY(EditAnywhere, Category = Input)
+	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction* MovementAction;
 
-	UPROPERTY(EditAnywhere, Category = Input)
+	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction* LookAroundAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UInputAction* JumpAction;;
 
 	void Move(const FInputActionValue& Value);
 	void LookAround(const FInputActionValue& Value);

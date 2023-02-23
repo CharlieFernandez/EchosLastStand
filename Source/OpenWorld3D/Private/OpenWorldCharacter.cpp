@@ -49,6 +49,12 @@ void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 	}
 }
 
+void AOpenWorldCharacter::Jump()
+{
+	Super::Jump();
+}
+
+
 
 void AOpenWorldCharacter::BeginPlay()
 {
@@ -77,6 +83,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 	{
 		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Move);
 		EnhancedInputComponent -> BindAction(LookAroundAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LookAround);
+		EnhancedInputComponent -> BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
 	}
 }
 
