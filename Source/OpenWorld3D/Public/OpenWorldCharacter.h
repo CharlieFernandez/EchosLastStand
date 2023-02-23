@@ -10,6 +10,8 @@
 
 class UInputMappingContext;
 class UInputAction;
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class OPENWORLD3D_API AOpenWorldCharacter : public ACharacter
@@ -30,5 +32,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* MovementAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* LookAroundAction;
+
 	void Move(const FInputActionValue& Value);
+	void LookAround(const FInputActionValue& Value);
+
+private:
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* Ptr_SpringArm;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* Ptr_Camera;
 };
