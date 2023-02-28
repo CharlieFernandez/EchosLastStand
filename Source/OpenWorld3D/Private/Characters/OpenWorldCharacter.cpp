@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "OpenWorldCharacter.h"
+#include "Characters/OpenWorldCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -9,6 +9,7 @@
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Items/Weapons/Weapon.h"
 
 AOpenWorldCharacter::AOpenWorldCharacter()
 {
@@ -49,12 +50,19 @@ void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 	}
 }
 
+void AOpenWorldCharacter::EKeyPressed()
+{	
+	if(	AWeapon* Weapon = Cast<AWeapon>(OverlappedItem))
+	{
+		Weapon->EquipWeapon(GetMesh(), FName("handSocketWeapon"));
+		CharacterState = ECharacterState::ECS_EquippedOneHandedWeapon;
+	}
+}
+
 void AOpenWorldCharacter::Jump()
 {
 	Super::Jump();
 }
-
-
 
 void AOpenWorldCharacter::BeginPlay()
 {
@@ -72,7 +80,6 @@ void AOpenWorldCharacter::BeginPlay()
 void AOpenWorldCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -81,9 +88,10 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Move);
+		EnhancedInputComponent -> BindAction(MovementAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Move);
 		EnhancedInputComponent -> BindAction(LookAroundAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LookAround);
 		EnhancedInputComponent -> BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
+		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::EKeyPressed);
 	}
 }
 

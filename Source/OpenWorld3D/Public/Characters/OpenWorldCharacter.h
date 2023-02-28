@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Items/Item.h"
+#include "Characters/CharacterTypes.h"
 
 #include "OpenWorldCharacter.generated.h"
 
@@ -12,6 +14,7 @@ class UInputMappingContext;
 class UInputAction;
 class USpringArmComponent;
 class UCameraComponent;
+class AItem;
 
 UCLASS()
 class OPENWORLD3D_API AOpenWorldCharacter : public ACharacter
@@ -23,6 +26,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void Jump() override;
+
+	FORCEINLINE void SetOverlappingItem(AItem* Item){ OverlappedItem = Item; }
+	FORCEINLINE ECharacterState GetCharacterState() const { return CharacterState; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -37,15 +43,24 @@ protected:
 	UInputAction* LookAroundAction;
 
 	UPROPERTY(EditDefaultsOnly, Category = Input)
-	UInputAction* JumpAction;;
+	UInputAction* JumpAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UInputAction* EKeyPressedAction;
 
 	void Move(const FInputActionValue& Value);
 	void LookAround(const FInputActionValue& Value);
+	void EKeyPressed();
 
 private:
+	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+	
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* Ptr_SpringArm;
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* Ptr_Camera;
+
+	UPROPERTY(VisibleInstanceOnly)
+	AItem* OverlappedItem;
 };

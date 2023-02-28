@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Items/Item.h"
+
+#include "Characters/OpenWorldCharacter.h"
 #include "OpenWorld3D/DebugMacros.h"
 #include "Components/SphereComponent.h"
 
@@ -29,22 +31,18 @@ void AItem::BeginPlay()
 void AItem::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	const FString OtherActorName = OtherActor->GetName();
-
-	if(GEngine)
+	if(AOpenWorldCharacter* OpenWorldCharacter = Cast<AOpenWorldCharacter>(OtherActor))
 	{
-		GEngine->AddOnScreenDebugMessage(0, 30.f, FColor::Red, OtherActorName);
+		OpenWorldCharacter->SetOverlappingItem(this);
 	}
 }
 
 void AItem::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	const FString OtherActorName = OtherActor->GetName();
-
-	if(GEngine)
+	if(AOpenWorldCharacter* OpenWorldCharacter = Cast<AOpenWorldCharacter>(OtherActor))
 	{
-		GEngine -> AddOnScreenDebugMessage(1, 30.f, FColor::Cyan, OtherActorName);
+		OpenWorldCharacter -> SetOverlappingItem(nullptr);
 	}
 }
 
@@ -58,7 +56,5 @@ void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	RunningTime += DeltaTime;
-
-	AddActorWorldRotation(FRotator(0, 50, 0) * DeltaTime);
 }
 
