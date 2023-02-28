@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Animation/AnimMontage.h"
 
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
@@ -64,6 +65,18 @@ void AOpenWorldCharacter::Jump()
 	Super::Jump();
 }
 
+void AOpenWorldCharacter::Attack()
+{
+	 UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+
+	if(AnimInstance && AttackMontage)
+	{
+		AnimInstance->Montage_Play(AttackMontage, 2.f);
+
+		// AnimInstance->Montage_JumpToSection("Attack3", AttackMontage);
+	}
+}
+
 void AOpenWorldCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -92,6 +105,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent -> BindAction(LookAroundAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LookAround);
 		EnhancedInputComponent -> BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
 		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::EKeyPressed);
+		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
 	}
 }
 

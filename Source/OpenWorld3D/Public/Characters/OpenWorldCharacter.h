@@ -15,6 +15,7 @@ class UInputAction;
 class USpringArmComponent;
 class UCameraComponent;
 class AItem;
+class UAnimMontage;
 
 UCLASS()
 class OPENWORLD3D_API AOpenWorldCharacter : public ACharacter
@@ -48,9 +49,13 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction* EKeyPressedAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UInputAction* AttackPressedAction;
+
 	void Move(const FInputActionValue& Value);
 	void LookAround(const FInputActionValue& Value);
 	void EKeyPressed();
+	void Attack();
 
 private:
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
@@ -63,4 +68,7 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly)
 	AItem* OverlappedItem;
+
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	UAnimMontage* AttackMontage;
 };
