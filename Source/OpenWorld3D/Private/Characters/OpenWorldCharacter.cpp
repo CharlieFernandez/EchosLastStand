@@ -67,7 +67,16 @@ void AOpenWorldCharacter::Jump()
 
 void AOpenWorldCharacter::Attack()
 {
-	 UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(ActionState == EActionState::EAS_Unoccupied)
+	{
+		PlayActionMontage();
+		ActionState = EActionState::EAS_Attacking;
+	}
+}
+
+void AOpenWorldCharacter::PlayActionMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 
 	if(AnimInstance && AttackMontage)
 	{
