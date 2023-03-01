@@ -57,8 +57,12 @@ protected:
 	void EKeyPressed();
 	void Attack();
 
+	
+
 private:
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	EActionState ActionState = EActionState::EAS_Unoccupied;
 	
 	UPROPERTY(VisibleAnywhere)
@@ -73,5 +77,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	UAnimMontage* AttackMontage;
 
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void AttackEnd();
+
+	bool CanAttack();
+	
 	void PlayActionMontage();
 };

@@ -29,6 +29,8 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 
 void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 {
+	if(ActionState == EActionState::EAS_Attacking) return;
+	
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
 	const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
@@ -67,11 +69,21 @@ void AOpenWorldCharacter::Jump()
 
 void AOpenWorldCharacter::Attack()
 {
-	if(ActionState == EActionState::EAS_Unoccupied)
+	if(CanAttack())
 	{
 		PlayActionMontage();
 		ActionState = EActionState::EAS_Attacking;
 	}
+}
+
+bool AOpenWorldCharacter::CanAttack()
+{
+	return ActionState == EActionState::EAS_Unoccupied && CharacterState != ECharacterState::ECS_Unequipped;
+}
+
+void AOpenWorldCharacter::AttackEnd()
+{
+	ActionState = EActionState::EAS_Unoccupied;
 }
 
 void AOpenWorldCharacter::PlayActionMontage()
