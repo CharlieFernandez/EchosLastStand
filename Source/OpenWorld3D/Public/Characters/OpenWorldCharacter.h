@@ -80,6 +80,9 @@ private:
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void AttackEnd();
 
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void ComboEnd();
+
 	bool CanAttack();
 	
 	void PlayActionMontage();

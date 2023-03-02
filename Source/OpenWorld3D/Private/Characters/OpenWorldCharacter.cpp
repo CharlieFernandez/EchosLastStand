@@ -2,6 +2,9 @@
 
 
 #include "Characters/OpenWorldCharacter.h"
+
+#include <string>
+
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -70,7 +73,7 @@ void AOpenWorldCharacter::Jump()
 void AOpenWorldCharacter::Attack()
 {
 	if(CanAttack())
-	{
+	{		
 		PlayActionMontage();
 		ActionState = EActionState::EAS_Attacking;
 	}
@@ -78,24 +81,40 @@ void AOpenWorldCharacter::Attack()
 
 bool AOpenWorldCharacter::CanAttack()
 {
-	return ActionState == EActionState::EAS_Unoccupied && CharacterState != ECharacterState::ECS_Unequipped;
+	return (ActionState == EActionState::EAS_Unoccupied || ActionState == EActionState::EAS_AttackEnd)
+	&& CharacterState != ECharacterState::ECS_Unequipped;
 }
 
 void AOpenWorldCharacter::AttackEnd()
+{
+	ActionState = EActionState::EAS_AttackEnd;
+}
+
+void AOpenWorldCharacter::ComboEnd()
 {
 	ActionState = EActionState::EAS_Unoccupied;
 }
 
 void AOpenWorldCharacter::PlayActionMontage()
 {
+	static int AttackNum = 1;
+
+	if(ActionState != EActionState::EAS_AttackEnd)
+	{
+		AttackNum = 1;
+	}
+	
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 
 	if(AnimInstance && AttackMontage)
 	{
 		AnimInstance->Montage_Play(AttackMontage, 2.f);
-
-		// AnimInstance->Montage_JumpToSection("Attack3", AttackMontage);
+		const FString AttackString(TEXT("Attack "));
+		const FName AttackName(*FString(AttackString).Append(*FString::FromInt(AttackNum)));
+		// FName AttackName(*FString::FromInt(1))
+		AnimInstance->Montage_JumpToSection(AttackName, AttackMontage);
 	}
+	AttackNum++;
 }
 
 void AOpenWorldCharacter::BeginPlay()
