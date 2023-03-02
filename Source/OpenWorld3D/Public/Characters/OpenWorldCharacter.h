@@ -16,6 +16,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class AItem;
 class UAnimMontage;
+class UCharacterMovementComponent;
 
 UCLASS()
 class OPENWORLD3D_API AOpenWorldCharacter : public ACharacter
@@ -52,14 +53,20 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputAction* AttackPressedAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UInputAction* SprintAction;
+
 	void Move(const FInputActionValue& Value);
 	void LookAround(const FInputActionValue& Value);
 	void EKeyPressed();
+	void SprintPressed();
 	void Attack();
 
 	
 
 private:
+	UCharacterMovementComponent* CharacterMovementComponent;
+	
 	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -76,6 +83,15 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	UAnimMontage* AttackMontage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float MaxWalkSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float MaxRunSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float MaxSprintSpeed;
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void AttackEnd();

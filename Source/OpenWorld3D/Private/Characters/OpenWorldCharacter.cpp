@@ -24,7 +24,7 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 	Ptr_Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Ptr_Camera->SetupAttachment(Ptr_SpringArm);
 
-	UCharacterMovementComponent* CharacterMovementComponent = GetCharacterMovement();
+	CharacterMovementComponent = GetCharacterMovement();
 
 	CharacterMovementComponent -> bOrientRotationToMovement = true;
 	CharacterMovementComponent -> RotationRate = FRotator(0.f, 400.f, 0.f);
@@ -64,6 +64,12 @@ void AOpenWorldCharacter::EKeyPressed()
 		CharacterState = ECharacterState::ECS_EquippedOneHandedWeapon;
 	}
 }
+
+void AOpenWorldCharacter::SprintPressed()
+{
+	CharacterMovementComponent->MaxWalkSpeed = MaxSprintSpeed;
+}
+
 
 void AOpenWorldCharacter::Jump()
 {
@@ -133,6 +139,11 @@ void AOpenWorldCharacter::BeginPlay()
 void AOpenWorldCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if(CharacterMovementComponent->Velocity.Length() == 0)
+	{
+		CharacterMovementComponent->MaxWalkSpeed = MaxRunSpeed;
+	}
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -146,6 +157,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent -> BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
 		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::EKeyPressed);
 		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
+		EnhancedInputComponent -> BindAction(SprintAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::SprintPressed);
 	}
 }
 
