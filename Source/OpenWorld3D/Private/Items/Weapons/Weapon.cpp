@@ -19,9 +19,9 @@ void AWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AWeapon::ToggleWeaponState()
 {
-	WeaponState = (WeaponState == EWeaponState::EWS_Hovering) ? EWeaponState::EWS_Held : EWeaponState::EWS_Hovering;
+	ItemState = (ItemState == EItemState::EIS_Hovering) ? EItemState::EIS_Held : EItemState::EIS_Hovering;
 
-	if(WeaponState == EWeaponState::EWS_Held)
+	if(ItemState == EItemState::EIS_Held)
 	{		
 		SphereComponent->SetGenerateOverlapEvents(false);
 	}

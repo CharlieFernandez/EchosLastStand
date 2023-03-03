@@ -56,6 +56,12 @@ void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	RunningTime += DeltaTime;
+
+	if(ItemState == EItemState::EIS_Hovering)
+	{
+		AddActorWorldOffset(FVector(0, 0, TransformSine()));
+		AddActorLocalRotation(FRotator(0, SpinSpeed * DeltaTime, 0));
+	}
 }
 
 

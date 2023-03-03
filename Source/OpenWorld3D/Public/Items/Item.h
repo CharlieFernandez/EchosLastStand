@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Items/ItemState.h"
 #include "Item.generated.h"
 
 class USphereComponent;
@@ -45,6 +46,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* SphereComponent;
 
+	EItemState ItemState = EItemState::EIS_Hovering;
+
 private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;
@@ -52,6 +55,8 @@ private:
 	float Amplitude;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
+
+	const float SpinSpeed = 100;
 };
 
 template<typename T>
