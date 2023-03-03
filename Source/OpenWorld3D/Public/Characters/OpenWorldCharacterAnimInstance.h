@@ -33,5 +33,5 @@ private:
 	bool IsFalling;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Movement|Character State", meta = (AllowPrivateAccess = "true"))
-	ECharacterState CharacterState;
+	EEquipState CharacterState;
 };

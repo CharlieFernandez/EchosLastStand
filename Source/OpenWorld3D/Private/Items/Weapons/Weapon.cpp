@@ -3,10 +3,10 @@
 
 #include "Items/Weapons/Weapon.h"
 #include "Characters/OpenWorldCharacter.h"
-
+#include "Components/SphereComponent.h"
 
 void AWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                   UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnSphereBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 }
@@ -17,8 +17,16 @@ void AWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	Super::OnSphereEndOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
 }
 
-void AWeapon::EquipWeapon(USceneComponent* InParent, FName SN)
+void AWeapon::ToggleWeaponState()
 {
-	const FAttachmentTransformRules AttachmentTransformRules(EAttachmentRule::SnapToTarget, true);
-	ItemMesh -> AttachToComponent(InParent, AttachmentTransformRules, SN);
+	WeaponState = (WeaponState == EWeaponState::EWS_Hovering) ? EWeaponState::EWS_Held : EWeaponState::EWS_Hovering;
+
+	if(WeaponState == EWeaponState::EWS_Held)
+	{		
+		SphereComponent->SetGenerateOverlapEvents(false);
+	}
+	else
+	{
+		SphereComponent->SetGenerateOverlapEvents(true);
+	}
 }

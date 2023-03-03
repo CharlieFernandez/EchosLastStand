@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "Items/Item.h"
 #include "Characters/CharacterTypes.h"
+#include "Items/Weapons/EquipActionState.h"
 
 #include "OpenWorldCharacter.generated.h"
 
@@ -17,47 +18,44 @@ class UCameraComponent;
 class AItem;
 class UAnimMontage;
 class UCharacterMovementComponent;
+class AWeapon;
+class UAnimInstance;
 
 UCLASS()
 class OPENWORLD3D_API AOpenWorldCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
-public:
-	AOpenWorldCharacter();
-	virtual void Tick(float DeltaTime) override;
+public:	
+	// Default Methods	
+	AOpenWorldCharacter();	
+	virtual void Tick(float DeltaTime) override;	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	virtual void Jump() override;
-
+	
+	// Getter/Setter Methods
+	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
 	FORCEINLINE void SetOverlappingItem(AItem* Item){ OverlappedItem = Item; }
-	FORCEINLINE ECharacterState GetCharacterState() const { return CharacterState; }
-
+	
 protected:
-	virtual void BeginPlay() override;
-
-	UPROPERTY(EditDefaultsOnly, Category = Input)
+	// Input Mapping Contexts	
+  	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputMappingContext* OpenWorldCharacterContext;
 
-	UPROPERTY(EditDefaultsOnly, Category = Input)
-	UInputAction* MovementAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = Input)
-	UInputAction* LookAroundAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = Input)
-	UInputAction* JumpAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = Input)
-	UInputAction* EKeyPressedAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = Input)
-	UInputAction* AttackPressedAction;
-
-	UPROPERTY(EditDefaultsOnly, Category = Input)
-	UInputAction* SprintAction;
-
+	// Input Actions	
+	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* MovementAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* LookAroundAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* JumpAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* EKeyPressedAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* AttackPressedAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* SprintAction;
+	
+	// Default Methods
+	virtual void BeginPlay() override;
+	
+	// Input Methods
 	void Move(const FInputActionValue& Value);
 	void LookAround(const FInputActionValue& Value);
+	virtual void Jump() override;
 	void EKeyPressed();
 	void SprintPressed();
 	void Attack();
@@ -65,25 +63,37 @@ protected:
 	
 
 private:
-	UCharacterMovementComponent* CharacterMovementComponent;
+	// Pointers
+	UPROPERTY(VisibleInstanceOnly)
+	TObjectPtr<AItem> OverlappedItem;
+
+	UPROPERTY(VisibleInstanceOnly, Category = Weapon)
+	TObjectPtr<AWeapon> WeaponHeld;
 	
-	ECharacterState CharacterState = ECharacterState::ECS_Unequipped;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USpringArmComponent> SpringArm;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UCameraComponent> CameraBoom;	
+	
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TObjectPtr<UAnimMontage> AttackMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TObjectPtr<UAnimMontage> EquipMontage;
+
+	TObjectPtr<UAnimInstance> AnimInstance;
+
+	TObjectPtr<UCharacterMovementComponent> CharacterMovementComponent;
+	
+	// States
+	UPROPERTY(VisibleInstanceOnly)
+	EEquipState EquipState = EEquipState::ECS_Unequipped;
 
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	EActionState ActionState = EActionState::EAS_Unoccupied;
-	
-	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* Ptr_SpringArm;
 
-	UPROPERTY(VisibleAnywhere)
-	UCameraComponent* Ptr_Camera;
-
-	UPROPERTY(VisibleInstanceOnly)
-	AItem* OverlappedItem;
-
-	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	UAnimMontage* AttackMontage;
-
+	// Character Movement Speeds
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxWalkSpeed;
 
@@ -93,13 +103,29 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxSprintSpeed;
 
+	// Notify Methods
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void AttackEnd();
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
-	void ComboEnd();
+	void ResetActionState();
 
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void Equip();
+
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void Unequip();
+
+	// Helper Methods
 	bool CanAttack();
 	
-	void PlayActionMontage();
+	// Montage Methods
+	void PlayActionMontage() const;
+	void PlayEquipMontage(EEquipActionState EquipType);
+
+	// Helper Methods
+	void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
+	bool CanEquip() const;
+	bool CanUnequip() const;
+	void AttachMeshToSocket(UMeshComponent* WeaponMesh, FName SN);
 };

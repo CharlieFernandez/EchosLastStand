@@ -16,9 +16,11 @@ class OPENWORLD3D_API AItem : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AItem();
-
-	// Called every frame
+	
 	virtual void Tick(float DeltaTime) override;
+	FORCEINLINE UStaticMeshComponent* GetStaticMeshComponent(){ return ItemMesh; }
+
+	FORCEINLINE UMeshComponent* GetMesh() const { return ItemMesh; };
 
 protected:
 	// Called when the game starts or when spawned
@@ -40,19 +42,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UStaticMeshComponent* ItemMesh;
 
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* SphereComponent;
+
 private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;
-
-	// 1st Argument: EditDefaultsOnly || EditInstanceOnly || EditAnywhere || VisibleDefaultsOnly || VisibleInstanceOnly || VisibleAnywhere
-	// 2nd Argument: BlueprintReadOnly || BlueprintReadWrite
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float Amplitude;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
-
-	UPROPERTY(VisibleAnywhere)
-	USphereComponent* SphereComponent;
 };
 
 template<typename T>
