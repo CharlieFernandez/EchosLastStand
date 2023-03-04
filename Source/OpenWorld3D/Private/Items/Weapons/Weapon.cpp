@@ -5,6 +5,7 @@
 #include "Characters/OpenWorldCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 AWeapon::AWeapon()
 {
@@ -14,6 +15,19 @@ AWeapon::AWeapon()
 	BoxComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	BoxComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+
+	BoxTraceStart = CreateDefaultSubobject<USceneComponent>(TEXT("Start Component"));
+	BoxTraceStart->SetupAttachment(GetRootComponent());
+	
+	BoxTraceEnd = CreateDefaultSubobject<USceneComponent>(TEXT("End Component"));
+	BoxTraceEnd->SetupAttachment(GetRootComponent());
+}
+
+void AWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+
+	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnBoxBeginOverlap);
 }
 
 void AWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -26,6 +40,35 @@ void AWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	Super::OnSphereEndOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex);
+}
+
+void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	FVector Start = BoxTraceStart->GetComponentLocation();
+	FVector End = BoxTraceEnd->GetComponentLocation();
+
+	TArray<TObjectPtr<AActor>> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
+
+	FHitResult HitResult;
+	
+	UKismetSystemLibrary::BoxTraceSingle(
+		this,
+		Start,
+		End,
+		FVector(5.f, 5.f, 5.f),
+		BoxTraceStart->GetComponentRotation(),
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::ForDuration,
+		HitResult,
+		true,
+		FLinearColor::Red,
+		FLinearColor::Green,
+		1.f
+	);
 }
 
 void AWeapon::ToggleWeaponState()
