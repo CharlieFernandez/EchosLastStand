@@ -120,19 +120,22 @@ void AOpenWorldCharacter::EKeyPressed()
 		PickUpWeapon(Weapon, Weapon->GetStaticMeshComponent(), FName("handWeaponSocket"));
 	}
 	else
-	{		
-		if(CanUnequip())
-		{			
-			PlayEquipMontage(EEquipActionState::EEAS_Unequip);
-			EquipState = EEquipState::ECS_Unequipped;
-		}
-		else if(CanEquip())
+	{
+		if(WeaponHeld)
 		{
-			PlayEquipMontage(EEquipActionState::EEAS_Equip);
-			EquipState = EEquipState::ECS_EquippedOneHandedWeapon;
-		}
+			if(CanUnequip())
+			{			
+				PlayEquipMontage(EEquipActionState::EEAS_Unequip);
+				EquipState = EEquipState::ECS_Unequipped;
+			}
+			else if(CanEquip())
+			{
+				PlayEquipMontage(EEquipActionState::EEAS_Equip);
+				EquipState = EEquipState::ECS_EquippedOneHandedWeapon;
+			}
 
-		ActionState = EActionState::EAS_Equipping;		
+			ActionState = EActionState::EAS_Equipping;
+		}
 	}
 }
 
