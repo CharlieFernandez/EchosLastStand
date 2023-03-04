@@ -12,7 +12,7 @@ AWeapon::AWeapon()
 	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Hit Box"));
 	BoxComponent->SetupAttachment(GetRootComponent());
 
-	BoxComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	BoxComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 
@@ -82,5 +82,13 @@ void AWeapon::ToggleWeaponState()
 	else
 	{
 		SphereComponent->SetGenerateOverlapEvents(true);
+	}
+}
+
+void AWeapon::SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType)
+{
+	if(BoxComponent)
+	{
+		BoxComponent->SetCollisionEnabled(CollisionType);
 	}
 }

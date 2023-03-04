@@ -34,5 +34,8 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> BoxTraceEnd;
+
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType);
 };
 

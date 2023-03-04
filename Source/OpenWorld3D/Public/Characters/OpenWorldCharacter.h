@@ -8,6 +8,7 @@
 #include "Items/Item.h"
 #include "Characters/CharacterTypes.h"
 #include "Items/Weapons/EquipActionState.h"
+#include "Items/Weapons/Weapon.h"
 
 #include "OpenWorldCharacter.generated.h"
 
@@ -38,7 +39,7 @@ public:
 	
 protected:
 	// Input Mapping Contexts	
-  	UPROPERTY(EditDefaultsOnly, Category = Input)
+	UPROPERTY(EditDefaultsOnly, Category = Input)
 	UInputMappingContext* OpenWorldCharacterContext;
 
 	// Input Actions	
@@ -67,7 +68,7 @@ private:
 	UPROPERTY(VisibleInstanceOnly)
 	TObjectPtr<AItem> OverlappedItem;
 
-	UPROPERTY(VisibleInstanceOnly, Category = Weapon)
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<AWeapon> WeaponHeld;
 	
 	UPROPERTY(VisibleAnywhere)
