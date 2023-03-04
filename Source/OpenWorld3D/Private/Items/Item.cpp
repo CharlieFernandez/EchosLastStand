@@ -46,11 +46,6 @@ void AItem::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 	}
 }
 
-float AItem::TransformSine()
-{
-	return Amplitude * FMath::Sin(RunningTime * TimeConstant);
-}
-
 // Called every frame
 void AItem::Tick(float DeltaTime)
 {

@@ -8,6 +8,7 @@
 #include "Item.generated.h"
 
 class USphereComponent;
+class USoundBase;
 
 UCLASS()
 class OPENWORLD3D_API AItem : public AActor
@@ -19,9 +20,9 @@ public:
 	AItem();
 	
 	virtual void Tick(float DeltaTime) override;
-	FORCEINLINE UStaticMeshComponent* GetStaticMeshComponent(){ return ItemMesh; }
-
+	FORCEINLINE UStaticMeshComponent* GetStaticMeshComponent() const { return ItemMesh; }
 	FORCEINLINE UMeshComponent* GetMesh() const { return ItemMesh; };
+	FORCEINLINE USoundBase* GetPickUpSound() const { return PickUpSound; }
 
 protected:
 	// Called when the game starts or when spawned
@@ -29,10 +30,7 @@ protected:
 
 	//BlueprintCallable || BlueprintPure
 	UFUNCTION(BlueprintPure)
-	float TransformSine();
-
-	template<typename T>
-	T Avg(T First, T Second);
+	float TransformSine() const { return Amplitude * FMath::Sin(RunningTime * TimeConstant); }
 
 	UFUNCTION()
 	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -56,11 +54,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
 
-	const float SpinSpeed = 100;
-};
+	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USoundBase> PickUpSound;
 
-template<typename T>
-inline T AItem::Avg(T First, T Second)
-{
-	return (First + Second) / 2;
-}
+	UPROPERTY(EditAnywhere)
+	float SpinSpeed = 100;
+};

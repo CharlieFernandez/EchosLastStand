@@ -13,6 +13,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Items/Weapons/EquipActionState.h"
 #include "Items/Weapons/Weapon.h"
+#include "Kismet/GameplayStatics.h"
 
 // Default Methods
 AOpenWorldCharacter::AOpenWorldCharacter()
@@ -78,6 +79,11 @@ void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMe
 	EquipState = EEquipState::ECS_EquippedOneHandedWeapon;
 	WeaponHeld = Weapon;
 	Weapon->ToggleWeaponState();
+	
+	if(auto const PickUpSound = WeaponHeld->GetPickUpSound())
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, Weapon->GetActorLocation());
+	}
 }
 
 // Input Methods
