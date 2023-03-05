@@ -7,7 +7,8 @@
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
 
-class USkeletalMeshComponent;
+class UAnimMontage;
+
 UCLASS()
 class OPENWORLD3D_API AEnemy : public ACharacter, public IHitInterface
 {
@@ -25,4 +26,9 @@ protected:
 
 private:
 	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UAnimMontage>ReactMontage;
+
+	void PlayReactMontage(const FName& SectionName);
 };

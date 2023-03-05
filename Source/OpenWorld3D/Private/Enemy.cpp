@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 AEnemy::AEnemy()
 {
@@ -40,10 +41,32 @@ void AEnemy::GetHit(const FVector ImpactPoint)
 {	
 	if(GetWorld())
 	{
-		const float SphereRadius = 12.f;
-		const int Segments = 12;
-		const float LifeTime = 3.f;
-		DrawDebugSphere(GetWorld(), ImpactPoint, SphereRadius, Segments, FColor::Orange, false, LifeTime);
+		FVector Forward = GetActorForwardVector();
+		const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
+		FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
+		
+		double CosTheta = FVector::DotProduct(Forward, DirectionOfHit);
+		double Theta = FMath::Acos(CosTheta);
+		Theta = FMath::RadiansToDegrees(Theta);
+
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Emerald, FString::Printf(TEXT("Theta: %f"), Theta));
+		}
+
+		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (Forward * 60), 20, FLinearColor::Green, 3, 2);
+		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + DirectionOfHit * 60, 20, FLinearColor::Red, 3, 2);
+	}
+
+	PlayReactMontage("FromFront");
+}
+
+void AEnemy::PlayReactMontage(const FName& SectionName)
+{
+	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+	{
+		AnimInstance->Montage_Play(ReactMontage);
+		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
 	}
 }
 

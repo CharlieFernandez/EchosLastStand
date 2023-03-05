@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Items/Weapons/Weapon.h"
 #include "Characters/OpenWorldCharacter.h"
 #include "Components/BoxComponent.h"
@@ -63,12 +62,9 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
 		ActorsToIgnore,
-		EDrawDebugTrace::ForDuration,
+		EDrawDebugTrace::None,
 		HitResult,
-		true,
-		FLinearColor::Red,
-		FLinearColor::Green,
-		1.f
+		true
 	);	
 
 	if(AActor* ActorHit = HitResult.GetActor())
