@@ -49,11 +49,19 @@ void AEnemy::GetHit(const FVector ImpactPoint)
 		double Theta = FMath::Acos(CosTheta);
 		Theta = FMath::RadiansToDegrees(Theta);
 
+		const FVector CrossProduct = FVector::CrossProduct(Forward, DirectionOfHit);
+
+		if(CrossProduct.Z < 0)
+		{
+			Theta *= -1;
+		}
+
 		if(GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Emerald, FString::Printf(TEXT("Theta: %f"), Theta));
 		}
 
+		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (CrossProduct * 60), 20, FLinearColor::Blue, 3, 2);
 		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (Forward * 60), 20, FLinearColor::Green, 3, 2);
 		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + DirectionOfHit * 60, 20, FLinearColor::Red, 3, 2);
 	}

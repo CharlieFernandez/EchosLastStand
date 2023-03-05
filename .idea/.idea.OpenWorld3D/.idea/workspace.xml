@@ -7,15 +7,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cb6d7063-9927-445b-adfb-566c24c9480a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Crypto/BP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Crypto/BP_Enemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromBack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromBack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromFront.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromFront.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromLeft.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromLeft.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromRight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mixamo/Crypto/Animations/ReactFromRight.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Enemy.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +159,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1678022868539</updated>
-      <workItem from="1678022875458" duration="16001000" />
+      <workItem from="1678022875458" duration="17221000" />
     </task>
     <servers />
   </component>
