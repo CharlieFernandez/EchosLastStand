@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 AEnemy::AEnemy()
@@ -38,35 +39,47 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 
 void AEnemy::GetHit(const FVector ImpactPoint)
-{	
-	if(GetWorld())
+{
+	FVector Forward = GetActorForwardVector();
+	const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
+	FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
+	
+	double CosTheta = FVector::DotProduct(Forward, DirectionOfHit);
+	double Theta = FMath::Acos(CosTheta);
+	Theta = FMath::RadiansToDegrees(Theta);
+
+	const FVector CrossProduct = FVector::CrossProduct(Forward, DirectionOfHit);
+
+	if(CrossProduct.Z < 0)
 	{
-		FVector Forward = GetActorForwardVector();
-		const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
-		FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
-		
-		double CosTheta = FVector::DotProduct(Forward, DirectionOfHit);
-		double Theta = FMath::Acos(CosTheta);
-		Theta = FMath::RadiansToDegrees(Theta);
-
-		const FVector CrossProduct = FVector::CrossProduct(Forward, DirectionOfHit);
-
-		if(CrossProduct.Z < 0)
-		{
-			Theta *= -1;
-		}
-
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Emerald, FString::Printf(TEXT("Theta: %f"), Theta));
-		}
-
-		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (CrossProduct * 60), 20, FLinearColor::Blue, 3, 2);
-		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (Forward * 60), 20, FLinearColor::Green, 3, 2);
-		UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + DirectionOfHit * 60, 20, FLinearColor::Red, 3, 2);
+		Theta *= -1;
 	}
 
-	PlayReactMontage("FromFront");
+	if(GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Emerald, FString::Printf(TEXT("Theta: %f"), Theta));
+	}
+
+	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (CrossProduct * 60), 20, FLinearColor::Blue, 3, 2);
+	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (Forward * 60), 20, FLinearColor::Green, 3, 2);
+	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + DirectionOfHit * 60, 20, FLinearColor::Red, 3, 2);
+
+	FName SectionName = FName("FromBack");
+
+	if(Theta >= -45.f && Theta <= 45.f)
+	{
+		SectionName = FName("FromFront");
+	}
+	else if(Theta > 45.f && Theta < 135.f)
+	{
+		SectionName = FName("FromRight");
+	}
+	else if(Theta > -135.f && Theta < -45.f)
+	{
+		SectionName = FName("FromLeft");
+	}
+	
+	PlayReactMontage(SectionName);
 }
 
 void AEnemy::PlayReactMontage(const FName& SectionName)
@@ -77,4 +90,3 @@ void AEnemy::PlayReactMontage(const FName& SectionName)
 		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
 	}
 }
-
