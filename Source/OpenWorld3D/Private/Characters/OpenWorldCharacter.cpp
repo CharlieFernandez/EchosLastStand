@@ -130,7 +130,7 @@ void AOpenWorldCharacter::EKeyPressed()
 	}
 	else
 	{
-		if(WeaponHeld)
+		if(WeaponHeld && ActionState == EActionState::EAS_Unoccupied)
 		{
 			if(CanUnequip())
 			{			

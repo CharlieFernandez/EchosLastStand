@@ -2,7 +2,6 @@
 
 
 #include "Enemy.h"
-
 #include "Components/CapsuleComponent.h"
 
 AEnemy::AEnemy()
@@ -35,5 +34,16 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AEnemy::GetHit(const FVector ImpactPoint)
+{	
+	if(GetWorld())
+	{
+		const float SphereRadius = 12.f;
+		const int Segments = 12;
+		const float LifeTime = 3.f;
+		DrawDebugSphere(GetWorld(), ImpactPoint, SphereRadius, Segments, FColor::Orange, false, LifeTime);
+	}
 }
 

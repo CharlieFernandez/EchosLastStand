@@ -5,6 +5,7 @@
 #include "Characters/OpenWorldCharacter.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
+#include "Interfaces/HitInterface.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 AWeapon::AWeapon()
@@ -68,7 +69,15 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		FLinearColor::Red,
 		FLinearColor::Green,
 		1.f
-	);
+	);	
+
+	if(AActor* ActorHit = HitResult.GetActor())
+	{
+		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
+		{
+			HitInterface->GetHit(HitResult.ImpactPoint);
+		}		
+	}
 }
 
 void AWeapon::ToggleWeaponState()
