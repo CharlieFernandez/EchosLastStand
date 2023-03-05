@@ -49,6 +49,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* EKeyPressedAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* AttackPressedAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* SprintAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) UInputAction* RollAction;
 	
 	// Default Methods
 	virtual void BeginPlay() override;
@@ -60,6 +61,7 @@ protected:
 	void EKeyPressed();
 	void SprintPressed();
 	void Attack();
+	void Roll(const FInputActionValue& Value);
 
 	
 
@@ -83,6 +85,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage> EquipMontage;
 
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TObjectPtr<UAnimMontage> RollMontage;
+
 	TObjectPtr<UAnimInstance> AnimInstance;
 
 	TObjectPtr<UCharacterMovementComponent> CharacterMovementComponent;
@@ -104,6 +109,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxSprintSpeed;
 
+	UPROPERTY(EditDefaultsOnly)
+	float RollSpeed;
+
+	FVector DirectionToRoll;
+
 	// Notify Methods
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void AttackEnd();
@@ -117,12 +127,19 @@ private:
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void Unequip();
 
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void SpeedUpRoll();
+
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void SlowDownRoll();
+
 	// Helper Methods
 	bool CanAttack();
 	
 	// Montage Methods
 	void PlayActionMontage() const;
 	void PlayEquipMontage(EEquipActionState EquipType);
+	void PlayRollMontage(const FInputActionValue& Value);
 
 	// Helper Methods
 	void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);

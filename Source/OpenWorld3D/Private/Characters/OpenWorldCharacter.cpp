@@ -14,6 +14,7 @@
 #include "Items/Weapons/EquipActionState.h"
 #include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Default Methods
 AOpenWorldCharacter::AOpenWorldCharacter()
@@ -54,6 +55,13 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 	{
 		CharacterMovementComponent->MaxWalkSpeed = MaxRunSpeed;
 	}
+
+	if(ActionState == EActionState::EAS_Rolling)
+	{
+		const FVector RollDisplacement = DirectionToRoll * RollSpeed * DeltaTime;
+
+		AddMovementInput(GetActorForwardVector(), RollDisplacement.Length());
+	}
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -68,6 +76,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::EKeyPressed);
 		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
 		EnhancedInputComponent -> BindAction(SprintAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::SprintPressed);
+		EnhancedInputComponent -> BindAction(RollAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Roll);
 	}
 }
 
@@ -168,6 +177,7 @@ void AOpenWorldCharacter::AttackEnd()
 void AOpenWorldCharacter::ResetActionState()
 {
 	ActionState = EActionState::EAS_Unoccupied;
+	CharacterMovementComponent->MaxWalkSpeed = MaxRunSpeed;
 }
 
 void AOpenWorldCharacter::Equip()
@@ -179,6 +189,17 @@ void AOpenWorldCharacter::Unequip()
 {
 	AttachMeshToSocket(WeaponHeld->GetMesh(), "spineWeaponSocket");
 }
+
+void AOpenWorldCharacter::SpeedUpRoll()
+{
+	CharacterMovementComponent->MaxWalkSpeed = RollSpeed;
+}
+
+void AOpenWorldCharacter::SlowDownRoll()
+{
+	CharacterMovementComponent->MaxWalkSpeed = MaxWalkSpeed;
+}
+
 
 // Montage Methods
 void AOpenWorldCharacter::PlayActionMontage() const
@@ -210,6 +231,36 @@ void AOpenWorldCharacter::PlayEquipMontage(EEquipActionState EquipType)
 		AnimInstance->Montage_JumpToSection(FName(*EnumString), EquipMontage);
 	}	
 }
+
+void AOpenWorldCharacter::Roll(const FInputActionValue& Value)
+{
+	if(ActionState == EActionState::EAS_Rolling || ActionState == EActionState::EAS_Equipping ||
+		CharacterMovementComponent->IsFalling()) return;
+
+	PlayRollMontage(Value);
+}
+
+void AOpenWorldCharacter::PlayRollMontage(const FInputActionValue& Value)
+{
+	if(RollMontage)
+	{
+		const FVector MovementVector = Value.Get<FVector>();
+		DirectionToRoll = MovementVector.GetSafeNormal(0.f);
+
+		const FVector CurrentActorLocation = GetActorLocation();
+		
+		const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
+			CurrentActorLocation,
+			CurrentActorLocation + GetLastMovementInputVector()
+		);
+		
+		SetActorRelativeRotation(DirectionToFace);
+	
+		ActionState = EActionState::EAS_Rolling;
+		AnimInstance->Montage_Play(RollMontage);
+	}
+}
+
 
 // Helper Methods
 bool AOpenWorldCharacter::CanAttack()
