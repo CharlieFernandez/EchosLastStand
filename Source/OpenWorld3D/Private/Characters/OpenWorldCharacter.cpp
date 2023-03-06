@@ -213,7 +213,7 @@ void AOpenWorldCharacter::PlayActionMontage() const
 
 	if(AnimInstance && AttackMontage)
 	{		
-		AnimInstance->Montage_Play(AttackMontage, 2.f);
+		AnimInstance->Montage_Play(AttackMontage);
 		const FString AttackString = FString::Printf(TEXT("Attack %i"), AttackNum);
 		const FName AttackName(*FString(AttackString));
 		AnimInstance->Montage_JumpToSection(AttackName, AttackMontage);

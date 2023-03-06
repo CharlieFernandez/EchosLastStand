@@ -101,6 +101,6 @@ void AEnemy::EmitParticles(const FVector ImpactPoint)
 {
 	if(HitParticles)
 	{
-		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.5f);
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
 	}
 }
