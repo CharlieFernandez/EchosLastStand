@@ -19,6 +19,7 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void EmitParticles(FVector ImpactPoint);
 	virtual void GetHit(const FVector ImpactPoint);
 
 protected:
@@ -27,13 +28,16 @@ protected:
 private:
 	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 
-	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UAnimMontage>ReactMontage;
-
 	void PlayReactMontage(const FName& SectionName);
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TObjectPtr<UAnimMontage>ReactMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = Sounds)
 	TObjectPtr<USoundBase> HitSFX;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Visual Effects")
+	TObjectPtr<UParticleSystem> HitParticles;
 
 	double GetAngleFromImpactPoint(FVector ImpactPoint);
 	FName GenerateSectionName(double Angle);

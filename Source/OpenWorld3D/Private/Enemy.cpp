@@ -40,9 +40,11 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::GetHit(const FVector ImpactPoint)
 {
-	const double Angle = GetAngleFromImpactPoint(ImpactPoint);
-	const FName SectionName = GenerateSectionName(Angle);
 	UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
+	EmitParticles(ImpactPoint);
+	
+	const double Angle = GetAngleFromImpactPoint(ImpactPoint);
+	const FName SectionName = GenerateSectionName(Angle);	
 	PlayReactMontage(SectionName);
 }
 
@@ -92,5 +94,13 @@ void AEnemy::PlayReactMontage(const FName& SectionName)
 	{
 		AnimInstance->Montage_Play(ReactMontage);
 		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
+	}
+}
+
+void AEnemy::EmitParticles(const FVector ImpactPoint)
+{
+	if(HitParticles)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.5f);
 	}
 }
