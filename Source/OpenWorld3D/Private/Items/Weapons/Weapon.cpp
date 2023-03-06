@@ -78,7 +78,9 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 			}
 			
 			HitInterface->GetHit(HitResult.ImpactPoint);
-		}		
+		}
+
+		CreateFields(HitResult.ImpactPoint);
 	}
 }
 
