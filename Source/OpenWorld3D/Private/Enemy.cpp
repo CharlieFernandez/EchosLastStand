@@ -40,6 +40,14 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AEnemy::GetHit(const FVector ImpactPoint)
 {
+	const double Angle = GetAngleFromImpactPoint(ImpactPoint);
+	const FName SectionName = GenerateSectionName(Angle);
+	UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
+	PlayReactMontage(SectionName);
+}
+
+double AEnemy::GetAngleFromImpactPoint(const FVector ImpactPoint)
+{
 	FVector Forward = GetActorForwardVector();
 	const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
 	FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
@@ -55,31 +63,27 @@ void AEnemy::GetHit(const FVector ImpactPoint)
 		Theta *= -1;
 	}
 
-	if(GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Emerald, FString::Printf(TEXT("Theta: %f"), Theta));
-	}
+	return Theta;
+}
 
-	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (CrossProduct * 60), 20, FLinearColor::Blue, 3, 2);
-	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + (Forward * 60), 20, FLinearColor::Green, 3, 2);
-	UKismetSystemLibrary::DrawDebugArrow(this, GetActorLocation(), GetActorLocation() + DirectionOfHit * 60, 20, FLinearColor::Red, 3, 2);
-
+FName AEnemy::GenerateSectionName(double Angle)
+{
 	FName SectionName = FName("FromBack");
 
-	if(Theta >= -45.f && Theta <= 45.f)
+	if(Angle >= -45.f && Angle <= 45.f)
 	{
 		SectionName = FName("FromFront");
 	}
-	else if(Theta > 45.f && Theta < 135.f)
+	else if(Angle > 45.f && Angle < 135.f)
 	{
 		SectionName = FName("FromRight");
 	}
-	else if(Theta > -135.f && Theta < -45.f)
+	else if(Angle > -135.f && Angle < -45.f)
 	{
 		SectionName = FName("FromLeft");
 	}
-	
-	PlayReactMontage(SectionName);
+
+	return SectionName;
 }
 
 void AEnemy::PlayReactMontage(const FName& SectionName)

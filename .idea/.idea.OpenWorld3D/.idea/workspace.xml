@@ -5,10 +5,20 @@
     <projectFile>Intermediate/ProjectFiles/UE5.vcxproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb6d7063-9927-445b-adfb-566c24c9480a" name="Changes" comment="">
+    <list default="true" id="996e79bc-97ba-4a28-a5c4-70e11334e39a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Crypto/AM_React.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Crypto/AM_React.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/MetaSounds/SFX_Swing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/MetaSounds/SFX_Swing.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Crypto/BP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Crypto/BP_Enemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Attacks/AM_Echo_Attack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Attacks/AM_Echo_Attack.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Architecture/Floor_400x400.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_Chair.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_Chair.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_TableRound.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_TableRound.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Enemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Items/Weapons/Weapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Items/Weapons/Weapon.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +28,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2Mb4IIaRCboeUiGdImkzs5PSwIP" />
+  <component name="ProjectId" id="2McEXiY8cZTVYcfZUc9HcYO7sww" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -155,12 +165,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cb6d7063-9927-445b-adfb-566c24c9480a" name="Changes" comment="" />
-      <created>1678022868539</created>
+      <changelist id="996e79bc-97ba-4a28-a5c4-70e11334e39a" name="Changes" comment="" />
+      <created>1678058512470</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1678022868539</updated>
-      <workItem from="1678022875458" duration="21892000" />
+      <updated>1678058512470</updated>
+      <workItem from="1678058516714" duration="2117000" />
     </task>
     <servers />
   </component>

@@ -31,4 +31,10 @@ private:
 	TObjectPtr<UAnimMontage>ReactMontage;
 
 	void PlayReactMontage(const FName& SectionName);
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<USoundBase> HitSFX;
+
+	double GetAngleFromImpactPoint(FVector ImpactPoint);
+	FName GenerateSectionName(double Angle);
 };

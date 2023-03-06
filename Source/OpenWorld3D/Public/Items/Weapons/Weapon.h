@@ -37,5 +37,7 @@ private:
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType);
+
+	TArray<TObjectPtr<AActor>> ActorsToIgnore;
 };
 

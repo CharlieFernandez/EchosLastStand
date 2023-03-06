@@ -47,9 +47,8 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 {
 	FVector Start = BoxTraceStart->GetComponentLocation();
 	FVector End = BoxTraceEnd->GetComponentLocation();
-
-	TArray<TObjectPtr<AActor>> ActorsToIgnore;
-	ActorsToIgnore.Add(this);
+	
+	ActorsToIgnore.AddUnique(this);
 
 	FHitResult HitResult;
 	
@@ -69,6 +68,8 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
+		ActorsToIgnore.AddUnique(ActorHit);
+		
 		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
 		{
 			HitInterface->GetHit(HitResult.ImpactPoint);
@@ -95,5 +96,6 @@ void AWeapon::SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType)
 	if(BoxComponent)
 	{
 		BoxComponent->SetCollisionEnabled(CollisionType);
+		ActorsToIgnore.Empty();
 	}
 }
