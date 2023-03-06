@@ -64,23 +64,20 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		EDrawDebugTrace::None,
 		HitResult,
 		true
-	);	
+	);
+
+	const FVector ImpactPoint = HitResult.ImpactPoint;
 
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
 		ActorsToIgnore.AddUnique(ActorHit);
 		
 		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
-		{
-			for(AActor* Actor: ActorsToIgnore)
-			{
-				GEngine->AddOnScreenDebugMessage(INDEX_NONE, 2, FColor::Emerald, Actor->GetName());				
-			}
-			
-			HitInterface->GetHit(HitResult.ImpactPoint);
+		{			
+			HitInterface->GetHit(ImpactPoint);
 		}
 
-		CreateFields(HitResult.ImpactPoint);
+		CreateFields(ImpactPoint);
 	}
 }
 
