@@ -72,6 +72,11 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		
 		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
 		{
+			for(AActor* Actor: ActorsToIgnore)
+			{
+				GEngine->AddOnScreenDebugMessage(INDEX_NONE, 2, FColor::Emerald, Actor->GetName());				
+			}
+			
 			HitInterface->GetHit(HitResult.ImpactPoint);
 		}		
 	}
@@ -96,6 +101,10 @@ void AWeapon::SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType)
 	if(BoxComponent)
 	{
 		BoxComponent->SetCollisionEnabled(CollisionType);
-		ActorsToIgnore.Empty();
+
+		if(CollisionType == ECollisionEnabled::NoCollision)
+		{
+			ActorsToIgnore.Empty();
+		}		
 	}
 }
