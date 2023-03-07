@@ -7,7 +7,9 @@
 #include "Interfaces/HitInterface.h"
 #include "BreakableActor.generated.h"
 
+class UCapsuleComponent;
 class UGeometryCollectionComponent;
+class ATreasure;
 
 UCLASS()
 class OPENWORLD3D_API ABreakableActor : public AActor, public IHitInterface
@@ -25,4 +27,10 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere)
     TObjectPtr<UGeometryCollectionComponent> GeometryCollectionComponent;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATreasure> Treasure;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UCapsuleComponent> CapsuleComponent;
 };
