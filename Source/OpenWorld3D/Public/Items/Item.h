@@ -46,6 +46,9 @@ protected:
 
 	EItemState ItemState = EItemState::EIS_Hovering;
 
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<USoundBase> PickUpSound;
+
 private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;
@@ -53,9 +56,6 @@ private:
 	float Amplitude;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
-
-	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USoundBase> PickUpSound;
 
 	UPROPERTY(EditAnywhere)
 	float SpinSpeed = 100;
