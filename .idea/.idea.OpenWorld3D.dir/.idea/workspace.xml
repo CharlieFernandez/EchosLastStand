@@ -5,14 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b689458f-5136-43dc-b2ca-96b43e804e84" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Breakable/BP_Breakable.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Breakable/BP_Breakable.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Weapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Weapon.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Audio/Collapse01.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Audio/Collapse01.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Blueprints/Blueprint_CeilingLight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_Chair.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_Chair.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_TableRound.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/StarterContent/Props/Materials/M_TableRound.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/OpenWorld3D.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/OpenWorld3D.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Breakable/BreakableActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Breakable/BreakableActor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Breakable/BreakableActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Breakable/BreakableActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Enemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Interfaces/HitInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Interfaces/HitInterface.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +110,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1678138386624</updated>
-      <workItem from="1678138389419" duration="2085000" />
+      <workItem from="1678138389419" duration="3998000" />
     </task>
     <servers />
   </component>

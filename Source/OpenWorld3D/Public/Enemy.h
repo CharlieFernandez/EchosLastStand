@@ -20,7 +20,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void EmitParticles(FVector ImpactPoint);
-	virtual void GetHit(const FVector ImpactPoint);
+	virtual void GetHit_Implementation(const FVector ImpactPoint);
 
 protected:
 	virtual void BeginPlay() override;
