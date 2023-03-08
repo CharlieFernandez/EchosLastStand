@@ -7,6 +7,8 @@
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
 
+class UWidgetComponent;
+class UAttributeComponent;
 class UAnimMontage;
 
 UCLASS()
@@ -41,4 +43,10 @@ private:
 
 	double GetAngleFromImpactPoint(FVector ImpactPoint);
 	FName GenerateSectionName(double Angle);
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UAttributeComponent> Attributes;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UWidgetComponent> HealthBarWidget;
 };

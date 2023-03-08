@@ -2,7 +2,10 @@
 
 
 #include "Enemy.h"
+
+#include "Components/AttributeComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/WidgetComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -17,7 +20,10 @@ AEnemy::AEnemy()
 	SkeletalMeshComponent->SetGenerateOverlapEvents(true);
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-	
+
+	Attributes = CreateDefaultSubobject<UAttributeComponent>("Attribute Component");
+	HealthBarWidget = CreateDefaultSubobject<UWidgetComponent>("Health Bar");
+	HealthBarWidget->SetupAttachment(GetRootComponent());
 }
 
 void AEnemy::BeginPlay()
