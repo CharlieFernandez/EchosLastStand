@@ -7,7 +7,7 @@
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
 
-class UWidgetComponent;
+class UHealthBarComponent;
 class UAttributeComponent;
 class UAnimMontage;
 
@@ -48,5 +48,5 @@ private:
 	TObjectPtr<UAttributeComponent> Attributes;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UWidgetComponent> HealthBarWidget;
+	TObjectPtr<UHealthBarComponent> HealthBarWidget;
 };
