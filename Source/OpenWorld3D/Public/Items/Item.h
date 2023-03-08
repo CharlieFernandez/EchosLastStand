@@ -23,12 +23,12 @@ public:
 	FORCEINLINE UStaticMeshComponent* GetStaticMeshComponent() const { return ItemMesh; }
 	FORCEINLINE UMeshComponent* GetMesh() const { return ItemMesh; };
 	FORCEINLINE USoundBase* GetPickUpSound() const { return PickUpSound; }
+	FORCEINLINE EItemState GetItemState() const { return ItemState; }
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	//BlueprintCallable || BlueprintPure
+	
 	UFUNCTION(BlueprintPure)
 	float TransformSine() const { return Amplitude * FMath::Sin(RunningTime * TimeConstant); }
 
@@ -44,7 +44,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* SphereComponent;
 
-	EItemState ItemState = EItemState::EIS_Hovering;
+	UPROPERTY(EditDefaultsOnly)
+	EItemState ItemState;
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<USoundBase> PickUpSound;
@@ -52,11 +53,10 @@ protected:
 private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hover", meta = (AllowPrivateAccess = "true"))
 	float Amplitude;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hover", meta = (AllowPrivateAccess = "true"))
 	float TimeConstant;
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Hover")
 	float SpinSpeed = 100;
 };

@@ -29,7 +29,7 @@ private:
     TObjectPtr<UGeometryCollectionComponent> GeometryCollectionComponent;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ATreasure> Treasure;
+	TArray<TSubclassOf<ATreasure>> Treasures;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCapsuleComponent> CapsuleComponent;

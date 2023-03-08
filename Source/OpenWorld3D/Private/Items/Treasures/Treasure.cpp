@@ -16,8 +16,3 @@ void ATreasure::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 		}
 	}
 }
-
-void ATreasure::Tick(float DeltaTime)
-{
-	
-}

@@ -39,9 +39,28 @@ void ABreakableActor::GetHit_Implementation(const FVector ImpactPoint)
 {
 	if(UWorld* World = GetWorld())
 	{
-		FVector SpawnLocation = GetActorLocation();
-		SpawnLocation.Z = 32.f;
-		World->SpawnActor<ATreasure>(Treasure, SpawnLocation, GetActorRotation());		
+
+		if(const uint32 NumOfTreasures = Treasures.Num())
+		{
+			if(NumOfTreasures > 0)
+			{
+				const int32 IndexSelection = FMath::RandRange(0, NumOfTreasures - 1);
+				const TSubclassOf<ATreasure> TreasureToSpawn = Treasures[IndexSelection];
+				FVector SpawnLocation = GetActorLocation();
+
+				const EItemState ItemState = TreasureToSpawn.GetDefaultObject()->GetItemState();
+				if(ItemState == EItemState::EIS_Hovering)
+				{
+					SpawnLocation.Z += 90.f;
+				}
+				else if(ItemState == EItemState::EIS_Grounded)
+				{
+					SpawnLocation.Z = 32.f;
+				}			
+			
+				World->SpawnActor<ATreasure>(TreasureToSpawn, SpawnLocation, GetActorRotation());
+			}
+		}		
 	}
 
 	GeometryCollectionComponent -> SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
