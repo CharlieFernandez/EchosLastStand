@@ -6,6 +6,7 @@
 #include "Components/SphereComponent.h"
 #include "Interfaces/HitInterface.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "NiagaraComponent.h"
 
 AWeapon::AWeapon()
 {
@@ -88,6 +89,8 @@ void AWeapon::ToggleWeaponState()
 	if(ItemState == EItemState::EIS_Held)
 	{		
 		SphereComponent->SetGenerateOverlapEvents(false);
+		PickUpParticles->Deactivate();
+		ItemMesh->EmptyOverrideMaterials();
 	}
 	else
 	{

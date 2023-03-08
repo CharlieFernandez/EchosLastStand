@@ -9,6 +9,7 @@
 
 class USphereComponent;
 class USoundBase;
+class UNiagaraComponent;
 
 UCLASS()
 class OPENWORLD3D_API AItem : public AActor
@@ -49,6 +50,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<USoundBase> PickUpSound;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UNiagaraComponent> PickUpParticles;
 
 private:
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))

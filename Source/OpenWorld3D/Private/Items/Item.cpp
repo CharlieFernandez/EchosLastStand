@@ -2,8 +2,8 @@
 
 #include "Items/Item.h"
 
+#include "NiagaraComponent.h"
 #include "Characters/OpenWorldCharacter.h"
-#include "OpenWorld3D/DebugMacros.h"
 #include "Components/SphereComponent.h"
 
 // Sets default values
@@ -17,6 +17,9 @@ AItem::AItem(): Amplitude(0.25f), TimeConstant(5.f)
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Comp"));
 	SphereComponent -> SetupAttachment(GetRootComponent());
+
+	PickUpParticles = CreateDefaultSubobject<UNiagaraComponent>("Pick-Up Particles");
+	PickUpParticles->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned
