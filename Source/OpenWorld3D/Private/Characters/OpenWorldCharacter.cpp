@@ -88,6 +88,8 @@ void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMe
 	EquipState = EEquipState::ECS_EquippedOneHandedWeapon;
 	WeaponHeld = Weapon;
 	Weapon->ToggleWeaponState();
+	Weapon->SetOwner(this);
+	Weapon->SetInstigator(this);
 	
 	if(auto const PickUpSound = WeaponHeld->GetPickUpSound())
 	{

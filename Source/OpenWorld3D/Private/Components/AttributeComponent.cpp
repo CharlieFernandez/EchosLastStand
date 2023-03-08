@@ -3,32 +3,27 @@
 
 #include "Components/AttributeComponent.h"
 
-// Sets default values for this component's properties
 UAttributeComponent::UAttributeComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
-
-// Called when the game starts
 void UAttributeComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
 
-
-// Called every frame
 void UAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
+void UAttributeComponent::UpdateHealth(float HealthToAdd)
+{
+	CurrentHealth = FMath::Clamp(CurrentHealth + HealthToAdd, 0, MaxHealth);
+}
+
+float UAttributeComponent::GetCurrentHealthPercent() const
+{
+	return CurrentHealth / MaxHealth;
+}

@@ -7,6 +7,7 @@
 #include "Interfaces/HitInterface.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "NiagaraComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AWeapon::AWeapon()
 {
@@ -76,9 +77,17 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
 		{
 			HitInterface->Execute_GetHit(HitResult.GetActor(), ImpactPoint);
+			
 		}
 
 		CreateFields(ImpactPoint);
+
+		UGameplayStatics::ApplyDamage(ActorHit,
+			Damage,
+			GetInstigator()->GetController(),
+			this,
+			UDamageType::StaticClass()
+		);
 	}
 }
 

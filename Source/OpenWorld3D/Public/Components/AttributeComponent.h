@@ -21,6 +21,10 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth;
 
+	void UpdateHealth(float HealthToAdd);
+
+	float GetCurrentHealthPercent() const;
+
 protected:
 	virtual void BeginPlay() override;
 };

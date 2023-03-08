@@ -42,5 +42,8 @@ private:
 	void SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType);
 
 	TArray<TObjectPtr<AActor>> ActorsToIgnore;
+
+	UPROPERTY(EditDefaultsOnly)
+	float Damage;
 };
 
