@@ -73,14 +73,6 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
 		ActorsToIgnore.AddUnique(ActorHit);
-		
-		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
-		{
-			HitInterface->Execute_GetHit(HitResult.GetActor(), ImpactPoint);
-			
-		}
-
-		CreateFields(ImpactPoint);
 
 		UGameplayStatics::ApplyDamage(ActorHit,
 			Damage,
@@ -88,6 +80,13 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 			this,
 			UDamageType::StaticClass()
 		);
+		
+		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
+		{
+			HitInterface->Execute_GetHit(HitResult.GetActor(), ImpactPoint);			
+		}
+
+		CreateFields(ImpactPoint);
 	}
 }
 
@@ -97,13 +96,13 @@ void AWeapon::ToggleWeaponState()
 
 	if(ItemState == EItemState::EIS_Held)
 	{		
-		SphereComponent->SetGenerateOverlapEvents(false);
+		SphereComponent->SetGenerateOverlapEvents(true);
 		PickUpParticles->Deactivate();
 		ItemMesh->EmptyOverrideMaterials();
 	}
 	else
 	{
-		SphereComponent->SetGenerateOverlapEvents(true);
+		SphereComponent->SetGenerateOverlapEvents(false);
 	}
 }
 

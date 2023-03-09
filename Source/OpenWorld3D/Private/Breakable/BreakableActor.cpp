@@ -39,7 +39,6 @@ void ABreakableActor::GetHit_Implementation(const FVector ImpactPoint)
 {
 	if(UWorld* World = GetWorld())
 	{
-
 		if(const uint32 NumOfTreasures = Treasures.Num())
 		{
 			if(NumOfTreasures > 0)

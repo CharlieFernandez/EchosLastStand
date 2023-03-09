@@ -25,6 +25,9 @@ public:
 
 	float GetCurrentHealthPercent() const;
 
+	UFUNCTION(BlueprintPure)
+	bool IsAlive() const { return CurrentHealth > 0; }
+
 protected:
 	virtual void BeginPlay() override;
 };

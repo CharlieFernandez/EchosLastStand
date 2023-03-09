@@ -3,6 +3,7 @@
 
 #include "Characters/OpenWorldCharacter.h"
 
+#include "Enemy.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -11,6 +12,7 @@
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/SphereComponent.h"
 #include "Items/Weapons/EquipActionState.h"
 #include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"
@@ -30,15 +32,21 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 
 	CharacterMovementComponent -> bOrientRotationToMovement = true;
 	CharacterMovementComponent -> RotationRate = FRotator(0.f, 400.f, 0.f);
+
+	HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
+	HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());
 }
 
 void AOpenWorldCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	HealthRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereBeginOverlap);
+	HealthRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereEndOverlap);
+
 	AnimInstance = GetMesh()->GetAnimInstance();
 
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	if (const APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = PlayerController->GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
@@ -77,6 +85,24 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
 		EnhancedInputComponent -> BindAction(SprintAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::SprintPressed);
 		EnhancedInputComponent -> BindAction(RollAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Roll);
+	}
+}
+
+void AOpenWorldCharacter::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(AEnemy* Enemy = Cast<AEnemy>(OtherActor))
+	{
+		Enemy->ToggleHealth(true);
+	}
+}
+
+void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if(AEnemy* Enemy = Cast<AEnemy>(OtherActor))
+	{
+		Enemy->ToggleHealth(false);
 	}
 }
 

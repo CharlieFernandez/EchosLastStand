@@ -5,7 +5,9 @@
 
 #include "Components/AttributeComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
+#include "HUD/HealthBar.h"
 #include "HUD/HealthBarComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -30,6 +32,8 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ToggleHealth(false);
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -55,17 +59,36 @@ float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEv
 	return DamageAmount;
 }
 
-void AEnemy::GetHit_Implementation(const FVector ImpactPoint)
+void AEnemy::ToggleHealth(bool Toggle)
 {
-	UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
-	EmitParticles(ImpactPoint);
-	
-	const double Angle = GetAngleFromImpactPoint(ImpactPoint);
-	const FName SectionName = GenerateSectionName(Angle);	
-	PlayReactMontage(SectionName);
+	HealthBarComponent->SetVisibility(Toggle);
 }
 
-double AEnemy::GetAngleFromImpactPoint(const FVector ImpactPoint)
+void AEnemy::GetHit_Implementation(const FVector ImpactPoint)
+{
+	if(HitSFX)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
+	}
+	
+	EmitParticles(ImpactPoint);
+
+	if(Attributes)
+	{
+		if(Attributes->IsAlive())
+		{
+			const double Angle = GetAngleFromImpactPoint(ImpactPoint);
+			const FName SectionName = GenerateSectionNameByAngle(Angle);	
+			PlayReactMontage(SectionName);
+		}
+		else
+		{
+			Die();
+		}
+	}
+}
+
+double AEnemy::GetAngleFromImpactPoint(const FVector ImpactPoint) const
 {
 	FVector Forward = GetActorForwardVector();
 	const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
@@ -85,7 +108,7 @@ double AEnemy::GetAngleFromImpactPoint(const FVector ImpactPoint)
 	return Theta;
 }
 
-FName AEnemy::GenerateSectionName(double Angle)
+FName AEnemy::GenerateSectionNameByAngle(double Angle) const
 {
 	FName SectionName = FName("FromBack");
 
@@ -105,7 +128,7 @@ FName AEnemy::GenerateSectionName(double Angle)
 	return SectionName;
 }
 
-void AEnemy::PlayReactMontage(const FName& SectionName)
+void AEnemy::PlayReactMontage(const FName& SectionName) const
 {
 	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
@@ -114,10 +137,18 @@ void AEnemy::PlayReactMontage(const FName& SectionName)
 	}
 }
 
-void AEnemy::EmitParticles(const FVector ImpactPoint)
+void AEnemy::EmitParticles(const FVector ImpactPoint) const
 {
 	if(HitParticles)
 	{
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
 	}
+}
+
+// Death animations are handled on the blueprint side.
+void AEnemy::Die()
+{
+	SetLifeSpan(10.f);
+	ToggleHealth(false);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
