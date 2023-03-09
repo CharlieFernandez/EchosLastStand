@@ -96,13 +96,13 @@ void AWeapon::ToggleWeaponState()
 
 	if(ItemState == EItemState::EIS_Held)
 	{		
-		SphereComponent->SetGenerateOverlapEvents(true);
+		SphereComponent->SetGenerateOverlapEvents(false);
 		PickUpParticles->Deactivate();
 		ItemMesh->EmptyOverrideMaterials();
 	}
 	else
 	{
-		SphereComponent->SetGenerateOverlapEvents(false);
+		SphereComponent->SetGenerateOverlapEvents(true);
 	}
 }
 
