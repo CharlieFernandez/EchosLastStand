@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Characters/CharacterTypes.h"
 #include "Characters/GameCharacter.h"
 #include "GameFramework/Character.h"
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
 
+class UPawnSensingComponent;
 class AAIController;
 class ATargetPoint;
 class USphereComponent;
@@ -39,6 +41,8 @@ protected:
 private:
 	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 
+	EEnemyState State;
+
 	void PlayReactMontage(const FName& SectionName) const;
 
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
@@ -67,6 +71,14 @@ private:
 	UPROPERTY(EditAnywhere, Category = "AI Navigation")
 	float PatrolRadius;
 
-	FTimerHandle TimerHandle;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPawnSensingComponent> PawnSensingComponent;
+
+	UFUNCTION()
+	void OnPawnSeen(APawn* PawnSeen);
+
+	FTimerHandle PatrolTimerHandle;
 	void OnFinishedPatrolTimer();
+
+	
 };

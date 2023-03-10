@@ -14,6 +14,9 @@
 #include "HUD/HealthBarComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Perception/PawnSensingComponent.h"
+#include "Characters/CharacterTypes.h"
+#include "Characters/OpenWorldCharacter.h"
 
 AEnemy::AEnemy()
 {
@@ -35,11 +38,15 @@ AEnemy::AEnemy()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
+
+	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>("Pawn Sensor");
 }
 
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	State = EEnemyState::EES_Patrolling;
 
 	ToggleHealth(false);
 
@@ -52,7 +59,12 @@ void AEnemy::BeginPlay()
 	}
 
 	GenerateNewPatrolTarget();
-	GetWorldTimerManager().SetTimer(TimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 1.f);
+	GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 1.f);
+
+	if(PawnSensingComponent)
+	{
+		PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemy::OnPawnSeen);
+	}
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -62,7 +74,7 @@ void AEnemy::Tick(float DeltaTime)
 	if(PatrolTarget && MyUtilities::InTargetRange(PatrolRadius, this, PatrolTarget))
 	{
 		GenerateNewPatrolTarget();
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 3.f);
+		GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 3.f);
 	}
 }
 
@@ -70,6 +82,19 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AEnemy::OnPawnSeen(APawn* PawnSeen)
+{
+	if(State > EEnemyState::EES_Patrolling) return;
+	
+	if(PawnSeen->ActorHasTag(AOpenWorldCharacter::GetPlayerTag()))
+	{
+		State = EEnemyState::EES_Chasing;
+		GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
+		GetCharacterMovement()->MaxWalkSpeed = MaxRunSpeed;
+		SetNewMoveToTarget(PawnSeen);
+	}
 }
 
 float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
@@ -197,6 +222,7 @@ void AEnemy::EmitHitParticles(const FVector ImpactPoint) const
 // Death animations are handled on the blueprint side.
 void AEnemy::Die()
 {
+	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
 	SetLifeSpan(10.f);
 	ToggleHealth(false);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -204,7 +230,7 @@ void AEnemy::Die()
 
 void AEnemy::OnFinishedPatrolTimer()
 {
-	if(PatrolTargets.Num() > 0 && AIController)
+	if(AIController)
 	{		
 		SetNewMoveToTarget(PatrolTarget);
 	}

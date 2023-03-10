@@ -37,6 +37,8 @@ public:
 	// Getter/Setter Methods
 	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
 	FORCEINLINE void SetOverlappingItem(AItem* Item){ OverlappedItem = Item; }
+
+	static FORCEINLINE FName GetPlayerTag() { return PlayerTag; }
 	
 protected:
 	// Input Mapping Contexts	
@@ -72,6 +74,8 @@ protected:
 
 
 private:
+	inline static const FName PlayerTag = FName("Player");
+	
 	// Pointers
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* HealthRadiusSphereComponent;
@@ -109,12 +113,6 @@ private:
 	EActionState ActionState = EActionState::EAS_Unoccupied;
 
 	// Character Movement Speeds
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float MaxWalkSpeed;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float MaxRunSpeed;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxSprintSpeed;
 

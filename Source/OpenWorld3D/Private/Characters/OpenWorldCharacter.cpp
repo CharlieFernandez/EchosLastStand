@@ -41,6 +41,8 @@ void AOpenWorldCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Tags.Add(PlayerTag);
+
 	HealthRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereBeginOverlap);
 	HealthRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereEndOverlap);
 
