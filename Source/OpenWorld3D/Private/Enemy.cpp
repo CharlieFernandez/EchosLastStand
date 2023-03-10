@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "HUD/HealthBar.h"
 #include "HUD/HealthBarComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -27,6 +28,11 @@ AEnemy::AEnemy()
 	Attributes = CreateDefaultSubobject<UAttributeComponent>("Attribute Component");
 	HealthBarComponent = CreateDefaultSubobject<UHealthBarComponent>("Health Bar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationRoll = false;
+	bUseControllerRotationYaw = false;
 }
 
 void AEnemy::BeginPlay()
