@@ -3,6 +3,8 @@
 
 #include "Enemy.h"
 
+#include "AIController.h"
+#include "MyUtilities.h"
 #include "Components/AttributeComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
@@ -40,12 +42,28 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 
 	ToggleHealth(false);
+
+	AIController = Cast<AAIController>(GetController());
+
+	for(auto const Target: PatrolTargets)
+	{
+		FVector Location = Target->GetActorLocation();
+		DrawDebugSphere(GetWorld(), Location, 12.f, 12, FColor::Cyan, true, -1.f);
+	}
+
+	GenerateNewPatrolTarget();
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 1.f);
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(PatrolTarget && MyUtilities::InTargetRange(PatrolRadius, this, PatrolTarget))
+	{
+		GenerateNewPatrolTarget();
+		GetWorldTimerManager().SetTimer(TimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 3.f);
+	}
 }
 
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -65,6 +83,31 @@ float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEv
 	return DamageAmount;
 }
 
+void AEnemy::GenerateNewPatrolTarget()
+{
+	TObjectPtr<AActor> NewTarget;
+	
+	do
+	{
+		const uint8 TargetIndex = FMath::RandRange(0, PatrolTargets.Num() - 1);
+		NewTarget = PatrolTargets[TargetIndex];		
+	} while(&PatrolTarget == &NewTarget);
+
+	PatrolTarget = NewTarget;
+}
+
+void AEnemy::SetNewMoveToTarget(TObjectPtr<AActor> Target) const
+{
+	if(AIController && Target)
+	{
+		FAIMoveRequest MoveRequest;
+		MoveRequest.SetGoalActor(Target);
+		MoveRequest.SetAcceptanceRadius(15.f);
+		FNavPathSharedPtr NavPathSharedPtr;
+		AIController->MoveTo(MoveRequest);
+	}
+}
+
 void AEnemy::ToggleHealth(bool Toggle)
 {
 	HealthBarComponent->SetVisibility(Toggle);
@@ -77,7 +120,7 @@ void AEnemy::GetHit_Implementation(const FVector ImpactPoint)
 		UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
 	}
 	
-	EmitParticles(ImpactPoint);
+	EmitHitParticles(ImpactPoint);
 
 	if(Attributes)
 	{
@@ -143,7 +186,7 @@ void AEnemy::PlayReactMontage(const FName& SectionName) const
 	}
 }
 
-void AEnemy::EmitParticles(const FVector ImpactPoint) const
+void AEnemy::EmitHitParticles(const FVector ImpactPoint) const
 {
 	if(HitParticles)
 	{
@@ -157,4 +200,12 @@ void AEnemy::Die()
 	SetLifeSpan(10.f);
 	ToggleHealth(false);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void AEnemy::OnFinishedPatrolTimer()
+{
+	if(PatrolTargets.Num() > 0 && AIController)
+	{		
+		SetNewMoveToTarget(PatrolTarget);
+	}
 }

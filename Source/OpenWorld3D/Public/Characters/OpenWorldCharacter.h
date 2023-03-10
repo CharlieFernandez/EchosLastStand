@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameCharacter.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
 #include "Items/Item.h"
@@ -23,7 +24,7 @@ class AWeapon;
 class UAnimInstance;
 
 UCLASS()
-class OPENWORLD3D_API AOpenWorldCharacter : public ACharacter
+class OPENWORLD3D_API AOpenWorldCharacter : public AGameCharacter
 {
 	GENERATED_BODY()
 
