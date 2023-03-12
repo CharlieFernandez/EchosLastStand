@@ -8,9 +8,7 @@
 #include "Components/AttributeComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
-#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "HUD/HealthBar.h"
 #include "HUD/HealthBarComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -18,6 +16,7 @@
 #include "Characters/CharacterTypes.h"
 #include "Characters/OpenWorldCharacter.h"
 
+// Default Methods
 AEnemy::AEnemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -47,17 +46,9 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 
 	State = EEnemyState::EES_Patrolling;
-
 	ToggleHealth(false);
-
 	AIController = Cast<AAIController>(GetController());
-
-	for(auto const Target: PatrolTargets)
-	{
-		FVector Location = Target->GetActorLocation();
-		DrawDebugSphere(GetWorld(), Location, 12.f, 12, FColor::Cyan, true, -1.f);
-	}
-
+	DrawAllWaypoints();
 	GenerateNewPatrolTarget();
 	GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 1.f);
 
@@ -71,11 +62,14 @@ void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(PatrolTarget && MyUtilities::InTargetRange(PatrolRadius, this, PatrolTarget))
+	if(State > EEnemyState::EES_Patrolling)
 	{
-		GenerateNewPatrolTarget();
-		GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 3.f);
+		CheckCombatTarget();
 	}
+	else
+	{
+		CheckPatrolTarget();
+	}	
 }
 
 void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -84,16 +78,47 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+// Event & Callback Methods
 void AEnemy::OnPawnSeen(APawn* PawnSeen)
 {
 	if(State > EEnemyState::EES_Patrolling) return;
 	
 	if(PawnSeen->ActorHasTag(AOpenWorldCharacter::GetPlayerTag()))
 	{
-		State = EEnemyState::EES_Chasing;
-		GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
-		GetCharacterMovement()->MaxWalkSpeed = MaxRunSpeed;
-		SetNewMoveToTarget(PawnSeen);
+		SetStateToChasing(PawnSeen);
+	}
+}
+
+void AEnemy::OnFinishedPatrolTimer() const
+{
+	if(AIController)
+	{		
+		SetNewMoveToTarget(PatrolTarget);
+	}
+}
+
+// Override Methods
+void AEnemy::GetHit_Implementation(const FVector ImpactPoint)
+{
+	if(HitSFX)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
+	}
+	
+	EmitHitParticles(ImpactPoint);
+
+	if(Attributes)
+	{
+		if(Attributes->IsAlive())
+		{
+			const double Angle = GetAngleFromImpactPoint(ImpactPoint);
+			const FName SectionName = GenerateSectionNameByAngle(Angle);	
+			PlayReactMontage(SectionName);
+		}
+		else
+		{
+			Die();
+		}
 	}
 }
 
@@ -105,7 +130,55 @@ float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEv
 		HealthBarComponent->SetHealthPercentage(Attributes->GetCurrentHealthPercent());
 	}
 
+	SetStateToChasing(EventInstigator->GetPawn());
+
 	return DamageAmount;
+}
+
+// AI
+void AEnemy::SetStateToChasing(AActor* PawnToChase)
+{
+	CombatTarget = PawnToChase;
+	State = EEnemyState::EES_Chasing;
+	GetCharacterMovement()->MaxWalkSpeed = MaxRunSpeed;
+	SetNewMoveToTarget(PawnToChase);
+	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
+}
+
+void AEnemy::SetStateToPatrolling()
+{
+	CombatTarget = nullptr;
+	SetNewMoveToTarget(PatrolTarget);
+	State = EEnemyState::EES_Patrolling;
+	GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
+}
+
+void AEnemy::CheckCombatTarget()
+{
+	if(!MyUtilities::InTargetRange(ChasingDistance, this, CombatTarget))
+	{
+		SetStateToPatrolling();
+	}
+	else if(!MyUtilities::InTargetRange(AttackDistance, this, CombatTarget) && State != EEnemyState::EES_Chasing)
+	{
+		SetStateToChasing(CombatTarget);
+	}
+	else if(CombatTarget)
+	{
+		if(MyUtilities::InTargetRange(AttackDistance, this, CombatTarget) && State != EEnemyState::EES_Attacking)
+		{
+			State = EEnemyState::EES_Attacking;
+		}	
+	}
+}
+
+void AEnemy::CheckPatrolTarget()
+{
+	if(PatrolTarget && MyUtilities::InTargetRange(DistanceToGoalRadius, this, PatrolTarget))
+	{
+		GenerateNewPatrolTarget();
+		GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 3.f);
+	}
 }
 
 void AEnemy::GenerateNewPatrolTarget()
@@ -133,56 +206,42 @@ void AEnemy::SetNewMoveToTarget(TObjectPtr<AActor> Target) const
 	}
 }
 
-void AEnemy::ToggleHealth(bool Toggle)
+// Health
+void AEnemy::ToggleHealth(bool Toggle) const
 {
 	HealthBarComponent->SetVisibility(Toggle);
 }
 
-void AEnemy::GetHit_Implementation(const FVector ImpactPoint)
+// Animation
+void AEnemy::PlayReactMontage(const FName& SectionName) const
 {
-	if(HitSFX)
+	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
-		UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
-	}
-	
-	EmitHitParticles(ImpactPoint);
-
-	if(Attributes)
-	{
-		if(Attributes->IsAlive())
-		{
-			const double Angle = GetAngleFromImpactPoint(ImpactPoint);
-			const FName SectionName = GenerateSectionNameByAngle(Angle);	
-			PlayReactMontage(SectionName);
-		}
-		else
-		{
-			Die();
-		}
+		AnimInstance->Montage_Play(ReactMontage);
+		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
 	}
 }
 
-double AEnemy::GetAngleFromImpactPoint(const FVector ImpactPoint) const
+void AEnemy::EmitHitParticles(const FVector ImpactPoint) const
 {
-	FVector Forward = GetActorForwardVector();
-	const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
-	FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
-	
-	double CosTheta = FVector::DotProduct(Forward, DirectionOfHit);
-	double Theta = FMath::Acos(CosTheta);
-	Theta = FMath::RadiansToDegrees(Theta);
-
-	const FVector CrossProduct = FVector::CrossProduct(Forward, DirectionOfHit);
-
-	if(CrossProduct.Z < 0)
+	if(HitParticles)
 	{
-		Theta *= -1;
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
 	}
-
-	return Theta;
 }
 
-FName AEnemy::GenerateSectionNameByAngle(double Angle) const
+// Core
+/* Death animations are handled on the blueprint side.*/
+void AEnemy::Die()
+{
+	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
+	SetLifeSpan(10.f);
+	ToggleHealth(false);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+// Helper Methods
+FName AEnemy::GenerateSectionNameByAngle(double Angle)
 {
 	FName SectionName = FName("FromBack");
 
@@ -202,36 +261,31 @@ FName AEnemy::GenerateSectionNameByAngle(double Angle) const
 	return SectionName;
 }
 
-void AEnemy::PlayReactMontage(const FName& SectionName) const
+double AEnemy::GetAngleFromImpactPoint(const FVector ImpactPoint) const
 {
-	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+	const FVector Forward = GetActorForwardVector();
+	const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
+	const FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
+	
+	const double CosTheta = FVector::DotProduct(Forward, DirectionOfHit);
+	double Theta = FMath::Acos(CosTheta);
+	Theta = FMath::RadiansToDegrees(Theta);
+
+	const FVector CrossProduct = FVector::CrossProduct(Forward, DirectionOfHit);
+
+	if(CrossProduct.Z < 0)
 	{
-		AnimInstance->Montage_Play(ReactMontage);
-		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
+		Theta *= -1;
 	}
+
+	return Theta;
 }
 
-void AEnemy::EmitHitParticles(const FVector ImpactPoint) const
+void AEnemy::DrawAllWaypoints()
 {
-	if(HitParticles)
+	for(auto const Target: PatrolTargets)
 	{
-		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
-	}
-}
-
-// Death animations are handled on the blueprint side.
-void AEnemy::Die()
-{
-	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
-	SetLifeSpan(10.f);
-	ToggleHealth(false);
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-}
-
-void AEnemy::OnFinishedPatrolTimer()
-{
-	if(AIController)
-	{		
-		SetNewMoveToTarget(PatrolTarget);
+		FVector Location = Target->GetActorLocation();
+		DrawDebugSphere(GetWorld(), Location, 12.f, 12, FColor::Emerald, true, -1.f);
 	}
 }

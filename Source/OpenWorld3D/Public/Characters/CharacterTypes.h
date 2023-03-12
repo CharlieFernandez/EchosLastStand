@@ -18,6 +18,7 @@ enum class EActionState: uint8
 	EAS_Rolling UMETA(DisplayName = "Rolling")
 };
 
+UENUM()
 enum class EEnemyState: uint8
 {
 	EES_Patrolling UMETA(DisplayName = "Patrolling"),
