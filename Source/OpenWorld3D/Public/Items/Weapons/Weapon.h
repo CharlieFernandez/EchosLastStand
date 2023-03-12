@@ -48,5 +48,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float Damage;
+
+	FTimerHandle WeaponHitPauseTimer;
+
+	void SlightPause();
 };
 

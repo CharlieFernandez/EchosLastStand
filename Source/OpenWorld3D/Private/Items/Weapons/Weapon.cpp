@@ -75,8 +75,11 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		ActorsToIgnore.AddUnique(ActorHit);
 
 		if(HitSFX && Cast<APawn>(ActorHit))
-		{			
+		{
 			UGameplayStatics::PlaySoundAtLocation(this, HitSFX, ImpactPoint, GetActorRotation());
+
+			UGameplayStatics::SetGlobalTimeDilation(this, 0.01f);
+			GetWorldTimerManager().SetTimer(WeaponHitPauseTimer, this, &AWeapon::SlightPause, 0.001f);
 		}
 
 		UGameplayStatics::ApplyDamage(ActorHit,
@@ -122,4 +125,9 @@ void AWeapon::SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType)
 			ActorsToIgnore.Empty();
 		}		
 	}
+}
+
+void AWeapon::SlightPause()
+{
+	UGameplayStatics::SetGlobalTimeDilation(this, 1.f);
 }
