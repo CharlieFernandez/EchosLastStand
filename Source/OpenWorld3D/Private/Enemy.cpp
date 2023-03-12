@@ -99,12 +99,7 @@ void AEnemy::OnFinishedPatrolTimer() const
 
 // Override Methods
 void AEnemy::GetHit_Implementation(const FVector ImpactPoint)
-{
-	if(HitSFX)
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, HitSFX, GetActorLocation(), GetActorRotation());
-	}
-	
+{	
 	EmitHitParticles(ImpactPoint);
 
 	if(Attributes)
@@ -286,6 +281,6 @@ void AEnemy::DrawAllWaypoints()
 	for(auto const Target: PatrolTargets)
 	{
 		FVector Location = Target->GetActorLocation();
-		DrawDebugSphere(GetWorld(), Location, 12.f, 12, FColor::Emerald, true, -1.f);
+		// DrawDebugSphere(GetWorld(), Location, 12.f, 12, FColor::Emerald, true, -1.f);
 	}
 }

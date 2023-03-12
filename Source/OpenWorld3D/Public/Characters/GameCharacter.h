@@ -20,9 +20,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Visual Effects")
 	TObjectPtr<UParticleSystem> HitParticles;
 
-	UPROPERTY(EditDefaultsOnly, Category = Sounds)
-	TObjectPtr<USoundBase> HitSFX;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxWalkSpeed;
 

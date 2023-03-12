@@ -58,7 +58,7 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 		this,
 		Start,
 		End,
-		FVector(5.f, 5.f, 5.f),
+		FVector(BoxComponent->GetUnscaledBoxExtent() / 2),
 		BoxTraceStart->GetComponentRotation(),
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
@@ -73,6 +73,11 @@ void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
 		ActorsToIgnore.AddUnique(ActorHit);
+
+		if(HitSFX && Cast<APawn>(ActorHit))
+		{			
+			UGameplayStatics::PlaySoundAtLocation(this, HitSFX, ImpactPoint, GetActorRotation());
+		}
 
 		UGameplayStatics::ApplyDamage(ActorHit,
 			Damage,

@@ -27,6 +27,9 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void CreateFields(const FVector& FieldLocation);
+
+	UPROPERTY(EditDefaultsOnly, Category = Sounds)
+	TObjectPtr<USoundBase> HitSFX;
 	
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
