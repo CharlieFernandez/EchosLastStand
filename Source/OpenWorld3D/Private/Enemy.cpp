@@ -193,14 +193,18 @@ void AEnemy::Die()
 void AEnemy::GenerateNewPatrolTarget()
 {
 	TObjectPtr<AActor> NewTarget;
-	
-	do
-	{
-		const uint8 TargetIndex = FMath::RandRange(0, PatrolTargets.Num() - 1);
-		NewTarget = PatrolTargets[TargetIndex];		
-	} while(&PatrolTarget == &NewTarget);
 
-	PatrolTarget = NewTarget;
+	const uint8 NumOfPatrolTargets = PatrolTargets.Num();
+	if(NumOfPatrolTargets > 0)
+	{
+		do
+		{
+			const uint8 TargetIndex = FMath::RandRange(0, PatrolTargets.Num() - 1);
+			NewTarget = PatrolTargets[TargetIndex];		
+		} while(&PatrolTarget == &NewTarget);
+
+		PatrolTarget = NewTarget;
+	}
 }
 
 void AEnemy::SetNewMoveToTarget(TObjectPtr<AActor> Target) const
