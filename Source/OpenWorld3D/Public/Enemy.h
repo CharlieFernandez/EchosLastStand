@@ -18,96 +18,69 @@ class UAttributeComponent;
 class UAnimMontage;
 
 UCLASS()
-class OPENWORLD3D_API AEnemy : public AGameCharacter, public IHitInterface
+class OPENWORLD3D_API AEnemy : public AGameCharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Default Methods
+	/* Methods */
 	AEnemy();
-	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	// Override Methods
-	virtual void GetHit_Implementation(const FVector ImpactPoint) override;
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
-
-	// Health Methods
-	void ToggleHealth(bool Toggle) const;
-
-	// Helper Methods
-	void EmitHitParticles(FVector ImpactPoint) const;
 	void DrawAllWaypoints();
+	void ToggleHealth(bool Toggle) const;	
+	virtual void Tick(float DeltaTime) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;	
 
 protected:
-	// Default Methods
-	virtual void BeginPlay() override;
-
-	// AI Navigation
+	/* Methods */
 	void GenerateNewPatrolTarget();
+	virtual void BeginPlay() override;
 	void SetNewMoveToTarget(TObjectPtr<AActor> Target) const;
 
 private:
-	// Main Variables
-	UPROPERTY(VisibleInstanceOnly)
-	EEnemyState State;
-	
-	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
-
-	// Core Methods
-	void Die();
-	
-	// AI Navigation: Variables
+	/* Fields */
 	FTimerHandle PatrolTimerHandle;
-	
-	UPROPERTY()
-	TObjectPtr<AAIController> AIController;
-	
-	UPROPERTY(VisibleInstanceOnly)
-	TObjectPtr<AActor> PatrolTarget;
-	
-	UPROPERTY(EditInstanceOnly, Category = "AI Navigation")
-	TArray<TObjectPtr<AActor>> PatrolTargets;
 
-	UPROPERTY(EditAnywhere, Category = "AI Navigation")
-	float DistanceToGoalRadius;
-
-	UPROPERTY(VisibleInstanceOnly)
-	TObjectPtr<AActor> CombatTarget;
-
-	UPROPERTY(EditDefaultsOnly)
-	float ChasingDistance;
-
-	UPROPERTY(EditDefaultsOnly)
-	float AttackDistance;
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UPawnSensingComponent> PawnSensingComponent;
-
-	// AI Navigation: Methods
+	/* Methods */
 	void SetStateToChasing(AActor* PawnToChase);
 	void SetStateToPatrolling();
 	void CheckPatrolTarget();
 	void CheckCombatTarget();
-	
-	UFUNCTION()
-	void OnPawnSeen(APawn* PawnSeen);
 	void OnFinishedPatrolTimer() const;
+	virtual void Die() override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
-	// Health 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAttributeComponent> Attributes;
+	/* Properties */	
+	UPROPERTY()
+	TObjectPtr<AAIController> AIController;
+
+	UPROPERTY(VisibleInstanceOnly)
+	EEnemyState State;	
+	
+	UPROPERTY(VisibleInstanceOnly)
+	TObjectPtr<AActor> PatrolTarget;
+	
+	UPROPERTY(EditAnywhere, Category = "AI Navigation")
+	float DistanceToGoalRadius;
+
+	UPROPERTY(EditInstanceOnly, Category = "AI Navigation")
+	TArray<TObjectPtr<AActor>> PatrolTargets;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UPawnSensingComponent> PawnSensingComponent;
+	
+	UPROPERTY(EditDefaultsOnly)
+	float AttackDistance;
+	
+	UPROPERTY(EditDefaultsOnly)
+	float ChasingDistance;
+	
+	UPROPERTY(VisibleInstanceOnly)
+	TObjectPtr<AActor> CombatTarget;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UHealthBarComponent> HealthBarComponent;
 
-	// Montages
-	void PlayReactMontage(const FName& SectionName) const;
-	
-	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	TObjectPtr<UAnimMontage>ReactMontage;
-
-	// Helper Methods
-	double GetAngleFromImpactPoint(FVector ImpactPoint) const;	
-	static FName GenerateSectionNameByAngle(double Angle);
+	/* Functions */
+	UFUNCTION()
+	void OnPawnSeen(APawn* PawnSeen);
 };

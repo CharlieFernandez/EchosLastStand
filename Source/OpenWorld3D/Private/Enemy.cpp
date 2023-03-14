@@ -16,12 +16,11 @@
 #include "Characters/CharacterTypes.h"
 #include "Characters/OpenWorldCharacter.h"
 
-// Default Methods
+/* Core Methods */
 AEnemy::AEnemy()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	SkeletalMeshComponent = GetMesh();
+	
 	SkeletalMeshComponent->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	SkeletalMeshComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	SkeletalMeshComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
@@ -78,7 +77,6 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-// Event & Callback Methods
 void AEnemy::OnPawnSeen(APawn* PawnSeen)
 {
 	if(State > EEnemyState::EES_Patrolling) return;
@@ -97,28 +95,10 @@ void AEnemy::OnFinishedPatrolTimer() const
 	}
 }
 
-// Override Methods
-void AEnemy::GetHit_Implementation(const FVector ImpactPoint)
-{	
-	EmitHitParticles(ImpactPoint);
-
-	if(Attributes)
-	{
-		if(Attributes->IsAlive())
-		{
-			const double Angle = GetAngleFromImpactPoint(ImpactPoint);
-			const FName SectionName = GenerateSectionNameByAngle(Angle);	
-			PlayReactMontage(SectionName);
-		}
-		else
-		{
-			Die();
-		}
-	}
-}
-
 float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
+	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	
 	if(Attributes && HealthBarComponent)
 	{
 		Attributes->UpdateHealth(-DamageAmount);
@@ -130,12 +110,11 @@ float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEv
 	return DamageAmount;
 }
 
-// AI
 void AEnemy::SetStateToChasing(AActor* PawnToChase)
 {
 	CombatTarget = PawnToChase;
 	State = EEnemyState::EES_Chasing;
-	GetCharacterMovement()->MaxWalkSpeed = MaxRunSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = GetMaxRunSpeed();
 	SetNewMoveToTarget(PawnToChase);
 	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
 }
@@ -145,7 +124,7 @@ void AEnemy::SetStateToPatrolling()
 	CombatTarget = nullptr;
 	SetNewMoveToTarget(PatrolTarget);
 	State = EEnemyState::EES_Patrolling;
-	GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
+	GetCharacterMovement()->MaxWalkSpeed = GetMaxWalkSpeed();
 }
 
 void AEnemy::CheckCombatTarget()
@@ -176,6 +155,41 @@ void AEnemy::CheckPatrolTarget()
 	}
 }
 
+void AEnemy::ToggleHealth(bool Toggle) const
+{
+	HealthBarComponent->SetVisibility(Toggle);
+}
+
+void AGameCharacter::PlayReactMontage(const FName& SectionName) const
+{	
+	if(AnimInstance)
+	{
+		AnimInstance->Montage_Play(ReactMontage);
+		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
+	}
+}
+
+void AGameCharacter::EmitHitParticles(const FVector ImpactPoint) const
+{
+	if(HitParticles)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
+	}
+}
+
+void AEnemy::Die()
+{
+	// Death animations are handled on the blueprint side.
+	
+	Super::Die();
+	
+	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
+	SetLifeSpan(10.f);
+	ToggleHealth(false);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+/* Helper Methods */
 void AEnemy::GenerateNewPatrolTarget()
 {
 	TObjectPtr<AActor> NewTarget;
@@ -201,42 +215,7 @@ void AEnemy::SetNewMoveToTarget(TObjectPtr<AActor> Target) const
 	}
 }
 
-// Health
-void AEnemy::ToggleHealth(bool Toggle) const
-{
-	HealthBarComponent->SetVisibility(Toggle);
-}
-
-// Animation
-void AEnemy::PlayReactMontage(const FName& SectionName) const
-{
-	if(AnimInstance)
-	{
-		AnimInstance->Montage_Play(ReactMontage);
-		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
-	}
-}
-
-void AEnemy::EmitHitParticles(const FVector ImpactPoint) const
-{
-	if(HitParticles)
-	{
-		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
-	}
-}
-
-// Core
-/* Death animations are handled on the blueprint side.*/
-void AEnemy::Die()
-{
-	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
-	SetLifeSpan(10.f);
-	ToggleHealth(false);
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-}
-
-// Helper Methods
-FName AEnemy::GenerateSectionNameByAngle(double Angle)
+FName AGameCharacter::GenerateSectionNameByAngle(double Angle)
 {
 	FName SectionName = FName("FromBack");
 
@@ -256,7 +235,7 @@ FName AEnemy::GenerateSectionNameByAngle(double Angle)
 	return SectionName;
 }
 
-double AEnemy::GetAngleFromImpactPoint(const FVector ImpactPoint) const
+double AGameCharacter::GetAngleFromImpactPoint(const FVector ImpactPoint) const
 {
 	const FVector Forward = GetActorForwardVector();
 	const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
@@ -281,6 +260,6 @@ void AEnemy::DrawAllWaypoints()
 	for(auto const Target: PatrolTargets)
 	{
 		FVector Location = Target->GetActorLocation();
-		// DrawDebugSphere(GetWorld(), Location, 12.f, 12, FColor::Emerald, true, -1.f);
+		DrawDebugSphere(GetWorld(), Location, 12.f, 12, FColor::Emerald, true, -1.f);
 	}
 }
