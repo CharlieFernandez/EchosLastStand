@@ -54,7 +54,7 @@ void AEnemy::BeginPlay()
 
 	if(PawnSensingComponent)
 	{
-		PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemy::OnPawnSeen);
+		// PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemy::OnPawnSeen);
 	}
 }
 
@@ -210,7 +210,7 @@ void AEnemy::ToggleHealth(bool Toggle) const
 // Animation
 void AEnemy::PlayReactMontage(const FName& SectionName) const
 {
-	if(UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
+	if(AnimInstance)
 	{
 		AnimInstance->Montage_Play(ReactMontage);
 		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);

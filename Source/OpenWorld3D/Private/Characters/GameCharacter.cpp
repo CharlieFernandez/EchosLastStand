@@ -12,7 +12,8 @@ AGameCharacter::AGameCharacter()
 void AGameCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	AnimInstance = GetMesh()->GetAnimInstance();
 }
 
 void AGameCharacter::Tick(float DeltaTime)

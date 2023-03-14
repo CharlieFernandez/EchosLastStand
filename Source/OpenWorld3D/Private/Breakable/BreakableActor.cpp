@@ -64,4 +64,3 @@ void ABreakableActor::GetHit_Implementation(const FVector ImpactPoint)
 
 	GeometryCollectionComponent -> SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
-

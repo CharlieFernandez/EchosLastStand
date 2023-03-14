@@ -101,8 +101,6 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage> RollMontage;
 
-	TObjectPtr<UAnimInstance> AnimInstance;
-
 	TObjectPtr<UCharacterMovementComponent> CharacterMovementComponent;
 	
 	// States

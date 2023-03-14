@@ -23,6 +23,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxWalkSpeed;
 
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UAnimInstance> AnimInstance;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxRunSpeed;
 

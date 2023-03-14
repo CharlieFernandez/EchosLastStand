@@ -7,7 +7,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Animation/AnimMontage.h"
 
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
@@ -45,8 +44,6 @@ void AOpenWorldCharacter::BeginPlay()
 
 	HealthRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereBeginOverlap);
 	HealthRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereEndOverlap);
-
-	AnimInstance = GetMesh()->GetAnimInstance();
 
 	if (const APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -113,7 +110,7 @@ void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMe
 {
 	AttachMeshToSocket(WeaponMesh, SN);
 	
-	EquipState = EEquipState::ECS_EquippedOneHandedWeapon;
+	EquipState = EEquipState::ECS_Equipped;
 	WeaponHeld = Weapon;
 	Weapon->ToggleWeaponState();
 	Weapon->SetOwner(this);
@@ -170,7 +167,7 @@ void AOpenWorldCharacter::EKeyPressed()
 			else if(CanEquip())
 			{
 				PlayEquipMontage(EEquipActionState::EEAS_Equip);
-				EquipState = EEquipState::ECS_EquippedOneHandedWeapon;
+				EquipState = EEquipState::ECS_Equipped;
 			}
 
 			ActionState = EActionState::EAS_Equipping;

@@ -19,7 +19,7 @@ class OPENWORLD3D_API ABreakableActor : public AActor, public IHitInterface
 public:	
 	ABreakableActor();
 	virtual void Tick(float DeltaTime) override;
-	virtual void GetHit_Implementation(const FVector ImpactPoint) override; 
+	virtual void GetHit_Implementation(const FVector ImpactPoint) override;
 
 protected:
 	virtual void BeginPlay() override;

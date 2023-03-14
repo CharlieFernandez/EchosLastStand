@@ -2,34 +2,45 @@
 
 #include "Items/Weapons/Weapon.h"
 #include "Characters/OpenWorldCharacter.h"
-#include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
-#include "Interfaces/HitInterface.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "NiagaraComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AWeapon::AWeapon()
 {
-	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Hit Box"));
-	BoxComponent->SetupAttachment(GetRootComponent());
+	// BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Hit Box"));
+	// BoxComponent->SetupAttachment(GetRootComponent());
+	//
+	// BoxComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	// BoxComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+	// BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 
-	BoxComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	BoxComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
-	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+	// BoxTraceStart = CreateDefaultSubobject<USceneComponent>(TEXT("Start Component"));
+	// BoxTraceStart->SetupAttachment(GetRootComponent());
+	//
+	// BoxTraceEnd = CreateDefaultSubobject<USceneComponent>(TEXT("End Component"));
+	// BoxTraceEnd->SetupAttachment(GetRootComponent());
 
-	BoxTraceStart = CreateDefaultSubobject<USceneComponent>(TEXT("Start Component"));
-	BoxTraceStart->SetupAttachment(GetRootComponent());
-	
-	BoxTraceEnd = CreateDefaultSubobject<USceneComponent>(TEXT("End Component"));
-	BoxTraceEnd->SetupAttachment(GetRootComponent());
+	DamageDealerComponent = CreateDefaultSubobject<UDamageDealer>(TEXT("Damage Dealer Cmpt"));
 }
 
 void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 
-	BoxComponent->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnBoxBeginOverlap);
+	for(UPrimitiveComponent* HitBox: AllHitBoxes)
+	{
+		HitBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		HitBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+		HitBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);	
+	}
+
+	Damage = CurrentlyAllDamage;
+	for(UPrimitiveComponent* PrimitiveComponent: AllHitBoxes)
+	{
+		PrimitiveComponent->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnBoxBeginOverlap);
+	}
 }
 
 void AWeapon::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -46,56 +57,14 @@ void AWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 
 void AWeapon::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	FVector Start = BoxTraceStart->GetComponentLocation();
-	FVector End = BoxTraceEnd->GetComponentLocation();
-	
-	ActorsToIgnore.AddUnique(this);
-
-	FHitResult HitResult;
-	
-	UKismetSystemLibrary::BoxTraceSingle(
-		this,
-		Start,
-		End,
-		FVector(BoxComponent->GetUnscaledBoxExtent() / 2),
-		BoxTraceStart->GetComponentRotation(),
-		ETraceTypeQuery::TraceTypeQuery1,
-		false,
-		ActorsToIgnore,
-		EDrawDebugTrace::None,
-		HitResult,
-		true
+{	
+	DamageDealerComponent -> DealDamage(
+		OverlappedComponent,
+		OverlappedComponent->GetChildComponent(0)->GetComponentLocation(),
+		OverlappedComponent->GetChildComponent(1)->GetComponentLocation(),
+		Damage,
+		HitSFX
 	);
-
-	const FVector ImpactPoint = HitResult.ImpactPoint;
-
-	if(AActor* ActorHit = HitResult.GetActor())
-	{
-		ActorsToIgnore.AddUnique(ActorHit);
-
-		if(HitSFX && Cast<APawn>(ActorHit))
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, HitSFX, ImpactPoint, GetActorRotation());
-
-			UGameplayStatics::SetGlobalTimeDilation(this, 0.01f);
-			GetWorldTimerManager().SetTimer(WeaponHitPauseTimer, this, &AWeapon::SlightPause, 0.001f);
-		}
-
-		UGameplayStatics::ApplyDamage(ActorHit,
-			Damage,
-			GetInstigator()->GetController(),
-			this,
-			UDamageType::StaticClass()
-		);
-		
-		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
-		{
-			HitInterface->Execute_GetHit(HitResult.GetActor(), ImpactPoint);			
-		}
-
-		CreateFields(ImpactPoint);
-	}
 }
 
 void AWeapon::ToggleWeaponState()
@@ -112,22 +81,4 @@ void AWeapon::ToggleWeaponState()
 	{
 		SphereComponent->SetGenerateOverlapEvents(true);
 	}
-}
-
-void AWeapon::SetHitBoxCollisionType(ECollisionEnabled::Type CollisionType)
-{
-	if(BoxComponent)
-	{
-		BoxComponent->SetCollisionEnabled(CollisionType);
-
-		if(CollisionType == ECollisionEnabled::NoCollision)
-		{
-			ActorsToIgnore.Empty();
-		}		
-	}
-}
-
-void AWeapon::SlightPause()
-{
-	UGameplayStatics::SetGlobalTimeDilation(this, 1.f);
 }
