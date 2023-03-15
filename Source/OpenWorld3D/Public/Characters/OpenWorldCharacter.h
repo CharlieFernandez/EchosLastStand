@@ -21,7 +21,7 @@ class UCharacterMovementComponent;
 class AWeapon;
 class UAnimInstance;
 
-UCLASS()
+UCLASS(BlueprintType)
 class OPENWORLD3D_API AOpenWorldCharacter : public AGameCharacter
 {
 	GENERATED_BODY()
