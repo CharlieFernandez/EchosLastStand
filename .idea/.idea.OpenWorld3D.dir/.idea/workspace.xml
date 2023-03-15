@@ -4,10 +4,11 @@
     <projectFile>OpenWorld3D.uproject</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de1fe973-a592-4cd5-bf7c-67a4ca786a96" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" afterDir="false" />
+    <list default="true" id="f266def6-3220-4acf-8f8b-5db6882472b3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Great_Sword.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sword_Animations.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sword_and_Shield.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +18,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2N0zUGy3LdgO9kAdKKXqvbxG00f" />
+  <component name="ProjectId" id="2N1cRhP3Ldvnh3xZ1qtGBZzG3z9" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -98,12 +99,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="de1fe973-a592-4cd5-bf7c-67a4ca786a96" name="Changes" comment="" />
-      <created>1678815802317</created>
+      <changelist id="f266def6-3220-4acf-8f8b-5db6882472b3" name="Changes" comment="" />
+      <created>1678835022989</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1678815802317</updated>
-      <workItem from="1678815805472" duration="10682000" />
+      <updated>1678835022989</updated>
+      <workItem from="1678835026447" duration="394000" />
     </task>
     <servers />
   </component>
