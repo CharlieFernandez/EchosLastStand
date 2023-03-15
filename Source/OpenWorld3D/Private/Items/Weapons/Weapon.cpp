@@ -9,19 +9,6 @@
 
 AWeapon::AWeapon()
 {
-	// BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("Hit Box"));
-	// BoxComponent->SetupAttachment(GetRootComponent());
-	//
-	// BoxComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	// BoxComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
-	// BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
-
-	// BoxTraceStart = CreateDefaultSubobject<USceneComponent>(TEXT("Start Component"));
-	// BoxTraceStart->SetupAttachment(GetRootComponent());
-	//
-	// BoxTraceEnd = CreateDefaultSubobject<USceneComponent>(TEXT("End Component"));
-	// BoxTraceEnd->SetupAttachment(GetRootComponent());
-
 	DamageDealerComponent = CreateDefaultSubobject<UDamageDealer>(TEXT("Damage Dealer Cmpt"));
 }
 
