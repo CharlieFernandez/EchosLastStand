@@ -17,6 +17,9 @@ class OPENWORLD3D_API AGameCharacter : public ACharacter, public IHitInterface
 	GENERATED_BODY()
 
 public:
+	/* Fields */
+	const inline static FName rightHandItemSocket = FName("rightHandWeaponSocket");
+	
 	/* Methods */
 	void Sprint();
 	AGameCharacter();
@@ -37,6 +40,8 @@ protected:
 	void PlayAttackMontage() const;	
 	virtual void BeginPlay() override;
 	void PlayReactMontage(const FName& SectionName) const;
+	void SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
+	FORCEINLINE AWeapon* GetWeaponHeld() const { return WeaponHeld; }
 	void AttachMeshToSocket(UMeshComponent* WeaponMesh, FName SocketName) const;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	FORCEINLINE float GetMaxRunSpeed() const { return MaxRunSpeed; }
@@ -59,9 +64,6 @@ protected:
 	
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	EActionState ActionState = EActionState::EAS_Unoccupied;
-	
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<AWeapon> WeaponHeld;	
 
 	/* Functions */
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
@@ -95,4 +97,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxSprintSpeed;
+
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<AWeapon> WeaponHeld;
 };

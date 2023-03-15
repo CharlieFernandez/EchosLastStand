@@ -75,9 +75,19 @@ void AGameCharacter::AttackEnd()
 	ActionState = EActionState::EAS_AttackEnd;
 }
 
+void AGameCharacter::SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN)
+{
+	AttachMeshToSocket(WeaponMesh, SN);
+	
+	EquipState = EEquipState::ECS_Equipped;
+	WeaponHeld = Weapon;
+	Weapon->SetOwner(this);
+	Weapon->SetInstigator(this);
+}
+
 void AGameCharacter::Equip() const
 {
-	AttachMeshToSocket(WeaponHeld->GetMesh(), "handWeaponSocket");
+	AttachMeshToSocket(WeaponHeld->GetMesh(), rightHandItemSocket);
 }
 
 void AGameCharacter::Unequip() const

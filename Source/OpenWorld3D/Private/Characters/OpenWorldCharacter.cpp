@@ -133,11 +133,11 @@ void AOpenWorldCharacter::ObtainOrEquip()
 {	
 	if(	AWeapon* Weapon = Cast<AWeapon>(OverlappedItem))
 	{
-		PickUpWeapon(Weapon, Weapon->GetStaticMeshComponent(), FName("handWeaponSocket"));
+		PickUpWeapon(Weapon, Weapon->GetStaticMeshComponent(), rightHandItemSocket);
 	}
 	else
 	{
-		if(WeaponHeld && ActionState == EActionState::EAS_Unoccupied)
+		if(GetWeaponHeld() && ActionState == EActionState::EAS_Unoccupied)
 		{
 			if(CanUnequip())
 			{			
@@ -157,15 +157,10 @@ void AOpenWorldCharacter::ObtainOrEquip()
 
 void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN)
 {
-	AttachMeshToSocket(WeaponMesh, SN);
-	
-	EquipState = EEquipState::ECS_Equipped;
-	WeaponHeld = Weapon;
+	SetEquippedWeapon(Weapon, WeaponMesh, SN);
 	Weapon->ToggleWeaponState();
-	Weapon->SetOwner(this);
-	Weapon->SetInstigator(this);
 	
-	if(auto const PickUpSound = WeaponHeld->GetPickUpSound())
+	if(auto const PickUpSound = GetWeaponHeld()->GetPickUpSound())
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, Weapon->GetActorLocation());
 	}
@@ -173,7 +168,7 @@ void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMe
 
 void AOpenWorldCharacter::PlayEquipMontage(EEquipActionState EquipType) const
 {
-	if(EquipMontage && WeaponHeld && AnimInstance)
+	if(EquipMontage && GetWeaponHeld() && AnimInstance)
 	{
 		AnimInstance->Montage_Play(EquipMontage);
 		const UEnum* EnumEquipActionState = StaticEnum<EEquipActionState>();

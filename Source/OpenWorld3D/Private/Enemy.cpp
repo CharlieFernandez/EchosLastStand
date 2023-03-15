@@ -15,6 +15,7 @@
 #include "Perception/PawnSensingComponent.h"
 #include "Characters/CharacterTypes.h"
 #include "Characters/OpenWorldCharacter.h"
+#include "Items/Weapons/Weapon.h"
 
 /* Core Methods */
 AEnemy::AEnemy()
@@ -43,6 +44,16 @@ AEnemy::AEnemy()
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UWorld* World = GetWorld();
+
+	if(StartingWeaponClass && World)
+	{
+		AWeapon* Weapon = Cast<AWeapon>(World->SpawnActor(StartingWeaponClass));
+		SetEquippedWeapon(Weapon, Weapon->GetMesh(), rightHandItemSocket);
+		Weapon->SetToHeldItem();
+		Equip();
+	}
 
 	State = EEnemyState::EES_Patrolling;
 	ToggleHealth(false);
@@ -187,6 +198,14 @@ void AEnemy::Die()
 	SetLifeSpan(10.f);
 	ToggleHealth(false);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void AEnemy::Destroyed()
+{
+	if(GetWeaponHeld())
+	{
+		GetWeaponHeld()->Destroy();		
+	}
 }
 
 /* Helper Methods */

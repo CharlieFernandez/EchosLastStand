@@ -6,7 +6,6 @@
 #include "Characters/CharacterTypes.h"
 #include "Characters/GameCharacter.h"
 #include "GameFramework/Character.h"
-#include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
 
 class UPawnSensingComponent;
@@ -35,6 +34,7 @@ protected:
 	void GenerateNewPatrolTarget();
 	virtual void BeginPlay() override;
 	void SetNewMoveToTarget(TObjectPtr<AActor> Target) const;
+	virtual void Destroyed() override;
 
 private:
 	/* Fields */
@@ -52,6 +52,9 @@ private:
 	/* Properties */	
 	UPROPERTY()
 	TObjectPtr<AAIController> AIController;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AWeapon> StartingWeaponClass;
 
 	UPROPERTY(VisibleInstanceOnly)
 	EEnemyState State;	

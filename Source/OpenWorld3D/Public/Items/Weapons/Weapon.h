@@ -17,6 +17,7 @@ class OPENWORLD3D_API AWeapon : public AItem
 public:
 	AWeapon();
 	void ToggleWeaponState();
+	void SetToHeldItem();
 	
 protected:
 	virtual void BeginPlay() override;
