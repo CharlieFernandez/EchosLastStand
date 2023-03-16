@@ -56,20 +56,29 @@ void AGameCharacter::PlayMontageSection(UAnimMontage* Montage, FName SectionName
 void AGameCharacter::PlayComboAttackMontage()
 {
 	static TArray<FName> AttacksNotUsed = ComboAttackMontageSectionNames;
+	ResetIfComboEnded(AttacksNotUsed, ComboAttackMontageSectionNames);
+	
+	if(AttacksNotUsed.Num() <= 0) return;
+	
+	ActionState = EActionState::EAS_Attacking;
+	const FName AttackNameToUse = FindUniqueMontageSection(AttacksNotUsed);	
+	PlayMontageSection(AttackMontage, AttackNameToUse);
+}
 
+FName AGameCharacter::FindUniqueMontageSection(TArray<FName> &SectionsNotUsed) const
+{
+	const int32 AttackSelection = FMath::RandRange(0, SectionsNotUsed.Num()-1);
+	const FName AttackNameToUse = SectionsNotUsed[AttackSelection];
+	SectionsNotUsed.RemoveAt(AttackSelection);
+	return AttackNameToUse;
+}
+
+void AGameCharacter::ResetIfComboEnded(TArray<FName>& SectionsNotUsed, const TArray<FName> &AllSections) const
+{
 	if(ActionState == EActionState::EAS_Unoccupied)
 	{
-		AttacksNotUsed = ComboAttackMontageSectionNames;
+		SectionsNotUsed = AllSections;
 	}
-
-	if(AttacksNotUsed.Num() <= 0)	return;
-
-	ActionState = EActionState::EAS_Attacking;
-	const int32 AttackSelection = FMath::RandRange(0, AttacksNotUsed.Num()-1);
-	const FName AttackNameToUse = AttacksNotUsed[AttackSelection];
-	AttacksNotUsed.RemoveAt(AttackSelection);
-	
-	PlayMontageSection(AttackMontage, AttackNameToUse);
 }
 
 void AGameCharacter::AttackEnd()
@@ -79,22 +88,21 @@ void AGameCharacter::AttackEnd()
 
 void AGameCharacter::SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN)
 {
-	AttachMeshToSocket(WeaponMesh, SN);
-	
+	AttachMeshToSocket(WeaponMesh, SN);	
 	EquipState = EEquipState::ECS_Equipped;
 	WeaponHeld = Weapon;
-	Weapon->SetOwner(this);
-	Weapon->SetInstigator(this);
 }
 
 void AGameCharacter::Equip() const
 {
-	AttachMeshToSocket(WeaponHeld->GetMesh(), rightHandItemSocket);
+	AttachMeshToSocket(GetWeaponHeld()->GetMesh(), rightHandItemSocket);	
 }
 
-void AGameCharacter::Unequip() const
+void AGameCharacter::Unequip()
 {
-	AttachMeshToSocket(WeaponHeld->GetMesh(), "spineWeaponSocket");
+	AttachMeshToSocket(WeaponHeld->GetMesh(), spineWeaponSocket);
+	EquipState = EEquipState::ECS_Equipped;
+	WeaponHeld = nullptr;
 }
 
 bool AGameCharacter::CanEquip() const
@@ -114,25 +122,31 @@ bool AGameCharacter::CanUnequip() const
 void AGameCharacter::GetHit_Implementation(const FVector ImpactPoint)
 {	
 	EmitHitParticles(ImpactPoint);
-
-	if(Attributes)
+	
+	if(IsAlive())
 	{
-		if(Attributes->IsAlive())
-		{
-			const double Angle = GetAngleFromImpactPoint(ImpactPoint);
-			const FName SectionName = GenerateSectionNameByAngle(Angle);	
-			PlayReactMontage(SectionName);
-		}
-		else
-		{
-			Die();
-		}
+		FindAndPlayReactSection(ImpactPoint);
 	}
+	else Die();
+}
+
+bool AGameCharacter::IsAlive() const
+{
+	return Attributes->IsAlive();
+}
+
+void AGameCharacter::FindAndPlayReactSection(const FVector ImpactPoint) const
+{
+	const double Angle = GetAngleFromImpactPoint(ImpactPoint);
+	const FName SectionName = GenerateSectionNameByAngle(Angle);	
+	PlayReactMontage(SectionName);
 }
 
 float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
 	AActor* DamageCauser)
 {
+	Attributes->UpdateHealth(-DamageAmount);
+	
 	return Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 }
 

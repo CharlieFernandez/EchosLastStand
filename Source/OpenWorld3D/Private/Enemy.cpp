@@ -43,28 +43,31 @@ AEnemy::AEnemy()
 
 void AEnemy::BeginPlay()
 {
+	AIController = Cast<AAIController>(GetController());
 	Super::BeginPlay();
+	StartWithWeapon();
+	State = EEnemyState::EES_Patrolling;
+	ToggleHealth(false);
+	DrawAllWaypoints();
+	GenerateNewPatrolTarget();
+	OnFinishedPatrolTimer(); //Starts moving to the next waypoint.
 
+	if(PawnSensingComponent)
+	{
+		// PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemy::OnPawnSeen);
+	}
+}
+
+void AEnemy::StartWithWeapon()
+{
 	UWorld* World = GetWorld();
-
+	
 	if(StartingWeaponClass && World)
 	{
 		AWeapon* Weapon = Cast<AWeapon>(World->SpawnActor(StartingWeaponClass));
 		SetEquippedWeapon(Weapon, Weapon->GetMesh(), rightHandItemSocket);
 		Weapon->SetToHeldItem();
 		Equip();
-	}
-
-	State = EEnemyState::EES_Patrolling;
-	ToggleHealth(false);
-	AIController = Cast<AAIController>(GetController());
-	DrawAllWaypoints();
-	GenerateNewPatrolTarget();
-	GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 1.f);
-
-	if(PawnSensingComponent)
-	{
-		// PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemy::OnPawnSeen);
 	}
 }
 
@@ -109,16 +112,17 @@ void AEnemy::OnFinishedPatrolTimer() const
 float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	
-	if(Attributes && HealthBarComponent)
-	{
-		Attributes->UpdateHealth(-DamageAmount);
+	SetHealthPercentage();
+	SetStateToChasing(EventInstigator->GetPawn());
+	return DamageAmount;
+}
+
+void AGameCharacter::SetHealthPercentage() const
+{
+	if(HealthBarComponent)
+	{		
 		HealthBarComponent->SetHealthPercentage(Attributes->GetCurrentHealthPercent());
 	}
-
-	SetStateToChasing(EventInstigator->GetPawn());
-
-	return DamageAmount;
 }
 
 void AEnemy::SetStateToChasing(AActor* PawnToChase)
@@ -140,30 +144,58 @@ void AEnemy::SetStateToPatrolling()
 
 void AEnemy::CheckCombatTarget()
 {
-	if(!MyUtilities::InTargetRange(ChasingDistance, this, CombatTarget))
+	if(!IsInChasingRadius())
 	{
 		SetStateToPatrolling();
 	}
-	else if(!MyUtilities::InTargetRange(AttackDistance, this, CombatTarget) && State != EEnemyState::EES_Chasing)
+	else if(!IsInAttackingRadius() && !IsChasing())
 	{
 		SetStateToChasing(CombatTarget);
 	}
-	else if(CombatTarget)
+	else if(IsInAttackingRadius() && !IsAttacking())
 	{
-		if(MyUtilities::InTargetRange(AttackDistance, this, CombatTarget) && State != EEnemyState::EES_Attacking)
-		{
-			State = EEnemyState::EES_Attacking;
-		}	
-	}
+		State = EEnemyState::EES_Attacking;
+		Attack();
+	}	
+}
+
+bool AEnemy::IsChasing() const
+{
+	return State != EEnemyState::EES_Chasing;
+}
+
+bool AEnemy::IsAttacking() const
+{
+	return State != EEnemyState::EES_Attacking;
+}
+
+bool AEnemy::IsInChasingRadius() const
+{
+	return MyUtilities::InTargetRange(ChasingDistance, this, CombatTarget);
+}
+
+bool AEnemy::IsInAttackingRadius() const
+{
+	return MyUtilities::InTargetRange(AttackDistance, this, CombatTarget);
 }
 
 void AEnemy::CheckPatrolTarget()
 {
-	if(PatrolTarget && MyUtilities::InTargetRange(DistanceToGoalRadius, this, PatrolTarget))
+	if(PatrolTarget && IsNearPatrolTarget())
 	{
 		GenerateNewPatrolTarget();
-		GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 3.f);
+		SetPatrolTimer();
 	}
+}
+
+void AEnemy::SetPatrolTimer()
+{
+	GetWorldTimerManager().SetTimer(PatrolTimerHandle, this, &AEnemy::OnFinishedPatrolTimer, 3.f);
+}
+
+bool AEnemy::IsNearPatrolTarget() const
+{
+	return MyUtilities::InTargetRange(DistanceToGoalRadius, this, PatrolTarget);
 }
 
 void AEnemy::ToggleHealth(bool Toggle) const
@@ -172,12 +204,8 @@ void AEnemy::ToggleHealth(bool Toggle) const
 }
 
 void AGameCharacter::PlayReactMontage(const FName& SectionName) const
-{	
-	if(AnimInstance)
-	{
-		AnimInstance->Montage_Play(ReactMontage);
-		AnimInstance->Montage_JumpToSection(SectionName, ReactMontage);
-	}
+{
+	PlayMontageSection(ReactMontage, SectionName);
 }
 
 void AGameCharacter::EmitHitParticles(const FVector ImpactPoint) const
@@ -211,19 +239,25 @@ void AEnemy::Destroyed()
 /* Helper Methods */
 void AEnemy::GenerateNewPatrolTarget()
 {
-	TObjectPtr<AActor> NewTarget;
-
 	const uint8 NumOfPatrolTargets = PatrolTargets.Num();
+	
 	if(NumOfPatrolTargets > 0)
 	{
-		do
-		{
-			const uint8 TargetIndex = FMath::RandRange(0, PatrolTargets.Num() - 1);
-			NewTarget = PatrolTargets[TargetIndex];		
-		} while(&PatrolTarget == &NewTarget);
-
-		PatrolTarget = NewTarget;
+		PatrolTarget = FindUniquePatrolTarget();
 	}
+}
+
+AActor* AEnemy::FindUniquePatrolTarget() const
+{
+	TObjectPtr<AActor> NewTarget;
+	
+	do
+	{
+		const uint8 TargetIndex = FMath::RandRange(0, PatrolTargets.Num() - 1);
+		NewTarget = PatrolTargets[TargetIndex];		
+	} while(&PatrolTarget == &NewTarget);
+
+	return NewTarget;
 }
 
 void AEnemy::SetNewMoveToTarget(TObjectPtr<AActor> Target) const

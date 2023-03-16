@@ -137,27 +137,34 @@ void AOpenWorldCharacter::ObtainOrEquip()
 	}
 	else
 	{
-		if(GetWeaponHeld() && ActionState == EActionState::EAS_Unoccupied)
-		{
-			if(CanUnequip())
-			{			
-				PlayEquipMontage(EEquipActionState::EEAS_Unequip);
-				EquipState = EEquipState::ECS_Unequipped;
-			}
-			else if(CanEquip())
-			{
-				PlayEquipMontage(EEquipActionState::EEAS_Equip);
-				EquipState = EEquipState::ECS_Equipped;
-			}
+		EquipOrUnequipWeapon();
+	}
+}
 
-			ActionState = EActionState::EAS_Equipping;
+void AOpenWorldCharacter::EquipOrUnequipWeapon()
+{
+	if(GetWeaponHeld() && ActionState == EActionState::EAS_Unoccupied)
+	{
+		if(CanUnequip())
+		{			
+			PlayEquipMontage(EEquipActionState::EEAS_Unequip);
+			EquipState = EEquipState::ECS_Unequipped;
 		}
+		else if(CanEquip())
+		{
+			PlayEquipMontage(EEquipActionState::EEAS_Equip);
+			EquipState = EEquipState::ECS_Equipped;
+		}
+
+		ActionState = EActionState::EAS_Equipping;
 	}
 }
 
 void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN)
 {
 	SetEquippedWeapon(Weapon, WeaponMesh, SN);
+	Weapon->SetOwner(this);
+	Weapon->SetInstigator(this);
 	Weapon->ToggleWeaponState();
 	
 	if(auto const PickUpSound = GetWeaponHeld()->GetPickUpSound())

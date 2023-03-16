@@ -34,6 +34,8 @@ protected:
 	void GenerateNewPatrolTarget();
 	virtual void BeginPlay() override;
 	void SetNewMoveToTarget(TObjectPtr<AActor> Target) const;
+	bool IsChasing() const;
+	bool IsAttacking() const;
 	virtual void Destroyed() override;
 
 private:
@@ -41,13 +43,22 @@ private:
 	FTimerHandle PatrolTimerHandle;
 
 	/* Methods */
-	void SetStateToChasing(AActor* PawnToChase);
-	void SetStateToPatrolling();
+	void StartWithWeapon();
 	void CheckPatrolTarget();
 	void CheckCombatTarget();
-	void OnFinishedPatrolTimer() const;
+	bool IsInChasingRadius() const;
+	bool IsInAttackingRadius() const;
+	bool IsNearPatrolTarget() const;
+	void SetPatrolTimer();
+
+
 	virtual void Die() override;
+	void SetStateToPatrolling();
+	AActor* FindUniquePatrolTarget() const;
+	void OnFinishedPatrolTimer() const;
+	void SetStateToChasing(AActor* PawnToChase);
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+
 
 	/* Properties */	
 	UPROPERTY()
@@ -79,9 +90,6 @@ private:
 	
 	UPROPERTY(VisibleInstanceOnly)
 	TObjectPtr<AActor> CombatTarget;
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UHealthBarComponent> HealthBarComponent;
 
 	/* Functions */
 	UFUNCTION()

@@ -67,10 +67,12 @@ private:
 	inline static const FName PlayerTag = FName("Player");
 
 	/* Methods */
+	void EquipOrUnequipWeapon();
 	virtual bool CanAttack() override;
 	void PlayRollMontage(const FInputActionValue& Value);	
 	void PlayEquipMontage(EEquipActionState EquipType) const;
 	void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
+
 	
 	/* Properties */
 	UPROPERTY(VisibleAnywhere)

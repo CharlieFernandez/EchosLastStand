@@ -8,6 +8,7 @@
 #include "Interfaces/HitInterface.h"
 #include "GameCharacter.generated.h"
 
+class UHealthBarComponent;
 class AWeapon;
 class UAttributeComponent;
 
@@ -19,11 +20,13 @@ class OPENWORLD3D_API AGameCharacter : public ACharacter, public IHitInterface
 public:
 	/* Fields */
 	const inline static FName rightHandItemSocket = FName("rightHandWeaponSocket");
+	const inline static FName spineWeaponSocket = FName("spineWeaponSocket");
 	
 	/* Methods */
 	void Sprint();
 	AGameCharacter();
 	virtual void Tick(float DeltaTime) override;
+	bool IsAlive() const;
 
 protected:
 	/* Fields */
@@ -46,8 +49,11 @@ protected:
 	FORCEINLINE float GetMaxRunSpeed() const { return MaxRunSpeed; }
 	FORCEINLINE float GetMaxWalkSpeed() const { return MaxWalkSpeed; }
 	FORCEINLINE float GetMaxSprintSpeed() const { return MaxSprintSpeed; }
+	void ResetIfComboEnded(TArray<FName>& SectionsNotUsed, const TArray<FName> &AllSections) const;
 	FORCEINLINE UAnimMontage* GetAttackMontage() const { return AttackMontage; }
+	FName FindUniqueMontageSection(TArray<FName> &SectionsNotUsed) const;
 	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
+	void SetHealthPercentage() const;
 
 	/* Properties */
 	UPROPERTY(VisibleInstanceOnly)
@@ -55,6 +61,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UAttributeComponent> Attributes;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UHealthBarComponent> HealthBarComponent;
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Visual Effects")
 	TObjectPtr<UParticleSystem> HitParticles;
@@ -73,7 +82,7 @@ protected:
 	void Equip() const;
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
-	void Unequip() const;
+	void Unequip();
 
 private:
 	/* Methods */
@@ -81,6 +90,7 @@ private:
 	static FName GenerateSectionNameByAngle(double Angle);
 	double GetAngleFromImpactPoint(FVector ImpactPoint) const;
 	virtual void GetHit_Implementation(const FVector ImpactPoint) override;
+	void FindAndPlayReactSection(const FVector ImpactPoint) const;
 
 	/* Properties */
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
