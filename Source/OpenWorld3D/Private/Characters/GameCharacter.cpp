@@ -24,12 +24,6 @@ void AGameCharacter::BeginPlay()
 void AGameCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-}
-
-void AGameCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
 void AGameCharacter::Sprint()
@@ -39,35 +33,43 @@ void AGameCharacter::Sprint()
 
 bool AGameCharacter::CanAttack()
 {
-	return false;
+	return false; // Change this later.
 }
 
 void AGameCharacter::Attack()
 {
 	if(CanAttack())
 	{
-		PlayAttackMontage();
-		ActionState = EActionState::EAS_Attacking;
+		PlayComboAttackMontage();
 	}
 }
 
-void AGameCharacter::PlayAttackMontage() const
-{	
-	static int AttackNum = 1;
-
-	if(ActionState != EActionState::EAS_AttackEnd)
+void AGameCharacter::PlayMontageSection(UAnimMontage* Montage, FName SectionName) const
+{
+	if(AnimInstance && Montage)
 	{
-		AttackNum = 1;
+		AnimInstance->Montage_Play(Montage);
+		AnimInstance->Montage_JumpToSection(SectionName, Montage);
+	}
+}
+
+void AGameCharacter::PlayComboAttackMontage()
+{
+	static TArray<FName> AttacksNotUsed = ComboAttackMontageSectionNames;
+
+	if(ActionState == EActionState::EAS_Unoccupied)
+	{
+		AttacksNotUsed = ComboAttackMontageSectionNames;
 	}
 
-	if(AnimInstance && AttackMontage)
-	{		
-		AnimInstance->Montage_Play(AttackMontage);
-		const FString AttackString = FString::Printf(TEXT("Attack %i"), AttackNum);
-		const FName AttackName(*FString(AttackString));
-		AnimInstance->Montage_JumpToSection(AttackName, AttackMontage);
-	}
-	AttackNum++;
+	if(AttacksNotUsed.Num() <= 0)	return;
+
+	ActionState = EActionState::EAS_Attacking;
+	const int32 AttackSelection = FMath::RandRange(0, AttacksNotUsed.Num()-1);
+	const FName AttackNameToUse = AttacksNotUsed[AttackSelection];
+	AttacksNotUsed.RemoveAt(AttackSelection);
+	
+	PlayMontageSection(AttackMontage, AttackNameToUse);
 }
 
 void AGameCharacter::AttackEnd()

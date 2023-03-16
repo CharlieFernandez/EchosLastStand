@@ -24,7 +24,6 @@ public:
 	void Sprint();
 	AGameCharacter();
 	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
 	/* Fields */
@@ -37,7 +36,7 @@ protected:
 	bool CanEquip() const;
 	bool CanUnequip() const;
 	virtual bool CanAttack();
-	void PlayAttackMontage() const;	
+	void PlayComboAttackMontage();	
 	virtual void BeginPlay() override;
 	void PlayReactMontage(const FName& SectionName) const;
 	void SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
@@ -48,6 +47,7 @@ protected:
 	FORCEINLINE float GetMaxWalkSpeed() const { return MaxWalkSpeed; }
 	FORCEINLINE float GetMaxSprintSpeed() const { return MaxSprintSpeed; }
 	FORCEINLINE UAnimMontage* GetAttackMontage() const { return AttackMontage; }
+	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
 
 	/* Properties */
 	UPROPERTY(VisibleInstanceOnly)
@@ -83,6 +83,12 @@ private:
 	virtual void GetHit_Implementation(const FVector ImpactPoint) override;
 
 	/* Properties */
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TArray<FName> ComboAttackMontageSectionNames;
+
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TArray<FName> ComboFinisherMontageSectionNames;
+	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage> AttackMontage;
 	
