@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "WeaponTypes.h"
 #include "Damage Dealer/DamageDealer.h"
 #include "Items/Item.h"
 #include "Weapon.generated.h"
@@ -41,4 +42,7 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UDamageDealer> DamageDealerComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	EWeaponType WeaponType;
 };

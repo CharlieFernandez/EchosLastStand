@@ -23,7 +23,6 @@ public:
 	const inline static FName spineWeaponSocket = FName("spineWeaponSocket");
 	
 	/* Methods */
-	void Sprint();
 	AGameCharacter();
 	virtual void Tick(float DeltaTime) override;
 	bool IsAlive() const;
@@ -48,7 +47,6 @@ protected:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	FORCEINLINE float GetMaxRunSpeed() const { return MaxRunSpeed; }
 	FORCEINLINE float GetMaxWalkSpeed() const { return MaxWalkSpeed; }
-	FORCEINLINE float GetMaxSprintSpeed() const { return MaxSprintSpeed; }
 	void ResetIfComboEnded(TArray<FName>& SectionsNotUsed, const TArray<FName> &AllSections) const;
 	FORCEINLINE UAnimMontage* GetAttackMontage() const { return AttackMontage; }
 	FName FindUniqueMontageSection(TArray<FName> &SectionsNotUsed) const;
@@ -110,9 +108,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxRunSpeed;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	float MaxSprintSpeed;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<AWeapon> WeaponHeld;

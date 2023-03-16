@@ -51,7 +51,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> JumpAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> EKeyPressedAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> AttackPressedAction;
-	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> SprintAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> RollAction;
 
 	/* Functions */
@@ -95,6 +94,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage> RollMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = Camera)
+	float CameraRotationSpeed;
 
 	/* Functions */
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))

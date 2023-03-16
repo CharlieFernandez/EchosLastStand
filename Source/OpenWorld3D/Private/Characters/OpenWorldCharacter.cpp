@@ -56,11 +56,6 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(CharacterMovementComponent->Velocity.Length() == 0)
-	{
-		CharacterMovementComponent->MaxWalkSpeed = GetMaxRunSpeed();
-	}
-
 	if(ActionState == EActionState::EAS_Rolling)
 	{
 		const FVector RollDisplacement = DirectionToRoll * RollSpeed * DeltaTime;
@@ -80,7 +75,6 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent -> BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
 		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
 		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
-		EnhancedInputComponent -> BindAction(SprintAction, ETriggerEvent::Triggered, this, &AGameCharacter::Sprint);
 		EnhancedInputComponent -> BindAction(RollAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Roll);
 	}
 }
@@ -120,10 +114,11 @@ void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 
 void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 {
-	const FVector2D RotationValue = Value.Get<FVector2D>();
+	const FVector2D InputRotationValue = Value.Get<FVector2D>();
 
-	if(Controller && !RotationValue.IsZero())
+	if(Controller && !InputRotationValue.IsZero())
 	{
+		const FVector2d RotationValue = InputRotationValue * CameraRotationSpeed;		
 		AddControllerPitchInput(RotationValue.Y);
 		AddControllerYawInput(RotationValue.X);
 	}
@@ -237,5 +232,4 @@ bool AOpenWorldCharacter::CanAttack()
 void AOpenWorldCharacter::ResetActionState()
 {
 	ActionState = EActionState::EAS_Unoccupied;
-	CharacterMovementComponent->MaxWalkSpeed = GetMaxRunSpeed();
 }

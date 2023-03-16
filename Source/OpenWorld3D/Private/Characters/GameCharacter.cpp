@@ -26,11 +26,6 @@ void AGameCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AGameCharacter::Sprint()
-{
-	CharacterMovementComponent->MaxWalkSpeed = MaxSprintSpeed;
-}
-
 bool AGameCharacter::CanAttack()
 {
 	return false; // Change this later.
@@ -101,7 +96,7 @@ void AGameCharacter::Equip() const
 void AGameCharacter::Unequip()
 {
 	AttachMeshToSocket(WeaponHeld->GetMesh(), spineWeaponSocket);
-	EquipState = EEquipState::ECS_Equipped;
+	EquipState = EEquipState::ECS_Unequipped;
 	WeaponHeld = nullptr;
 }
 
