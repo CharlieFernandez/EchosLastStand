@@ -50,29 +50,22 @@ void AGameCharacter::PlayMontageSection(UAnimMontage* Montage, FName SectionName
 
 void AGameCharacter::PlayComboAttackMontage()
 {
-	static TArray<FName> AttacksNotUsed = ComboAttackMontageSectionNames;
-	ResetIfComboEnded(AttacksNotUsed, ComboAttackMontageSectionNames);
+	static uint8 AttackIndex = 0;
 	
-	if(AttacksNotUsed.Num() <= 0) return;
+	ResetIfComboEnded(AttackIndex);
+	
+	if(NormalAttacksMontage->GetNumSections() <= AttackIndex) return;
 	
 	ActionState = EActionState::EAS_Attacking;
-	const FName AttackNameToUse = FindUniqueMontageSection(AttacksNotUsed);	
-	PlayMontageSection(AttackMontage, AttackNameToUse);
+	PlayMontageSection(NormalAttacksMontage, NormalAttacksMontage->GetSectionName(AttackIndex));
+	AttackIndex++;
 }
 
-FName AGameCharacter::FindUniqueMontageSection(TArray<FName> &SectionsNotUsed) const
-{
-	const int32 AttackSelection = FMath::RandRange(0, SectionsNotUsed.Num()-1);
-	const FName AttackNameToUse = SectionsNotUsed[AttackSelection];
-	SectionsNotUsed.RemoveAt(AttackSelection);
-	return AttackNameToUse;
-}
-
-void AGameCharacter::ResetIfComboEnded(TArray<FName>& SectionsNotUsed, const TArray<FName> &AllSections) const
+void AGameCharacter::ResetIfComboEnded(uint8 &AttackIndex) const
 {
 	if(ActionState == EActionState::EAS_Unoccupied)
 	{
-		SectionsNotUsed = AllSections;
+		AttackIndex = 0;
 	}
 }
 

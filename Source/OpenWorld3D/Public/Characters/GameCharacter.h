@@ -47,9 +47,8 @@ protected:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	FORCEINLINE float GetMaxRunSpeed() const { return MaxRunSpeed; }
 	FORCEINLINE float GetMaxWalkSpeed() const { return MaxWalkSpeed; }
-	void ResetIfComboEnded(TArray<FName>& SectionsNotUsed, const TArray<FName> &AllSections) const;
-	FORCEINLINE UAnimMontage* GetAttackMontage() const { return AttackMontage; }
-	FName FindUniqueMontageSection(TArray<FName> &SectionsNotUsed) const;
+	void ResetIfComboEnded(uint8& AttackIndex) const;
+	FORCEINLINE UAnimMontage* GetAttackMontage() const { return NormalAttacksMontage; }
 	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
 	void SetHealthPercentage() const;
 
@@ -90,15 +89,9 @@ private:
 	virtual void GetHit_Implementation(const FVector ImpactPoint) override;
 	void FindAndPlayReactSection(const FVector ImpactPoint) const;
 
-	/* Properties */
+	/* Properties */	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	TArray<FName> ComboAttackMontageSectionNames;
-
-	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	TArray<FName> ComboFinisherMontageSectionNames;
-	
-	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	TObjectPtr<UAnimMontage> AttackMontage;
+	TObjectPtr<UAnimMontage> NormalAttacksMontage;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage>ReactMontage;
