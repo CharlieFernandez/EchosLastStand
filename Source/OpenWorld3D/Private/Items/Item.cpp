@@ -3,7 +3,7 @@
 #include "Items/Item.h"
 
 #include "NiagaraComponent.h"
-#include "Characters/OpenWorldCharacter.h"
+#include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
 #include "Components/SphereComponent.h"
 
 // Sets default values

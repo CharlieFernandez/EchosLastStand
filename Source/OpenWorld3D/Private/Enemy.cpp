@@ -14,7 +14,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Perception/PawnSensingComponent.h"
 #include "Characters/CharacterTypes.h"
-#include "Characters/OpenWorldCharacter.h"
+#include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
 #include "Items/Weapons/Weapon.h"
 
 /* Core Methods */
@@ -54,7 +54,7 @@ void AEnemy::BeginPlay()
 
 	if(PawnSensingComponent)
 	{
-		// PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemy::OnPawnSeen);
+		PawnSensingComponent->OnSeePawn.AddDynamic(this, &AEnemy::OnPawnSeen);
 	}
 }
 
@@ -75,6 +75,8 @@ void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if(IsDead()) return;
+
 	if(State > EEnemyState::EES_Patrolling)
 	{
 		CheckCombatTarget();
@@ -83,12 +85,6 @@ void AEnemy::Tick(float DeltaTime)
 	{
 		CheckPatrolTarget();
 	}	
-}
-
-void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void AEnemy::OnPawnSeen(APawn* PawnSeen)
@@ -125,17 +121,31 @@ void AGameCharacter::SetHealthPercentage() const
 	}
 }
 
+void AEnemy::ClearPatrolTimer()
+{
+	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
+}
+
+void AEnemy::ClearAttackTimer()
+{
+	GetWorldTimerManager().ClearTimer(AttackTimerHandle);
+}
+
 void AEnemy::SetStateToChasing(AActor* PawnToChase)
 {
+	if(State == EEnemyState::EES_Dead) return;
+	
 	CombatTarget = PawnToChase;
 	State = EEnemyState::EES_Chasing;
 	GetCharacterMovement()->MaxWalkSpeed = GetMaxRunSpeed();
 	SetNewMoveToTarget(PawnToChase);
-	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
+	ClearPatrolTimer();
 }
 
 void AEnemy::SetStateToPatrolling()
 {
+	if(State == EEnemyState::EES_Dead) return;
+	
 	CombatTarget = nullptr;
 	SetNewMoveToTarget(PatrolTarget);
 	State = EEnemyState::EES_Patrolling;
@@ -146,27 +156,37 @@ void AEnemy::CheckCombatTarget()
 {
 	if(!IsInChasingRadius())
 	{
-		SetStateToPatrolling();
+		ClearAttackTimer();
+
+		if(!IsEngaged())
+		{
+			SetStateToPatrolling();
+		}
 	}
 	else if(!IsInAttackingRadius() && !IsChasing())
 	{
+		ClearAttackTimer();
 		SetStateToChasing(CombatTarget);
 	}
-	else if(IsInAttackingRadius() && !IsAttacking())
+	else if(CanAttack())
 	{
-		State = EEnemyState::EES_Attacking;
-		Attack();
+		ClearAttackTimer();
+		StartAttackTimer();
 	}	
 }
 
-bool AEnemy::IsChasing() const
+bool AEnemy::CanAttack()
 {
-	return State != EEnemyState::EES_Chasing;
+	return IsInAttackingRadius() &&
+		!IsAttacking() &&
+		!IsDead();
 }
 
-bool AEnemy::IsAttacking() const
+void AEnemy::StartAttackTimer()
 {
-	return State != EEnemyState::EES_Attacking;
+	State = EEnemyState::EES_Attacking;
+	const float AttackTime = FMath::RandRange(AttackMinTimer, AttackMaxTimer);
+	GetWorldTimerManager().SetTimer(AttackTimerHandle, this, &AEnemy::Attack, AttackTime);
 }
 
 bool AEnemy::IsInChasingRadius() const
@@ -221,10 +241,13 @@ void AEnemy::Die()
 	// Death animations are handled on the blueprint side.
 	
 	Super::Die();
-	
+
+	State = EEnemyState::EES_Dead;
+	CombatTarget = nullptr;
 	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
 	SetLifeSpan(10.f);
 	ToggleHealth(false);
+	AIController->StopMovement();
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
@@ -237,6 +260,26 @@ void AEnemy::Destroyed()
 }
 
 /* Helper Methods */
+bool AEnemy::IsDead() const
+{
+	return State == EEnemyState::EES_Dead;
+}
+
+bool AEnemy::IsChasing() const
+{
+	return State != EEnemyState::EES_Chasing;
+}
+
+bool AEnemy::IsAttacking() const
+{
+	return State != EEnemyState::EES_Attacking;
+}
+
+bool AEnemy::IsEngaged() const
+{
+	return State != EEnemyState::EES_Engaged;
+}
+
 void AEnemy::GenerateNewPatrolTarget()
 {
 	const uint8 NumOfPatrolTargets = PatrolTargets.Num();
@@ -267,7 +310,6 @@ void AEnemy::SetNewMoveToTarget(TObjectPtr<AActor> Target) const
 		FAIMoveRequest MoveRequest;
 		MoveRequest.SetGoalActor(Target);
 		MoveRequest.SetAcceptanceRadius(15.f);
-		FNavPathSharedPtr NavPathSharedPtr;
 		AIController->MoveTo(MoveRequest);
 	}
 }

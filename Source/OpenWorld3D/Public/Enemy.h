@@ -27,20 +27,22 @@ public:
 	void DrawAllWaypoints();
 	void ToggleHealth(bool Toggle) const;	
 	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;	
 
 protected:
 	/* Methods */
 	void GenerateNewPatrolTarget();
 	virtual void BeginPlay() override;
 	void SetNewMoveToTarget(TObjectPtr<AActor> Target) const;
+	virtual bool CanAttack() override;
 	bool IsChasing() const;
 	bool IsAttacking() const;
+	bool IsEngaged() const;
 	virtual void Destroyed() override;
 
 private:
 	/* Fields */
 	FTimerHandle PatrolTimerHandle;
+	FTimerHandle AttackTimerHandle;
 
 	/* Methods */
 	void StartWithWeapon();
@@ -50,8 +52,11 @@ private:
 	bool IsInAttackingRadius() const;
 	bool IsNearPatrolTarget() const;
 	void SetPatrolTimer();
+	void ClearPatrolTimer();
+	void StartAttackTimer();
+	void ClearAttackTimer();
 
-
+	bool IsDead() const;
 	virtual void Die() override;
 	void SetStateToPatrolling();
 	AActor* FindUniquePatrolTarget() const;
@@ -68,7 +73,13 @@ private:
 	TSubclassOf<AWeapon> StartingWeaponClass;
 
 	UPROPERTY(VisibleInstanceOnly)
-	EEnemyState State;	
+	EEnemyState State;
+
+	UPROPERTY(EditDefaultsOnly)
+	float AttackMinTimer;
+
+	UPROPERTY(EditDefaultsOnly)
+	float AttackMaxTimer;
 	
 	UPROPERTY(VisibleInstanceOnly)
 	TObjectPtr<AActor> PatrolTarget;

@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Characters/OpenWorldCharacter.h"
+#include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
 
 #include "Enemy.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Components/SphereComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Items/Weapons/EquipActionState.h"
 #include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"

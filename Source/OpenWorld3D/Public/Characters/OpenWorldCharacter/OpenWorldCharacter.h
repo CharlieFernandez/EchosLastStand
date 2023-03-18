@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameCharacter.h"
+#include "Characters/GameCharacter.h"
 #include "InputActionValue.h"
 #include "Items/Item.h"
 #include "Characters/CharacterTypes.h"

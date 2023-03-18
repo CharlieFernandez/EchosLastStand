@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Characters/OpenWorldCharacterAnimInstance.h"
+#include "Characters/OpenWorldCharacter/OpenWorldCharacterAnimInstance.h"
 
-#include "Characters/OpenWorldCharacter.h"
+#include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
