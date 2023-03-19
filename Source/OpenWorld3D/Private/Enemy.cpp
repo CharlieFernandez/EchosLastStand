@@ -205,8 +205,6 @@ void AEnemy::StartAttackTimer()
 	State = EEnemyState::EES_ConsideringAttack;
 	const float AttackTime = FMath::RandRange(AttackMinTimer, AttackMaxTimer);
 	GetWorldTimerManager().SetTimer(AttackTimerHandle, this, &AEnemy::Attack, AttackTime);
-	
-	UE_LOG(LogTemp, Warning, TEXT("Considering Attack..."));
 }
 
 bool AEnemy::IsInChasingRadius() const

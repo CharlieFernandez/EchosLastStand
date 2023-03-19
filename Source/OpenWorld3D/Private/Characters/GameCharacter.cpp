@@ -33,11 +33,9 @@ bool AGameCharacter::CanAttack()
 
 void AGameCharacter::Attack()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Trying to attack..."));
 	
 	if(CanAttack())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Attacking!"));
 		PlayComboAttackMontage();
 	}
 }
