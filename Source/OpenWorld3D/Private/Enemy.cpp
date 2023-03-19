@@ -84,7 +84,7 @@ void AEnemy::Tick(float DeltaTime)
 	else
 	{
 		CheckPatrolTarget();
-	}	
+	}
 }
 
 void AEnemy::OnPawnSeen(APawn* PawnSeen)
@@ -168,11 +168,22 @@ void AEnemy::CheckCombatTarget()
 		ClearAttackTimer();
 		SetStateToChasing(CombatTarget);
 	}
-	else if(CanAttack())
+	else if(IsAttackEnding() && IsInAttackingRadius())
+	{
+		Attack();
+	}
+	else if(CanConsiderAttacking())
 	{
 		ClearAttackTimer();
 		StartAttackTimer();
-	}	
+	}
+}
+
+bool AEnemy::CanConsiderAttacking() const
+{
+	return IsInAttackingRadius() &&
+		!IsConsideringAttacking() &&
+		!IsDead();
 }
 
 bool AEnemy::CanAttack()
@@ -182,11 +193,20 @@ bool AEnemy::CanAttack()
 		!IsDead();
 }
 
-void AEnemy::StartAttackTimer()
+bool AEnemy::CanEngage() const
 {
-	State = EEnemyState::EES_Attacking;
+	return IsInAttackingRadius() &&
+		!IsEngaged() &&
+		!IsDead();
+}
+
+void AEnemy::StartAttackTimer()
+{	
+	State = EEnemyState::EES_ConsideringAttack;
 	const float AttackTime = FMath::RandRange(AttackMinTimer, AttackMaxTimer);
 	GetWorldTimerManager().SetTimer(AttackTimerHandle, this, &AEnemy::Attack, AttackTime);
+	
+	UE_LOG(LogTemp, Warning, TEXT("Considering Attack..."));
 }
 
 bool AEnemy::IsInChasingRadius() const
@@ -244,7 +264,8 @@ void AEnemy::Die()
 
 	State = EEnemyState::EES_Dead;
 	CombatTarget = nullptr;
-	GetWorldTimerManager().ClearTimer(PatrolTimerHandle);
+	ClearPatrolTimer();
+	ClearAttackTimer();
 	SetLifeSpan(10.f);
 	ToggleHealth(false);
 	AIController->StopMovement();
@@ -270,9 +291,9 @@ bool AEnemy::IsChasing() const
 	return State == EEnemyState::EES_Chasing;
 }
 
-bool AEnemy::IsAttacking() const
+bool AEnemy::IsConsideringAttacking() const
 {
-	return State == EEnemyState::EES_Attacking;
+	return State == EEnemyState::EES_ConsideringAttack;
 }
 
 bool AEnemy::IsEngaged() const

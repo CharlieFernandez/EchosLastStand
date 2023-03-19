@@ -33,8 +33,11 @@ bool AGameCharacter::CanAttack()
 
 void AGameCharacter::Attack()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Trying to attack..."));
+	
 	if(CanAttack())
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Attacking!"));
 		PlayComboAttackMontage();
 	}
 }
@@ -50,6 +53,8 @@ void AGameCharacter::PlayMontageSection(UAnimMontage* Montage, FName SectionName
 
 void AGameCharacter::PlayComboAttackMontage()
 {
+	if(NormalAttacksMontage == nullptr) return;
+	
 	static uint8 AttackIndex = 0;
 	
 	ResetIfComboEnded(AttackIndex);
@@ -72,6 +77,11 @@ void AGameCharacter::ResetIfComboEnded(uint8 &AttackIndex) const
 void AGameCharacter::AttackEnd()
 {
 	ActionState = EActionState::EAS_AttackEnd;
+}
+
+void AGameCharacter::ResetActionState()
+{
+	ActionState = EActionState::EAS_Unoccupied;
 }
 
 void AGameCharacter::SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN)
@@ -130,8 +140,14 @@ bool AGameCharacter::IsUnoccupied() const
 
 bool AGameCharacter::IsAttacking() const
 {
-	return ActionState != EActionState::EAS_Attacking;
+	return ActionState == EActionState::EAS_Attacking;
 }
+
+bool AGameCharacter::IsAttackEnding() const
+{
+	return ActionState == EActionState::EAS_AttackEnd;
+}
+
 
 void AGameCharacter::FindAndPlayReactSection(const FVector ImpactPoint) const
 {

@@ -104,7 +104,4 @@ private:
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void SlowDownRoll();
-	
-	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
-	void ResetActionState();
 };

@@ -33,9 +33,11 @@ protected:
 	void GenerateNewPatrolTarget();
 	virtual void BeginPlay() override;
 	void SetNewMoveToTarget(TObjectPtr<AActor> Target) const;
+	bool CanConsiderAttacking() const;
 	virtual bool CanAttack() override;
+	bool CanEngage() const;
 	bool IsChasing() const;
-	bool IsAttacking() const;
+	bool IsConsideringAttacking() const;
 	bool IsEngaged() const;
 	virtual void Destroyed() override;
 

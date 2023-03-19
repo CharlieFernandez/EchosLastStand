@@ -242,8 +242,3 @@ bool AOpenWorldCharacter::CanAttack()
 	return (ActionState == EActionState::EAS_Unoccupied || ActionState == EActionState::EAS_AttackEnd)
 	&& EquipState != EEquipState::ECS_Unequipped;
 }
-
-void AOpenWorldCharacter::ResetActionState()
-{
-	ActionState = EActionState::EAS_Unoccupied;
-}

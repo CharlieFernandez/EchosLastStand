@@ -54,6 +54,7 @@ protected:
 	void SetHealthPercentage() const;
 	bool IsUnoccupied() const;
 	bool IsAttacking() const;
+	bool IsAttackEnding() const;
 
 
 
@@ -79,6 +80,8 @@ protected:
 	/* Functions */
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void AttackEnd();
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	void ResetActionState();
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void Equip() const;
