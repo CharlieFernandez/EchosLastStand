@@ -9,6 +9,7 @@
 #include "Components/InputComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "InputState.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Items/Weapons/EquipActionState.h"
@@ -99,17 +100,30 @@ void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp
 
 void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 {
-	if(ActionState != EActionState::EAS_Unoccupied) return;
+	if(!IsUnoccupied() && !IsAttacking()) return;
 	
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
-	const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
-	
-	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	if(ActionState == EActionState::EAS_Unoccupied)
+	{
+		const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);	
+		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-	AddMovementInput(ForwardDirection, MovementVector.Y);
-	AddMovementInput(RightDirection, MovementVector.X);
+		AddMovementInput(ForwardDirection, MovementVector.Y);
+		AddMovementInput(RightDirection, MovementVector.X);	
+	}
+	else
+	{
+		const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
+			FVector::ZeroVector,
+			FVector(MovementVector.Y, MovementVector.X, 0)
+		);
+
+		const FRotator CameraRotation = CameraBoom->GetComponentRotation();
+		const FRotator CameraYawRotation (0, CameraRotation.Yaw, 0);
+		SetActorRotation(DirectionToFace + CameraYawRotation);
+	}
 }
 
 void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)

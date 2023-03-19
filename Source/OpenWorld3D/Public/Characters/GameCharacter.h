@@ -51,6 +51,10 @@ protected:
 	FORCEINLINE UAnimMontage* GetAttackMontage() const { return NormalAttacksMontage; }
 	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
 	void SetHealthPercentage() const;
+	bool IsUnoccupied() const;
+	bool IsAttacking() const;
+
+
 
 	/* Properties */
 	UPROPERTY(VisibleInstanceOnly)

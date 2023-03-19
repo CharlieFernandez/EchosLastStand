@@ -123,6 +123,16 @@ bool AGameCharacter::IsAlive() const
 	return Attributes->IsAlive();
 }
 
+bool AGameCharacter::IsUnoccupied() const
+{
+	return ActionState == EActionState::EAS_Unoccupied;
+}
+
+bool AGameCharacter::IsAttacking() const
+{
+	return ActionState != EActionState::EAS_Attacking;
+}
+
 void AGameCharacter::FindAndPlayReactSection(const FVector ImpactPoint) const
 {
 	const double Angle = GetAngleFromImpactPoint(ImpactPoint);
