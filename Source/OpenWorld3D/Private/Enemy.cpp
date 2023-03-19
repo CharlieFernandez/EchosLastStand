@@ -267,17 +267,17 @@ bool AEnemy::IsDead() const
 
 bool AEnemy::IsChasing() const
 {
-	return State != EEnemyState::EES_Chasing;
+	return State == EEnemyState::EES_Chasing;
 }
 
 bool AEnemy::IsAttacking() const
 {
-	return State != EEnemyState::EES_Attacking;
+	return State == EEnemyState::EES_Attacking;
 }
 
 bool AEnemy::IsEngaged() const
 {
-	return State != EEnemyState::EES_Engaged;
+	return State == EEnemyState::EES_Engaged;
 }
 
 void AEnemy::GenerateNewPatrolTarget()
