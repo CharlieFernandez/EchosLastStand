@@ -32,25 +32,9 @@ void UDamageDealer::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, float Damage, USoundBase* SoundBase)
 {
 	AActor* ActorOwner = GetOwner<AActor>();
-	
 	ActorsToIgnore.AddUnique(ActorOwner);
-
 	FHitResult HitResult;
-
-	UKismetSystemLibrary::BoxTraceSingle(
-		this,
-		StartTracePos,
-		EndTracePos,
-		FVector(PrimitiveComponent->GetPlacementExtent().BoxExtent / 2),
-		PrimitiveComponent->GetComponentRotation(),
-		ETraceTypeQuery::TraceTypeQuery1,
-		false,
-		ActorsToIgnore,
-		EDrawDebugTrace::None,
-		HitResult,
-		true
-	);
-
+	BoxTrace(PrimitiveComponent, StartTracePos, EndTracePos, HitResult);
 	const FVector ImpactPoint = HitResult.ImpactPoint;
 
 	if(AActor* ActorHit = HitResult.GetActor())
@@ -60,7 +44,6 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 		if(SoundBase && Cast<APawn>(ActorHit))
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, SoundBase, ImpactPoint, PrimitiveComponent -> GetComponentRotation());
-
 			UGameplayStatics::SetGlobalTimeDilation(this, 0.01f);
 			ActorOwner->GetWorldTimerManager().SetTimer(ImpactTimer, this, &UDamageDealer::ImpactPause, 0.001f);
 		}
@@ -100,4 +83,21 @@ void UDamageDealer::SetHitBoxCollisionType(TArray<UPrimitiveComponent*> Primitiv
 void UDamageDealer::ImpactPause() const
 {
 	UGameplayStatics::SetGlobalTimeDilation(this, 1.f);
+}
+
+void UDamageDealer::BoxTrace(const UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, FHitResult& HitResult) const
+{
+	UKismetSystemLibrary::BoxTraceSingle(
+	this,
+	StartTracePos,
+	EndTracePos,
+	FVector(PrimitiveComponent->GetPlacementExtent().BoxExtent / 2),
+	PrimitiveComponent->GetComponentRotation(),
+	ETraceTypeQuery::TraceTypeQuery1,
+	false,
+	ActorsToIgnore,
+	EDrawDebugTrace::None,
+	HitResult,
+	true
+);
 }

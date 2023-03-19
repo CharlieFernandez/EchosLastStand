@@ -22,18 +22,6 @@ public:
 
 	void DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, float Damage, USoundBase* SoundBase);
 
-	// UFUNCTION(BlueprintPure)
-	// FORCEINLINE UFieldSystemComponent* GetFieldSystemComponent() const { return FieldSystemComponent; }
-	//
-	// UFUNCTION(BlueprintPure)
-	// FORCEINLINE URadialFalloff* GetRadialFalloff() const {return RadialFalloff; }
-	//
-	// UFUNCTION(BlueprintPure)
-	// FORCEINLINE URadialVector* GetRadialVector() const { return RadialVector; }
-	//
-	// UFUNCTION(BlueprintPure)
-	// FORCEINLINE UFieldSystemMetaDataFilter* GetFSMetaDataFilter() const { return FieldSystemMetaDataFilter; }
-
 protected:
 	virtual void BeginPlay() override;
 
@@ -41,12 +29,13 @@ protected:
 	void CreateFields(const FVector& FieldLocation);
 	
 private:
+	FTimerHandle ImpactTimer;
+	void ImpactPause() const;
+	void BoxTrace(const UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, FHitResult& HitResult) const;
+
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TObjectPtr<AActor>> ActorsToIgnore;
-	FTimerHandle ImpactTimer;
 	
-	void ImpactPause() const;
-
 	UFUNCTION(BlueprintCallable)
 	void SetHitBoxCollisionType(TArray<UPrimitiveComponent*> PrimitiveComponents, ECollisionEnabled::Type CollisionType);
 
