@@ -100,7 +100,7 @@ void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp
 
 void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 {
-	if(!IsUnoccupied() && !IsAttacking()) return;
+	if(!IsUnoccupied() &&!IsAttacking()) return;
 	
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
@@ -234,7 +234,7 @@ void AOpenWorldCharacter::SpeedUpRoll()
 
 void AOpenWorldCharacter::SlowDownRoll()
 {
-	CharacterMovementComponent->MaxWalkSpeed = GetMaxWalkSpeed();
+	CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
 }
 
 bool AOpenWorldCharacter::CanAttack()

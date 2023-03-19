@@ -45,6 +45,7 @@ protected:
 	FORCEINLINE AWeapon* GetWeaponHeld() const { return WeaponHeld; }
 	void AttachMeshToSocket(UMeshComponent* WeaponMesh, FName SocketName) const;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	FORCEINLINE float GetMaxSprintSpeed() const { return MaxSprintSpeed; }
 	FORCEINLINE float GetMaxRunSpeed() const { return MaxRunSpeed; }
 	FORCEINLINE float GetMaxWalkSpeed() const { return MaxWalkSpeed; }
 	void ResetIfComboEnded(uint8& AttackIndex) const;
@@ -105,6 +106,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float MaxRunSpeed;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float MaxSprintSpeed;
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<AWeapon> WeaponHeld;
