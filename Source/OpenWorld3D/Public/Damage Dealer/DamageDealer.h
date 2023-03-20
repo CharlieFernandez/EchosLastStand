@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DamageHitBox.h"
 #include "DamageDealer.generated.h"
-
 
 class UFieldSystemMetaDataFilter;
 class URadialVector;
@@ -20,13 +20,18 @@ public:
 	UDamageDealer();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, float Damage, USoundBase* SoundBase);
+	void DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, float Damage, USoundBase* SoundBase, float ImpactPauseTime);
+	FORCEINLINE TArray<FDamageHitBox> GetAllDamageHitBoxes() const { return DamageHitBoxes; }
 
 protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintImplementableEvent)
 	void CreateFields(const FVector& FieldLocation);
+
+	UFUNCTION()
+	void OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 	
 private:
 	FTimerHandle ImpactTimer;
@@ -51,4 +56,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UFieldSystemMetaDataFilter> FieldSystemMetaDataFilter;
+
+	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TArray<FDamageHitBox> DamageHitBoxes;
 };

@@ -21,7 +21,17 @@ UDamageDealer::UDamageDealer()
 
 void UDamageDealer::BeginPlay()
 {
-	Super::BeginPlay();	
+	Super::BeginPlay();
+
+	for(FDamageHitBox DamageHitBox: DamageHitBoxes)
+	{
+		UPrimitiveComponent* HitBox = DamageHitBox.GetHitBox();
+		HitBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		HitBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+		HitBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+
+		HitBox->OnComponentBeginOverlap.AddDynamic(this, &UDamageDealer::OnBoxBeginOverlap);
+	}
 }
 
 void UDamageDealer::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -29,7 +39,25 @@ void UDamageDealer::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, float Damage, USoundBase* SoundBase)
+void UDamageDealer::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	const FDamageHitBox* DamageHitBox = DamageHitBoxes.FindByPredicate([OverlappedComponent](const FDamageHitBox DamageHitBoxTemp)
+	{
+		return DamageHitBoxTemp.GetHitBox() == OverlappedComponent;
+	});
+	
+	DealDamage(
+		OverlappedComponent,
+		OverlappedComponent->GetChildComponent(0)->GetComponentLocation(),
+		OverlappedComponent->GetChildComponent(1)->GetComponentLocation(),
+		DamageHitBox->GetDamage(),
+		DamageHitBox->GetHitSFX(),
+		DamageHitBox->GetImpactPauseTime()
+	);
+}
+
+void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, float Damage, USoundBase* SoundBase, float ImpactPauseTime)
 {
 	AActor* ActorOwner = GetOwner<AActor>();
 	ActorsToIgnore.AddUnique(ActorOwner);
@@ -45,7 +73,7 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, SoundBase, ImpactPoint, PrimitiveComponent -> GetComponentRotation());
 			UGameplayStatics::SetGlobalTimeDilation(this, 0.01f);
-			ActorOwner->GetWorldTimerManager().SetTimer(ImpactTimer, this, &UDamageDealer::ImpactPause, 0.001f);
+			ActorOwner->GetWorldTimerManager().SetTimer(ImpactTimer, this, &UDamageDealer::ImpactPause, ImpactPauseTime);
 		}
 
 		UGameplayStatics::ApplyDamage(ActorHit,

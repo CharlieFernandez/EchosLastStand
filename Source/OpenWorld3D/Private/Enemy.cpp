@@ -39,6 +39,8 @@ AEnemy::AEnemy()
 	bUseControllerRotationYaw = false;
 
 	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>("Pawn Sensor");
+
+	Tags.AddUnique("Enemy");
 }
 
 void AEnemy::BeginPlay()

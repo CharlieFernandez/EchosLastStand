@@ -33,6 +33,8 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 
 	HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
 	HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());
+
+	Tags.AddUnique("Player");
 }
 
 void AOpenWorldCharacter::BeginPlay()
