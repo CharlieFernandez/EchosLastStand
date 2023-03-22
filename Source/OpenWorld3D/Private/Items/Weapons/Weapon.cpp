@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Items/Weapons/Weapon.h"
+
+#include "Enemy.h"
 #include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "NiagaraComponent.h"
-#include "Kismet/GameplayStatics.h"
 
 AWeapon::AWeapon()
 {
@@ -23,7 +24,7 @@ void AWeapon::ToggleWeaponState()
 
 	if(ItemState == EItemState::EIS_Held)
 	{		
-		SetToHeldItem();
+		SetToHeldItem<AOpenWorldCharacter>();
 	}
 	else
 	{
@@ -31,10 +32,28 @@ void AWeapon::ToggleWeaponState()
 	}
 }
 
+template <class T>
 void AWeapon::SetToHeldItem()
 {
 	ItemState = EItemState::EIS_Held;
 	SphereComponent->SetGenerateOverlapEvents(false);
 	PickUpParticles->Deactivate();
 	ItemMesh->EmptyOverrideMaterials();
+
+	if(typeid(T) == typeid(AEnemy))
+	{
+		TArray<FDamageHitBox> AllHitBoxes = DamageDealerComponent->GetAllDamageHitBoxes();
+
+		for(FDamageHitBox DamageHitBox: AllHitBoxes)
+		{
+			UPrimitiveComponent* HitBox = DamageHitBox.GetHitBox();
+			HitBox->SetGenerateOverlapEvents(true);
+			HitBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+			HitBox->SetCollisionResponseToAllChannels(ECR_Ignore);
+			HitBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+		}
+	}
 }
+
+template void AWeapon::SetToHeldItem<AEnemy>();
+template void AWeapon::SetToHeldItem<AOpenWorldCharacter>();

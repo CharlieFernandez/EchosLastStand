@@ -46,6 +46,12 @@ void UDamageDealer::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, 
 	{
 		return DamageHitBoxTemp.GetHitBox() == OverlappedComponent;
 	});
+
+	const APawn* AttackersInstigator = GetOwner()->GetInstigator();
+	const APawn* DefendersInstigator = OtherActor->GetInstigator();
+	
+	if(AttackersInstigator->ActorHasTag(TEXT("Enemy")) && DefendersInstigator->ActorHasTag(TEXT("Enemy")))
+		return;
 	
 	DealDamage(
 		OverlappedComponent,
@@ -65,6 +71,8 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 	BoxTrace(PrimitiveComponent, StartTracePos, EndTracePos, HitResult);
 	const FVector ImpactPoint = HitResult.ImpactPoint;
 
+	UE_LOG(LogTemp, Warning, TEXT("Hit someone"));
+	
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
 		ActorsToIgnore.AddUnique(ActorHit);

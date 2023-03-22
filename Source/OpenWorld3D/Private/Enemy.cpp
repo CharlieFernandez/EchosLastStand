@@ -68,7 +68,10 @@ void AEnemy::StartWithWeapon()
 	{
 		AWeapon* Weapon = Cast<AWeapon>(World->SpawnActor(StartingWeaponClass));
 		SetEquippedWeapon(Weapon, Weapon->GetMesh(), rightHandItemSocket);
-		Weapon->SetToHeldItem();
+		Weapon->SetOwner(this);
+		Weapon->SetInstigator(this);
+		Weapon->ToggleWeaponState();
+		Weapon->SetToHeldItem<AEnemy>();
 		Equip();
 	}
 }
