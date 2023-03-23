@@ -24,7 +24,7 @@ void AWeapon::ToggleWeaponState()
 
 	if(ItemState == EItemState::EIS_Held)
 	{		
-		SetToHeldItem<AOpenWorldCharacter>();
+		SetToHeldItem();
 	}
 	else
 	{
@@ -32,28 +32,10 @@ void AWeapon::ToggleWeaponState()
 	}
 }
 
-template <class T>
 void AWeapon::SetToHeldItem()
 {
 	ItemState = EItemState::EIS_Held;
 	SphereComponent->SetGenerateOverlapEvents(false);
 	PickUpParticles->Deactivate();
 	ItemMesh->EmptyOverrideMaterials();
-
-	if(typeid(T) == typeid(AEnemy))
-	{
-		TArray<FDamageHitBox> AllHitBoxes = DamageDealerComponent->GetAllDamageHitBoxes();
-
-		for(FDamageHitBox DamageHitBox: AllHitBoxes)
-		{
-			UPrimitiveComponent* HitBox = DamageHitBox.GetHitBox();
-			HitBox->SetGenerateOverlapEvents(true);
-			HitBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-			HitBox->SetCollisionResponseToAllChannels(ECR_Ignore);
-			HitBox->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
-		}
-	}
 }
-
-template void AWeapon::SetToHeldItem<AEnemy>();
-template void AWeapon::SetToHeldItem<AOpenWorldCharacter>();

@@ -40,7 +40,6 @@ protected:
 	virtual bool CanAttack();
 	void PlayComboAttackMontage();	
 	virtual void BeginPlay() override;
-	void PlayReactMontage(const FName& SectionName) const;
 	void SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
 	FORCEINLINE AWeapon* GetWeaponHeld() const { return WeaponHeld; }
 	void AttachMeshToSocket(UMeshComponent* WeaponMesh, FName SocketName) const;
@@ -93,9 +92,9 @@ private:
 	/* Methods */
 	void EmitHitParticles(FVector ImpactPoint) const;
 	static FName GenerateSectionNameByAngle(double Angle);
-	double GetAngleFromImpactPoint(FVector ImpactPoint) const;
-	virtual void GetHit_Implementation(const FVector ImpactPoint) override;
-	void FindAndPlayReactSection(const FVector ImpactPoint) const;
+	double GetAngleFromInstigatorPosition(FVector InstigatorPosition) const;
+	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
+	void FindAndPlayReactSection(const FVector InstigatorPosition) const;
 
 	/* Properties */	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)

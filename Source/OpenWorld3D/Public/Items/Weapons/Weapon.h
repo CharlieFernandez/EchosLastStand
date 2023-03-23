@@ -18,8 +18,7 @@ class OPENWORLD3D_API AWeapon : public AItem
 public:
 	AWeapon();
 	void ToggleWeaponState();
-
-	template <class T>
+	
 	void SetToHeldItem();
 	
 protected:

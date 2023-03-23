@@ -33,6 +33,11 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 
 	HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
 	HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());
+	
+	GetMesh()->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+	GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
+	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 
 	Tags.AddUnique("Player");
 }

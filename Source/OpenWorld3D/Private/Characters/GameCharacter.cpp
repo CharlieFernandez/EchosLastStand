@@ -4,6 +4,7 @@
 #include "Characters/GameCharacter.h"
 
 #include "Components/AttributeComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Items/Weapons/Weapon.h"
 
@@ -12,6 +13,7 @@ AGameCharacter::AGameCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	SkeletalMeshComponent = GetMesh();
+	Attributes = CreateDefaultSubobject<UAttributeComponent>("Attribute Component");
 }
 
 void AGameCharacter::BeginPlay()
@@ -19,6 +21,7 @@ void AGameCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	AnimInstance = GetMesh()->GetAnimInstance();
+	SetInstigator(this);
 }
 
 void AGameCharacter::Tick(float DeltaTime)
@@ -115,13 +118,13 @@ bool AGameCharacter::CanUnequip() const
 		ActionState != EActionState::EAS_Attacking;
 }
 
-void AGameCharacter::GetHit_Implementation(const FVector ImpactPoint)
+void AGameCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)
 {	
 	EmitHitParticles(ImpactPoint);
 	
 	if(IsAlive())
 	{
-		FindAndPlayReactSection(ImpactPoint);
+		FindAndPlayReactSection(InstigatorPosition);
 	}
 	else Die();
 }
@@ -147,11 +150,51 @@ bool AGameCharacter::IsAttackEnding() const
 }
 
 
-void AGameCharacter::FindAndPlayReactSection(const FVector ImpactPoint) const
+void AGameCharacter::FindAndPlayReactSection(const FVector InstigatorPosition) const
 {
-	const double Angle = GetAngleFromImpactPoint(ImpactPoint);
+	const double Angle = GetAngleFromInstigatorPosition(InstigatorPosition);
 	const FName SectionName = GenerateSectionNameByAngle(Angle);	
-	PlayReactMontage(SectionName);
+	PlayMontageSection(ReactMontage, SectionName);
+}
+
+FName AGameCharacter::GenerateSectionNameByAngle(double Angle)
+{
+	FName SectionName = FName("FromBack");
+
+	if(Angle >= -45.f && Angle <= 45.f)
+	{
+		SectionName = FName("FromFront");
+	}
+	else if(Angle > 45.f && Angle < 135.f)
+	{
+		SectionName = FName("FromRight");
+	}
+	else if(Angle > -135.f && Angle < -45.f)
+	{
+		SectionName = FName("FromLeft");
+	}
+
+	return SectionName;
+}
+
+double AGameCharacter::GetAngleFromInstigatorPosition(const FVector InstigatorPosition) const
+{
+	const FVector Forward = GetActorForwardVector();
+	const FVector ImpactLowered = FVector(InstigatorPosition.X, InstigatorPosition.Y, GetActorLocation().Z);
+	const FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
+	
+	const double CosTheta = FVector::DotProduct(Forward, DirectionOfHit);
+	double Theta = FMath::Acos(CosTheta);
+	Theta = FMath::RadiansToDegrees(Theta);
+
+	const FVector CrossProduct = FVector::CrossProduct(Forward, DirectionOfHit);
+
+	if(CrossProduct.Z < 0)
+	{
+		Theta *= -1;
+	}
+
+	return Theta;
 }
 
 float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
@@ -164,6 +207,7 @@ float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 
 void AGameCharacter::Die()
 {
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void AGameCharacter::AttachMeshToSocket(UMeshComponent* MeshToAttach, FName SocketName) const

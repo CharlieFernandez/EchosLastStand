@@ -10,6 +10,7 @@ UAttributeComponent::UAttributeComponent()
 
 void UAttributeComponent::BeginPlay()
 {
+	CurrentHealth = MaxHealth;
 	Super::BeginPlay();
 }
 

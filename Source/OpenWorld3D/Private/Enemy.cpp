@@ -28,8 +28,7 @@ AEnemy::AEnemy()
 	SkeletalMeshComponent->SetGenerateOverlapEvents(true);
 	
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
-
-	Attributes = CreateDefaultSubobject<UAttributeComponent>("Attribute Component");
+	
 	HealthBarComponent = CreateDefaultSubobject<UHealthBarComponent>("Health Bar");
 	HealthBarComponent->SetupAttachment(GetRootComponent());
 
@@ -71,7 +70,7 @@ void AEnemy::StartWithWeapon()
 		Weapon->SetOwner(this);
 		Weapon->SetInstigator(this);
 		Weapon->ToggleWeaponState();
-		Weapon->SetToHeldItem<AEnemy>();
+		Weapon->SetToHeldItem();
 		Equip();
 	}
 }
@@ -246,11 +245,6 @@ void AEnemy::ToggleHealth(bool Toggle) const
 	HealthBarComponent->SetVisibility(Toggle);
 }
 
-void AGameCharacter::PlayReactMontage(const FName& SectionName) const
-{
-	PlayMontageSection(ReactMontage, SectionName);
-}
-
 void AGameCharacter::EmitHitParticles(const FVector ImpactPoint) const
 {
 	if(HitParticles)
@@ -261,8 +255,7 @@ void AGameCharacter::EmitHitParticles(const FVector ImpactPoint) const
 
 void AEnemy::Die()
 {
-	// Death animations are handled on the blueprint side.
-	
+	// Death animations are handled on the blueprint side.	
 	Super::Die();
 
 	State = EEnemyState::EES_Dead;
@@ -272,7 +265,6 @@ void AEnemy::Die()
 	SetLifeSpan(10.f);
 	ToggleHealth(false);
 	AIController->StopMovement();
-	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void AEnemy::Destroyed()
@@ -336,46 +328,6 @@ void AEnemy::SetNewMoveToTarget(TObjectPtr<AActor> Target) const
 		MoveRequest.SetAcceptanceRadius(15.f);
 		AIController->MoveTo(MoveRequest);
 	}
-}
-
-FName AGameCharacter::GenerateSectionNameByAngle(double Angle)
-{
-	FName SectionName = FName("FromBack");
-
-	if(Angle >= -45.f && Angle <= 45.f)
-	{
-		SectionName = FName("FromFront");
-	}
-	else if(Angle > 45.f && Angle < 135.f)
-	{
-		SectionName = FName("FromRight");
-	}
-	else if(Angle > -135.f && Angle < -45.f)
-	{
-		SectionName = FName("FromLeft");
-	}
-
-	return SectionName;
-}
-
-double AGameCharacter::GetAngleFromImpactPoint(const FVector ImpactPoint) const
-{
-	const FVector Forward = GetActorForwardVector();
-	const FVector ImpactLowered = FVector(ImpactPoint.X, ImpactPoint.Y, GetActorLocation().Z);
-	const FVector DirectionOfHit = (ImpactLowered - GetActorLocation()).GetSafeNormal();
-	
-	const double CosTheta = FVector::DotProduct(Forward, DirectionOfHit);
-	double Theta = FMath::Acos(CosTheta);
-	Theta = FMath::RadiansToDegrees(Theta);
-
-	const FVector CrossProduct = FVector::CrossProduct(Forward, DirectionOfHit);
-
-	if(CrossProduct.Z < 0)
-	{
-		Theta *= -1;
-	}
-
-	return Theta;
 }
 
 void AEnemy::DrawAllWaypoints()

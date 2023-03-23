@@ -15,11 +15,6 @@ class OPENWORLD3D_API UAttributeComponent : public UActorComponent
 public:	
 	UAttributeComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	
-	UPROPERTY(EditDefaultsOnly)
-	float CurrentHealth;
-	UPROPERTY(EditDefaultsOnly)
-	float MaxHealth;
 
 	void UpdateHealth(float HealthToAdd);
 
@@ -30,4 +25,10 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(VisibleInstanceOnly)
+	float CurrentHealth;
+	UPROPERTY(EditDefaultsOnly)
+	float MaxHealth;
 };

@@ -3,6 +3,7 @@
 
 #include "Damage Dealer/DamageDealer.h"
 
+#include "NetworkReplayStreaming.h"
 #include "Components/ShapeComponent.h"
 #include "Field/FieldSystemComponent.h"
 #include "Interfaces/HitInterface.h"
@@ -28,7 +29,6 @@ void UDamageDealer::BeginPlay()
 		UPrimitiveComponent* HitBox = DamageHitBox.GetHitBox();
 		HitBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 		HitBox->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
-		HitBox->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
 
 		HitBox->OnComponentBeginOverlap.AddDynamic(this, &UDamageDealer::OnBoxBeginOverlap);
 	}
@@ -67,16 +67,20 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 {
 	AActor* ActorOwner = GetOwner<AActor>();
 	ActorsToIgnore.AddUnique(ActorOwner);
+	ActorsToIgnore.AddUnique(ActorOwner->GetInstigator());
 	FHitResult HitResult;
 	BoxTrace(PrimitiveComponent, StartTracePos, EndTracePos, HitResult);
 	const FVector ImpactPoint = HitResult.ImpactPoint;
 
-	UE_LOG(LogTemp, Warning, TEXT("Hit someone"));
+	if(HitResult.GetActor() == nullptr) return;
 	
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
 		ActorsToIgnore.AddUnique(ActorHit);
-
+		
+		if(ActorOwner->GetInstigator()->ActorHasTag(TEXT("Enemy")) && ActorHit->GetInstigator()->ActorHasTag(TEXT("Enemy")))
+			return;
+		
 		if(SoundBase && Cast<APawn>(ActorHit))
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, SoundBase, ImpactPoint, PrimitiveComponent -> GetComponentRotation());
@@ -86,14 +90,14 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 
 		UGameplayStatics::ApplyDamage(ActorHit,
 			Damage,
-			GetOwner()->GetInstigatorController(),
+			ActorOwner->GetInstigatorController(),
 			ActorOwner,
 			UDamageType::StaticClass()
 		);
 		
 		if(IHitInterface* HitInterface = Cast<IHitInterface>(ActorHit))
 		{
-			HitInterface->Execute_GetHit(HitResult.GetActor(), ImpactPoint);			
+			HitInterface->Execute_GetHit(HitResult.GetActor(), ImpactPoint, ActorOwner->GetInstigator()->GetActorLocation());			
 		}
 
 		CreateFields(ImpactPoint);
@@ -124,16 +128,16 @@ void UDamageDealer::ImpactPause() const
 void UDamageDealer::BoxTrace(const UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, FHitResult& HitResult) const
 {
 	UKismetSystemLibrary::BoxTraceSingle(
-	this,
-	StartTracePos,
-	EndTracePos,
-	FVector(PrimitiveComponent->GetPlacementExtent().BoxExtent / 2),
-	PrimitiveComponent->GetComponentRotation(),
-	ETraceTypeQuery::TraceTypeQuery1,
-	false,
-	ActorsToIgnore,
-	EDrawDebugTrace::None,
-	HitResult,
-	true
-);
+		this,
+		StartTracePos,
+		EndTracePos,
+		FVector(PrimitiveComponent->GetPlacementExtent().BoxExtent / 2),
+		PrimitiveComponent->GetComponentRotation(),
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::None,
+		HitResult,
+		true
+	);
 }

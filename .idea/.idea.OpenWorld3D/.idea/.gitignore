@@ -2,9 +2,9 @@
 /shelf/
 /workspace.xml
 # Rider ignored files
+/.idea.OpenWorld3D.iml
 /modules.xml
 /contentModel.xml
-/.idea.OpenWorld3D.iml
 /projectSettingsUpdater.xml
 # Editor-based HTTP Client requests
 /httpRequests/
