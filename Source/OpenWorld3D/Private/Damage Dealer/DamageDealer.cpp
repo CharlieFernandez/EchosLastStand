@@ -65,27 +65,22 @@ void UDamageDealer::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, 
 
 void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, float Damage, USoundBase* SoundBase, float ImpactPauseTime)
 {
-	AActor* ActorOwner = GetOwner<AActor>();
-	ActorsToIgnore.AddUnique(ActorOwner);
-	ActorsToIgnore.AddUnique(ActorOwner->GetInstigator());
 	FHitResult HitResult;
 	BoxTrace(PrimitiveComponent, StartTracePos, EndTracePos, HitResult);
-	const FVector ImpactPoint = HitResult.ImpactPoint;
-
-	if(HitResult.GetActor() == nullptr) return;
+	AActor* ActorOwner = GetOwner<AActor>();
+	
+	if(HitResult.GetActor() == nullptr || ActorOwner == nullptr) return;
 	
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
-		ActorsToIgnore.AddUnique(ActorHit);
+		ActorsToIgnore.AddUnique(ActorHit);		
+		const FVector ImpactPoint = HitResult.ImpactPoint;
 		
-		if(ActorOwner->GetInstigator()->ActorHasTag(TEXT("Enemy")) && ActorHit->GetInstigator()->ActorHasTag(TEXT("Enemy")))
-			return;
+		if(WasEnemyHit(ActorOwner, ActorHit)) return;
 		
 		if(SoundBase && Cast<APawn>(ActorHit))
 		{
-			UGameplayStatics::PlaySoundAtLocation(this, SoundBase, ImpactPoint, PrimitiveComponent -> GetComponentRotation());
-			UGameplayStatics::SetGlobalTimeDilation(this, 0.01f);
-			ActorOwner->GetWorldTimerManager().SetTimer(ImpactTimer, this, &UDamageDealer::ImpactPause, ImpactPauseTime);
+			AttackedPawn(ActorOwner, SoundBase, ImpactPoint, PrimitiveComponent, ImpactPauseTime);
 		}
 
 		UGameplayStatics::ApplyDamage(ActorHit,
@@ -103,6 +98,24 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 		CreateFields(ImpactPoint);
 	}
 }
+
+void UDamageDealer::AttackedPawn(const AActor* ActorOwner, USoundBase* SoundBase, FVector ImpactPoint, const UPrimitiveComponent* PrimitiveComponent, const float ImpactPauseTime)
+{
+	UGameplayStatics::PlaySoundAtLocation(this, SoundBase, ImpactPoint, PrimitiveComponent -> GetComponentRotation());
+	UGameplayStatics::SetGlobalTimeDilation(this, 0.01f);
+	ActorOwner->GetWorldTimerManager().SetTimer(ImpactTimer, this, &UDamageDealer::ImpactPause, ImpactPauseTime);
+}
+
+bool UDamageDealer::WasEnemyHit(AActor*& ActorOwner, AActor*& ActorHit)
+{
+	const APawn* AttackersInstigator = ActorOwner->GetInstigator();
+	const APawn* DefendersInstigator = ActorHit->GetInstigator();
+	
+	return AttackersInstigator == nullptr &&  DefendersInstigator == nullptr &&
+			AttackersInstigator->ActorHasTag(TEXT("Enemy")) &&
+			DefendersInstigator->ActorHasTag(TEXT("Enemy"));
+}
+
 
 void UDamageDealer::SetHitBoxCollisionType(TArray<UPrimitiveComponent*> PrimitiveComponents, ECollisionEnabled::Type CollisionType)
 {
@@ -125,8 +138,12 @@ void UDamageDealer::ImpactPause() const
 	UGameplayStatics::SetGlobalTimeDilation(this, 1.f);
 }
 
-void UDamageDealer::BoxTrace(const UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, FHitResult& HitResult) const
+void UDamageDealer::BoxTrace(const UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, FHitResult& HitResult)
 {
+	AActor* ActorOwner = GetOwner<AActor>();
+	ActorsToIgnore.AddUnique(ActorOwner);
+	ActorsToIgnore.AddUnique(ActorOwner->GetInstigator());
+	
 	UKismetSystemLibrary::BoxTraceSingle(
 		this,
 		StartTracePos,

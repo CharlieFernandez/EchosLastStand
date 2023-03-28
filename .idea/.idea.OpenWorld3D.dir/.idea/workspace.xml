@@ -4,35 +4,13 @@
     <projectFile>OpenWorld3D.uproject</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ce69406-369e-4b55-b591-0252a49ac4be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Equip.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Roll.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_S_NormalAttacks.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Rigs/IK_Echo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Rigs/IK_Echo.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/ABP_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/ABP_AlienSoldier.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/Montages/AM_NormalAttacks.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/Montages/AM_NormalAttacks.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/ABP_Crypto.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/ABP_Crypto.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Sword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Sword.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IKR_ManequinnToEcho.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IKR_ManequinnToEcho.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IK_Manequinn.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IK_Manequinn.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Sword_Animations/Demo/Mannequin/Character/Mesh/UE4_Mannequin_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Sword_Animations/Demo/Mannequin/Character/Mesh/UE4_Mannequin_Skeleton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Mixamo/AlienSoldier/SK_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mixamo/AlienSoldier/SK_AlienSoldier.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Breakable/BreakableActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Breakable/BreakableActor.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/AttributeComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/AttributeComponent.cpp" afterDir="false" />
+    <list default="true" id="018a6848-2025-40d4-b961-9c2818fc856d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Damage Dealer/DamageDealer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Damage Dealer/DamageDealer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Breakable/BreakableActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Breakable/BreakableActor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/Enemies/EnemyAnimInstance.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/Enemies/EnemyAnimInstance.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/AttributeComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/AttributeComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Interfaces/HitInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Interfaces/HitInterface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Items/Weapons/Weapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Items/Weapons/Weapon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Damage Dealer/DamageDealer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Damage Dealer/DamageDealer.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +20,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2NNrxv28D9PDFdu53q2jo6BssON" />
+  <component name="ProjectId" id="2NbkRV4hpMt1BjN1KDg8Xe08p0c" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -52,6 +30,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "XThreadsFramesViewSplitterKey": "0.60877866",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -123,12 +102,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5ce69406-369e-4b55-b591-0252a49ac4be" name="Changes" comment="" />
-      <created>1679515631530</created>
+      <changelist id="018a6848-2025-40d4-b961-9c2818fc856d" name="Changes" comment="" />
+      <created>1679940162573</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1679515631530</updated>
-      <workItem from="1679515635350" duration="1142000" />
+      <updated>1679940162573</updated>
+      <workItem from="1679940164846" duration="11948000" />
     </task>
     <servers />
   </component>
