@@ -119,7 +119,8 @@ bool AGameCharacter::CanUnequip() const
 }
 
 void AGameCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)
-{	
+{
+	ActionState = EActionState::EAS_HitReact;
 	EmitHitParticles(ImpactPoint);
 	
 	if(IsAlive())

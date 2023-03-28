@@ -207,8 +207,7 @@ void AOpenWorldCharacter::Jump()
 
 void AOpenWorldCharacter::Roll(const FInputActionValue& Value)
 {
-	if(ActionState == EActionState::EAS_Rolling || ActionState == EActionState::EAS_Equipping ||
-		CharacterMovementComponent->IsFalling()) return;
+	if(ActionState != EActionState::EAS_Unoccupied || CharacterMovementComponent->IsFalling()) return;
 
 	PlayRollMontage(Value);
 }
