@@ -4,13 +4,13 @@
     <projectFile>OpenWorld3D.uproject</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="018a6848-2025-40d4-b961-9c2818fc856d" name="Changes" comment="">
+    <list default="true" id="beaffe50-b455-447f-a11e-0b605ba49bd5" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Damage Dealer/DamageDealer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Damage Dealer/DamageDealer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Damage Dealer/DamageDealer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Damage Dealer/DamageDealer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/CharacterTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/CharacterTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +20,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2NbkRV4hpMt1BjN1KDg8Xe08p0c" />
+  <component name="ProjectId" id="2Ne8oThyTFPeyh7DHCrQAESYrjc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,7 +30,6 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.60877866",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -102,12 +101,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="018a6848-2025-40d4-b961-9c2818fc856d" name="Changes" comment="" />
-      <created>1679940162573</created>
+      <changelist id="beaffe50-b455-447f-a11e-0b605ba49bd5" name="Changes" comment="" />
+      <created>1680013362414</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1679940162573</updated>
-      <workItem from="1679940164846" duration="11948000" />
+      <updated>1680013362414</updated>
+      <workItem from="1680013365409" duration="346000" />
     </task>
     <servers />
   </component>

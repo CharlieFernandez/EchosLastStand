@@ -31,12 +31,12 @@ void AGameCharacter::Tick(float DeltaTime)
 
 bool AGameCharacter::CanAttack()
 {
-	return false; // Change this later.
+	return (ActionState == EActionState::EAS_Unoccupied || ActionState == EActionState::EAS_AttackEnd)
+	&& EquipState != EEquipState::ECS_Unequipped;
 }
 
 void AGameCharacter::Attack()
-{
-	
+{	
 	if(CanAttack())
 	{
 		PlayComboAttackMontage();

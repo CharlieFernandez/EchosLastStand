@@ -192,9 +192,14 @@ bool AEnemy::CanConsiderAttacking() const
 
 bool AEnemy::CanAttack()
 {
-	return IsInAttackingRadius() &&
-		!IsAttacking() &&
-		!IsDead();
+	if(Super::CanAttack())
+	{
+		return IsInAttackingRadius() &&
+			!IsAttacking() &&
+			!IsDead();
+	}
+
+	return false;
 }
 
 bool AEnemy::CanEngage() const

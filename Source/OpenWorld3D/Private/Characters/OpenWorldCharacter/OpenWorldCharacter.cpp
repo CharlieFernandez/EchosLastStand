@@ -243,9 +243,3 @@ void AOpenWorldCharacter::SlowDownRoll()
 {
 	CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
 }
-
-bool AOpenWorldCharacter::CanAttack()
-{
-	return (ActionState == EActionState::EAS_Unoccupied || ActionState == EActionState::EAS_AttackEnd)
-	&& EquipState != EEquipState::ECS_Unequipped;
-}
