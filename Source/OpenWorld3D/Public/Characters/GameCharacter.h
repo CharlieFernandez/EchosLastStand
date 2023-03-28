@@ -59,6 +59,9 @@ protected:
 
 	/* Properties */
 	UPROPERTY(VisibleInstanceOnly)
+	TObjectPtr<AActor> CombatTarget;
+	
+	UPROPERTY(VisibleInstanceOnly)
 	EEquipState EquipState = EEquipState::ECS_Unequipped;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
@@ -88,7 +91,7 @@ protected:
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void Unequip();
 
-private:
+private:	
 	/* Methods */
 	void EmitHitParticles(FVector ImpactPoint) const;
 	static FName GenerateSectionNameByAngle(double Angle);
@@ -96,7 +99,13 @@ private:
 	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 	void FindAndPlayReactSection(const FVector InstigatorPosition) const;
 
-	/* Properties */	
+	/* Properties */
+	UPROPERTY(EditDefaultsOnly)
+	bool CanBeStaggered = true;
+
+	UPROPERTY(EditDefaultsOnly)
+	float WarpTranslationOffset = 0.75f;
+	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage> NormalAttacksMontage;
 	
@@ -114,4 +123,11 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<AWeapon> WeaponHeld;
+
+	/* Functions */
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	FVector GetTranslationWarp() const;
+
+	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	FVector GetRotationWarp() const;
 };

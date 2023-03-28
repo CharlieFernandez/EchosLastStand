@@ -120,13 +120,16 @@ bool AGameCharacter::CanUnequip() const
 
 void AGameCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)
 {
-	ActionState = EActionState::EAS_HitReact;
 	EmitHitParticles(ImpactPoint);
 	
 	if(IsAlive())
 	{
-		FindAndPlayReactSection(InstigatorPosition);
-	}
+		if(CanBeStaggered)
+		{
+			ActionState = EActionState::EAS_HitReact;
+			FindAndPlayReactSection(InstigatorPosition);
+		}
+	}	
 	else Die();
 }
 
@@ -215,4 +218,23 @@ void AGameCharacter::AttachMeshToSocket(UMeshComponent* MeshToAttach, FName Sock
 {
 	const FAttachmentTransformRules AttachmentTransformRules(EAttachmentRule::SnapToTarget, true);
 	MeshToAttach->AttachToComponent(GetMesh(), AttachmentTransformRules, SocketName);
+}
+
+FVector AGameCharacter::GetTranslationWarp() const
+{
+	if(CombatTarget == nullptr) return FVector();
+
+	const FVector Location = GetActorLocation();
+	const FVector OtherLocation = CombatTarget->GetActorLocation();
+	FVector VectorDirection = (Location - OtherLocation).GetSafeNormal();
+	VectorDirection *= WarpTranslationOffset;
+
+	return VectorDirection + OtherLocation;
+}
+
+FVector AGameCharacter::GetRotationWarp() const
+{
+	if(CombatTarget == nullptr) return FVector();
+
+	return CombatTarget->GetActorLocation();
 }

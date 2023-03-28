@@ -100,9 +100,6 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly)
 	float ChasingDistance;
-	
-	UPROPERTY(VisibleInstanceOnly)
-	TObjectPtr<AActor> CombatTarget;
 
 	/* Functions */
 	UFUNCTION()
