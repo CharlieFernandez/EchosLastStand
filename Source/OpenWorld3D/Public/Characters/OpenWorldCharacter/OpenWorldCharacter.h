@@ -11,6 +11,7 @@
 
 #include "OpenWorldCharacter.generated.h"
 
+class ULockOnComponent;
 class UInputMappingContext;
 class UInputAction;
 class USpringArmComponent;
@@ -29,7 +30,7 @@ class OPENWORLD3D_API AOpenWorldCharacter : public AGameCharacter
 public:	
 	/* Methods */
 	AOpenWorldCharacter();	
-	virtual void Tick(float DeltaTime) override;	
+	void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	FORCEINLINE static FName GetPlayerTag() { return PlayerTag; }
 	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
@@ -52,6 +53,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> EKeyPressedAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> AttackPressedAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> RollAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOnAction;
 
 	/* Functions */
 	UFUNCTION()
@@ -67,12 +69,16 @@ private:
 
 	/* Methods */
 	void EquipOrUnequipWeapon();
-	void PlayRollMontage(const FInputActionValue& Value);	
+	void PlayRollMontage(const FInputActionValue& Value);
 	void PlayEquipMontage(EEquipActionState EquipType) const;
 	void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
+	void ToggleLockOn();
 
 	
 	/* Properties */
+	UPROPERTY(VisibleDefaultsOnly)
+	TObjectPtr<ULockOnComponent> LockOnComponent;
+	
 	UPROPERTY(VisibleAnywhere)
 	USphereComponent* HealthRadiusSphereComponent;
 	

@@ -47,10 +47,9 @@ void UDamageDealer::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, 
 		return DamageHitBoxTemp.GetHitBox() == OverlappedComponent;
 	});
 
-	const APawn* AttackersInstigator = GetOwner()->GetInstigator();
-	const APawn* DefendersInstigator = OtherActor->GetInstigator();
+	AActor* Actor = GetOwner();
 	
-	if(AttackersInstigator->ActorHasTag(TEXT("Enemy")) && DefendersInstigator->ActorHasTag(TEXT("Enemy")))
+	if(WasEnemyHit(Actor, OtherActor))
 		return;
 	
 	DealDamage(

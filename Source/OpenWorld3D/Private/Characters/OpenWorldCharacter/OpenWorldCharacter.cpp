@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputState.h"
+#include "Components/LockOnComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Items/Weapons/EquipActionState.h"
@@ -30,6 +31,9 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 
 	CharacterMovementComponent -> bOrientRotationToMovement = true;
 	CharacterMovementComponent -> RotationRate = FRotator(0.f, 400.f, 0.f);
+
+	LockOnComponent = CreateDefaultSubobject<ULockOnComponent>(TEXT("Lock-On Component"));
+	LockOnComponent->SpringArmComponent = SpringArm;
 
 	HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
 	HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());
@@ -63,7 +67,7 @@ void AOpenWorldCharacter::BeginPlay()
 void AOpenWorldCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 	if(ActionState == EActionState::EAS_Rolling)
 	{
 		const FVector RollDisplacement = DirectionToRoll * RollSpeed * DeltaTime;
@@ -84,6 +88,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
 		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
 		EnhancedInputComponent -> BindAction(RollAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Roll);
+		EnhancedInputComponent -> BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ToggleLockOn);
 	}
 }
 
@@ -135,6 +140,8 @@ void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 
 void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 {
+	if(LockOnComponent->LockedOnTarget) return;
+	
 	const FVector2D InputRotationValue = Value.Get<FVector2D>();
 
 	if(Controller && !InputRotationValue.IsZero())
@@ -242,3 +249,9 @@ void AOpenWorldCharacter::SlowDownRoll()
 {
 	CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
 }
+
+void AOpenWorldCharacter::ToggleLockOn()
+{
+	LockOnComponent->ToggleLockOntoTarget();
+}
+
