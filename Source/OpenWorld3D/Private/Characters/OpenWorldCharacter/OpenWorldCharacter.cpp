@@ -242,7 +242,7 @@ void AOpenWorldCharacter::PlayRollMontage(const FInputActionValue& Value)
 
 void AOpenWorldCharacter::SpeedUpRoll()
 {
-	CharacterMovementComponent->MaxWalkSpeed = RollSpeed;
+	CharacterMovementComponent->MaxWalkSpeed = RollSpeed
 }
 
 void AOpenWorldCharacter::SlowDownRoll()
