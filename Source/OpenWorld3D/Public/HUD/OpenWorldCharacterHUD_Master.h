@@ -16,6 +16,8 @@ class OPENWORLD3D_API AOpenWorldCharacterHUD_Master : public AHUD
 public:
 	virtual void BeginPlay() override;
 
+	FORCEINLINE TObjectPtr<UOpenWorldCharacterHUD> GetOpenWorldCharacterHUD() const { return OpenWorldCharacterHUD; }
+
 private:
 	TObjectPtr<UOpenWorldCharacterHUD> OpenWorldCharacterHUD;
 	

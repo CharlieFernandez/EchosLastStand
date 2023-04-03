@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e8c09862-1e6c-48e4-a7d0-b4103d47c9c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/GameMode/BP_BirdGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/GameMode/BP_BirdGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/HUD/WBP_OpenWorldCharacterHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/HUD/WBP_OpenWorldCharacterHUD.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/HUD/OpenWorldCharacterHUD_Master.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/HUD/OpenWorldCharacterHUD_Master.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +113,7 @@
       <workItem from="1680050042274" duration="5439000" />
       <workItem from="1680086277388" duration="15460000" />
       <workItem from="1680177613356" duration="15491000" />
-      <workItem from="1680532798683" duration="4258000" />
+      <workItem from="1680532798683" duration="7878000" />
     </task>
     <servers />
   </component>

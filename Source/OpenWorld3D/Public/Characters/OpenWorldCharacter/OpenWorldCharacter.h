@@ -21,6 +21,7 @@ class UAnimMontage;
 class UCharacterMovementComponent;
 class AWeapon;
 class UAnimInstance;
+class UOpenWorldCharacterHUD;
 
 UCLASS(BlueprintType)
 class OPENWORLD3D_API AOpenWorldCharacter : public AGameCharacter
@@ -29,7 +30,7 @@ class OPENWORLD3D_API AOpenWorldCharacter : public AGameCharacter
 
 public:	
 	/* Methods */
-	AOpenWorldCharacter();	
+	AOpenWorldCharacter();
 	void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	FORCEINLINE static FName GetPlayerTag() { return PlayerTag; }
@@ -44,6 +45,8 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void Roll(const FInputActionValue& Value);
 	void LookAround(const FInputActionValue& Value);
+	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
+
 	
 	/* Properties */	
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputMappingContext> OpenWorldCharacterContext;	
@@ -66,8 +69,11 @@ private:
 	/* Fields */
 	FVector DirectionToRoll;
 	inline static const FName PlayerTag = FName("Player");
+	TObjectPtr<UOpenWorldCharacterHUD> OpenWorldCharacterHUD;
 
 	/* Methods */
+	void BindHealthRadiusSphereComponents();
+	void InitializeHUD(const APlayerController* PlayerController);
 	void EquipOrUnequipWeapon();
 	void PlayRollMontage(const FInputActionValue& Value);
 	void PlayEquipMontage(EEquipActionState EquipType) const;

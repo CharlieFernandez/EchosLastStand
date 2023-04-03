@@ -10,9 +10,12 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputState.h"
+#include "Components/AttributeComponent.h"
 #include "Components/LockOnComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "HUD/OpenWorldCharacterHUD.h"
+#include "HUD/OpenWorldCharacterHUD_Master.h"
 #include "Items/Weapons/EquipActionState.h"
 #include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,25 +45,44 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 	GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
+}
 
-	Tags.AddUnique("Player");
+void AOpenWorldCharacter::BindHealthRadiusSphereComponents()
+{
+	HealthRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereBeginOverlap);
+	HealthRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereEndOverlap);
+}
+
+void AOpenWorldCharacter::InitializeHUD(const APlayerController* PlayerController)
+{
+	if(const AOpenWorldCharacterHUD_Master* OpenWorldCharacterHUD_Master = Cast<AOpenWorldCharacterHUD_Master>(PlayerController->GetHUD()))
+	{
+		OpenWorldCharacterHUD = OpenWorldCharacterHUD_Master->GetOpenWorldCharacterHUD();
+
+		if(OpenWorldCharacterHUD)
+		{
+			OpenWorldCharacterHUD->SetHealthPercent(Attributes->GetCurrentHealthPercent());
+			OpenWorldCharacterHUD->SetEnergyPercent(1.f);
+			OpenWorldCharacterHUD->SetGold(0);
+			OpenWorldCharacterHUD->SetSouls(0);
+		}
+	}
 }
 
 void AOpenWorldCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Tags.Add(PlayerTag);
-
-	HealthRadiusSphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereBeginOverlap);
-	HealthRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereEndOverlap);
-
+	Tags.AddUnique(PlayerTag);
+	BindHealthRadiusSphereComponents();
+	
 	if (const APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = PlayerController->GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
 			Subsystem->AddMappingContext(OpenWorldCharacterContext, 0);
 		}
+
+		InitializeHUD(PlayerController);
 	}
 }
 
@@ -254,4 +276,15 @@ void AOpenWorldCharacter::ToggleLockOn()
 {
 	LockOnComponent->ToggleLockOntoTarget();
 }
+
+void AOpenWorldCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)
+{
+	if(OpenWorldCharacterHUD && Attributes)
+	{
+		OpenWorldCharacterHUD->SetHealthPercent(Attributes->GetCurrentHealthPercent());
+	}
+	
+	Super::GetHit_Implementation(ImpactPoint, InstigatorPosition);
+}
+
 

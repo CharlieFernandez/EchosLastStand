@@ -54,6 +54,7 @@ protected:
 	bool IsUnoccupied() const;
 	bool IsAttacking() const;
 	bool IsAttackEnding() const;
+	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 
 
 
@@ -96,7 +97,6 @@ private:
 	void EmitHitParticles(FVector ImpactPoint) const;
 	static FName GenerateSectionNameByAngle(double Angle);
 	double GetAngleFromInstigatorPosition(FVector InstigatorPosition) const;
-	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 	void FindAndPlayReactSection(const FVector InstigatorPosition) const;
 
 	/* Properties */
