@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e8c09862-1e6c-48e4-a7d0-b4103d47c9c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Embers.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Embers.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/MI_Magic_Smoke_Prime.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/MI_Magic_Smoke_Prime.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/M_Arcblade_Smoke_Trail.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/M_Arcblade_Smoke_Trail.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/M_Magic_Smoke2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/M_Magic_Smoke2.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/WispySmokeSoft/M_WispySmokeSoft.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/WispySmokeSoft/M_WispySmokeSoft.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/WispySmokeTest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Smoke/WispySmokeTest.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Trails/MI_SpawnIn_Trail_Smoke.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Trails/MI_SpawnIn_Trail_Smoke.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Trails/M_SpawnIn_Trail_Smoke.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Trails/M_SpawnIn_Trail_Smoke.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +108,7 @@
       <workItem from="1680086277388" duration="15460000" />
       <workItem from="1680177613356" duration="15491000" />
       <workItem from="1680532798683" duration="11020000" />
-      <workItem from="1680611311064" duration="1182000" />
+      <workItem from="1680611311064" duration="3568000" />
     </task>
     <servers />
   </component>
