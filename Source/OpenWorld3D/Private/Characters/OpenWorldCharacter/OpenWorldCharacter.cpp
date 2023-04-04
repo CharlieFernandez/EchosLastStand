@@ -134,7 +134,7 @@ void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp
 
 void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 {
-	if(!IsUnoccupied() &&!IsAttacking()) return;
+	if(!IsAlive() || !IsUnoccupied() &&!IsAttacking()) return;
 	
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
@@ -175,7 +175,9 @@ void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 }
 
 void AOpenWorldCharacter::ObtainOrEquip()
-{	
+{
+	if(!IsAlive()) return;
+	
 	if(	AWeapon* Weapon = Cast<AWeapon>(OverlappedItem))
 	{
 		PickUpWeapon(Weapon, Weapon->GetStaticMeshComponent(), rightHandItemSocket);
@@ -188,7 +190,7 @@ void AOpenWorldCharacter::ObtainOrEquip()
 
 void AOpenWorldCharacter::EquipOrUnequipWeapon()
 {
-	if(GetWeaponHeld() && ActionState == EActionState::EAS_Unoccupied)
+	if(GetWeaponHeld() && ActionState == EActionState::EAS_Unoccupied && IsAlive())
 	{
 		if(CanUnequip())
 		{			
@@ -231,12 +233,14 @@ void AOpenWorldCharacter::PlayEquipMontage(EEquipActionState EquipType) const
 
 void AOpenWorldCharacter::Jump()
 {
+	if(!IsAlive()) return;
+	
 	Super::Jump();
 }
 
 void AOpenWorldCharacter::Roll(const FInputActionValue& Value)
 {
-	if(ActionState != EActionState::EAS_Unoccupied || CharacterMovementComponent->IsFalling()) return;
+	if(ActionState != EActionState::EAS_Unoccupied || CharacterMovementComponent->IsFalling() || !IsAlive()) return;
 
 	PlayRollMontage(Value);
 }
@@ -283,6 +287,8 @@ void AOpenWorldCharacter::GetHit_Implementation(const FVector ImpactPoint, const
 	{
 		OpenWorldCharacterHUD->SetHealthPercent(Attributes->GetCurrentHealthPercent());
 	}
+	
+	if(!IsAlive()) return;
 	
 	Super::GetHit_Implementation(ImpactPoint, InstigatorPosition);
 }

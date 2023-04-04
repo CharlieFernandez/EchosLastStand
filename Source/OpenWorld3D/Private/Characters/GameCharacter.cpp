@@ -31,7 +31,7 @@ void AGameCharacter::Tick(float DeltaTime)
 
 bool AGameCharacter::CanAttack()
 {
-	return (ActionState == EActionState::EAS_Unoccupied || ActionState == EActionState::EAS_AttackEnd)
+	return IsAlive() && (ActionState == EActionState::EAS_Unoccupied || ActionState == EActionState::EAS_AttackEnd)
 	&& EquipState != EEquipState::ECS_Unequipped;
 }
 
