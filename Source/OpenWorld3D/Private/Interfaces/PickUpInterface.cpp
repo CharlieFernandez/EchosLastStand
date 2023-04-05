@@ -5,3 +5,7 @@
 
 // Add default functionality here for any IPickUpInterface functions that are not pure virtual.
 void IPickUpInterface::SetOverlappingItem(AItem* Item){}
+
+void IPickUpInterface::AddSouls(ASouls* Souls){}
+
+void IPickUpInterface::AddGold(ATreasure* Treasure){}

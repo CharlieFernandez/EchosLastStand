@@ -18,4 +18,9 @@ class OPENWORLD3D_API ASouls : public AItem
 
 public:
 	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
+	FORCEINLINE int32 GetSoulCount() const { return SoulCount; }
+
+private:
+	UPROPERTY(EditAnywhere)
+	int32 SoulCount;
 };

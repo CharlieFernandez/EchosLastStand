@@ -28,3 +28,13 @@ float UAttributeComponent::GetCurrentHealthPercent() const
 {
 	return CurrentHealth / MaxHealth;
 }
+
+void UAttributeComponent::AddGold(int32 GoldValue)
+{
+	TotalGold += GoldValue;
+}
+
+void UAttributeComponent::AddSouls(int32 SoulsValue)
+{
+	TotalSouls += SoulsValue;
+}

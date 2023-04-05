@@ -9,8 +9,9 @@ void ASouls::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 {
 	Super::OnSphereBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
-	if(Cast<IPickUpInterface>(OtherActor))
+	if(IPickUpInterface* PickUpInterface = Cast<IPickUpInterface>(OtherActor))
 	{
+		PickUpInterface->AddSouls(this);
 		SpawnPickUpEffect();
 		StopUncollectedSound();
 		PlayPickUpSound();

@@ -14,6 +14,8 @@ class UPickUpInterface : public UInterface
 };
 
 class AItem;
+class ASouls;
+class ATreasure;
 
 /**
  * 
@@ -25,4 +27,6 @@ class OPENWORLD3D_API IPickUpInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual void SetOverlappingItem(AItem* Item);
+	virtual void AddSouls(ASouls* Souls);
+	virtual void AddGold(ATreasure* Treasure);
 };

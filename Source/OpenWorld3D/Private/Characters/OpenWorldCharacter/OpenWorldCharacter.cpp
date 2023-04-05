@@ -16,6 +16,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HUD/OpenWorldCharacterHUD.h"
 #include "HUD/OpenWorldCharacterHUD_Master.h"
+#include "Items/Souls.h"
+#include "Items/Treasures/Treasure.h"
 #include "Items/Weapons/EquipActionState.h"
 #include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"
@@ -287,6 +289,26 @@ void AOpenWorldCharacter::GetHit_Implementation(const FVector ImpactPoint, const
 	if(!IsAlive()) return;
 	
 	Super::GetHit_Implementation(ImpactPoint, InstigatorPosition);
+}
+
+void AOpenWorldCharacter::AddSouls(ASouls* Souls)
+{
+	if(Souls && Attributes)
+	{
+		const int32 SoulCount = Souls->GetSoulCount();
+		Attributes->AddSouls(SoulCount);
+		OpenWorldCharacterHUD->SetSouls(Attributes->GetTotalSouls());
+	}
+}
+
+void AOpenWorldCharacter::AddGold(ATreasure* Treasure)
+{
+	if(Treasure && Attributes)
+	{
+		const int32 GoldCount = Treasure->GetTotalGold();
+		Attributes->AddGold(GoldCount);
+		OpenWorldCharacterHUD->SetGold(Attributes->GetTotalGold());
+	}
 }
 
 

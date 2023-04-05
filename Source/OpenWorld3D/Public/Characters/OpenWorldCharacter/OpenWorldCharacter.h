@@ -36,6 +36,8 @@ public:
 	FORCEINLINE static FName GetPlayerTag() { return PlayerTag; }
 	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
 	virtual void SetOverlappingItem(AItem* Item) override { OverlappedItem = Item; }
+	virtual void AddSouls(ASouls* Souls) override;
+	virtual void AddGold(ATreasure* Treasure) override;
 	
 protected:
 	/* Methods */
