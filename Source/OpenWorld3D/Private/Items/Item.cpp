@@ -87,7 +87,10 @@ void AItem::PlayUncollectedSound()
 
 void AItem::StopUncollectedSound() const
 {
-	UncollectedSoundPlayed->Stop();
+	if(UncollectedSoundPlayed)
+	{
+		UncollectedSoundPlayed->Stop();
+	}
 }
 
 void AItem::PlayPickUpSound() const
