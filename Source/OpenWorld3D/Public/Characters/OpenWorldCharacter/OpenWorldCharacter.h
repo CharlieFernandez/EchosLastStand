@@ -43,6 +43,7 @@ protected:
 	/* Methods */
 	void ObtainOrEquip();
 	virtual void Jump() override;
+	bool HasMovementInput() const;
 	virtual void BeginPlay() override;
 	void Move(const FInputActionValue& Value);
 	void Roll(const FInputActionValue& Value);
@@ -110,6 +111,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Camera)
 	float CameraRotationSpeed;
+
+	UPROPERTY(EditDefaultsOnly, Category = Stamina)
+	float DodgeRollStaminaCost;
 
 	/* Functions */
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))

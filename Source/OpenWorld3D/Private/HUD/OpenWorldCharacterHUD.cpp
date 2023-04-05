@@ -14,11 +14,11 @@ void UOpenWorldCharacterHUD::SetHealthPercent(float Percent) const
 	}
 }
 
-void UOpenWorldCharacterHUD::SetEnergyPercent(float Percent) const
+void UOpenWorldCharacterHUD::SetStaminaPercent(float Percent) const
 {
-	if(EnergyProgressBar)
+	if(StaminaProgressBar)
 	{
-		EnergyProgressBar->SetPercent(Percent);
+		StaminaProgressBar->SetPercent(Percent);
 	}
 }
 

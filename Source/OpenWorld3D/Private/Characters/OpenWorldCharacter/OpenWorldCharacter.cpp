@@ -64,7 +64,8 @@ void AOpenWorldCharacter::InitializeHUD(const APlayerController* PlayerControlle
 		if(OpenWorldCharacterHUD)
 		{
 			OpenWorldCharacterHUD->SetHealthPercent(Attributes->GetCurrentHealthPercent());
-			OpenWorldCharacterHUD->SetEnergyPercent(1.f);
+			OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
+			OpenWorldCharacterHUD->SetStaminaPercent(1.f);
 			OpenWorldCharacterHUD->SetGold(0);
 			OpenWorldCharacterHUD->SetSouls(0);
 		}
@@ -97,6 +98,12 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 		const FVector RollDisplacement = DirectionToRoll * RollSpeed * DeltaTime;
 
 		AddMovementInput(GetActorForwardVector(), RollDisplacement.Length());
+	}
+
+	if(Attributes)
+	{
+		Attributes->RegenerateStamina(DeltaTime);
+		OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
 	}
 }
 
@@ -240,7 +247,12 @@ void AOpenWorldCharacter::Roll(const FInputActionValue& Value)
 {
 	if(ActionState != EActionState::EAS_Unoccupied || CharacterMovementComponent->IsFalling() || !IsAlive()) return;
 
-	PlayRollMontage(Value);
+	if(Attributes && Attributes->GetCurrentStamina() > DodgeRollStaminaCost && HasMovementInput())
+	{
+		PlayRollMontage(Value);
+		Attributes->UpdateStamina(-DodgeRollStaminaCost);
+		OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
+	}
 }
 
 void AOpenWorldCharacter::PlayRollMontage(const FInputActionValue& Value)
@@ -311,4 +323,7 @@ void AOpenWorldCharacter::AddGold(ATreasure* Treasure)
 	}
 }
 
-
+bool AOpenWorldCharacter::HasMovementInput() const
+{
+	return FVector2d(GetLastMovementInputVector()) != FVector2d::Zero();
+}

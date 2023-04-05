@@ -16,7 +16,7 @@ class OPENWORLD3D_API UOpenWorldCharacterHUD : public UUserWidget
 	
 public:	
 	void SetHealthPercent(float Percent) const;
-	void SetEnergyPercent(float Percent) const;
+	void SetStaminaPercent(float Percent) const;
 	void SetGold(int32 Gold) const;
 	void SetSouls(int32 Souls) const;
 	
@@ -25,7 +25,7 @@ private:
 	TObjectPtr<UProgressBar> HealthProgressBar;
 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UProgressBar> EnergyProgressBar;
+	TObjectPtr<UProgressBar> StaminaProgressBar;
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> GoldText;

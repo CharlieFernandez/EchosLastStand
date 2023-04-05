@@ -11,6 +11,7 @@ UAttributeComponent::UAttributeComponent()
 void UAttributeComponent::BeginPlay()
 {
 	CurrentHealth = MaxHealth;
+	CurrentStamina = MaxStamina;
 	Super::BeginPlay();
 }
 
@@ -24,9 +25,9 @@ void UAttributeComponent::UpdateHealth(float HealthToAdd)
 	CurrentHealth = FMath::Clamp(CurrentHealth + HealthToAdd, 0, MaxHealth);
 }
 
-float UAttributeComponent::GetCurrentHealthPercent() const
+void UAttributeComponent::UpdateStamina(float StaminaToAdd)
 {
-	return CurrentHealth / MaxHealth;
+	CurrentStamina = FMath::Clamp(CurrentStamina + StaminaToAdd, 0, MaxStamina);
 }
 
 void UAttributeComponent::AddGold(int32 GoldValue)
@@ -37,4 +38,9 @@ void UAttributeComponent::AddGold(int32 GoldValue)
 void UAttributeComponent::AddSouls(int32 SoulsValue)
 {
 	Souls += SoulsValue;
+}
+
+void UAttributeComponent::RegenerateStamina(float DeltaTime)
+{
+	CurrentStamina = FMath::Clamp(CurrentStamina + StaminaRegenPerSecond * DeltaTime, 0, MaxStamina);
 }
