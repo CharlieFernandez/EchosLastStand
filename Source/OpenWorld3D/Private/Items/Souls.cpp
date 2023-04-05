@@ -5,13 +5,15 @@
 #include "Interfaces/PickUpInterface.h"
 
 void ASouls::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+                                  UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	Super::OnSphereBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
-	if(IPickUpInterface* PickUpInterface = Cast<IPickUpInterface>(OtherActor))
+	if(Cast<IPickUpInterface>(OtherActor))
 	{
-		PickUpInterface->SetOverlappingItem(this);
+		SpawnPickUpEffect();
+		StopUncollectedSound();
+		PlayPickUpSound();
 		Destroy();
 	}
 }

@@ -2,17 +2,13 @@
 
 
 #include "Items/Treasures/Treasure.h"
-#include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
-#include "Kismet/GameplayStatics.h"
+#include "Interfaces/PickUpInterface.h"
 
 void ATreasure::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(AOpenWorldCharacter* OpenWorldCharacter = Cast<AOpenWorldCharacter>(OtherActor))
-	{
-		if(PickUpSound)
-		{
-			UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, GetActorLocation());
-			Destroy();
-		}
+	if(Cast<IPickUpInterface>(OtherActor))
+	{		
+		PlayPickUpSound();
+		Destroy();
 	}
 }

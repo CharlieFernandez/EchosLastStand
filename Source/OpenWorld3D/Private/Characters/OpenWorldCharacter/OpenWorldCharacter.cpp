@@ -213,11 +213,7 @@ void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMe
 	Weapon->SetOwner(this);
 	Weapon->SetInstigator(this);
 	Weapon->ToggleWeaponState();
-	
-	if(auto const PickUpSound = GetWeaponHeld()->GetPickUpSound())
-	{
-		UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, Weapon->GetActorLocation());
-	}
+	Weapon->PlayPickUpSound();
 }
 
 void AOpenWorldCharacter::PlayEquipMontage(EEquipActionState EquipType) const

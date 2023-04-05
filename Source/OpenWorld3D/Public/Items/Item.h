@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/AudioComponent.h"
 #include "GameFramework/Actor.h"
 #include "Interfaces/PickUpInterface.h"
 #include "Items/ItemState.h"
@@ -11,6 +12,8 @@
 class USphereComponent;
 class USoundBase;
 class UNiagaraComponent;
+class UNiagaraSystem;
+class UAudioComponent;
 
 UCLASS()
 class OPENWORLD3D_API AItem : public AActor
@@ -22,14 +25,22 @@ public:
 	AItem();
 	
 	virtual void Tick(float DeltaTime) override;
+	void PlayPickUpSound() const;
+	
 	FORCEINLINE UStaticMeshComponent* GetStaticMeshComponent() const { return ItemMesh; }
 	FORCEINLINE UMeshComponent* GetMesh() const { return ItemMesh; };
 	FORCEINLINE USoundBase* GetPickUpSound() const { return PickUpSound; }
 	FORCEINLINE EItemState GetItemState() const { return ItemState; }
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	void SpawnPickUpEffect() const;
+	void PlayUncollectedSound();
+	void StopUncollectedSound() const;
+
+
+	UPROPERTY(EditDefaultsOnly)
+	UNiagaraSystem* PickUpEffect;
 	
 	UFUNCTION(BlueprintPure)
 	float TransformSine() const { return Amplitude * FMath::Sin(RunningTime * TimeConstant); }
@@ -50,12 +61,17 @@ protected:
 	EItemState ItemState;
 
 	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<USoundBase> UncollectedSound;
+
+	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<USoundBase> PickUpSound;
 
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UNiagaraComponent> PickUpParticles;
 
 private:
+	UAudioComponent* UncollectedSoundPlayed;
+	
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Hover", meta = (AllowPrivateAccess = "true"))

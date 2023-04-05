@@ -5,6 +5,8 @@
 #include "NiagaraComponent.h"
 #include "Interfaces/PickUpInterface.h"
 #include "Components/SphereComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AItem::AItem(): Amplitude(0.25f), TimeConstant(5.f)
@@ -29,6 +31,8 @@ void AItem::BeginPlay()
 
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AItem::OnSphereBeginOverlap);
 	SphereComponent->OnComponentEndOverlap.AddDynamic(this, &AItem::OnSphereEndOverlap);
+	
+	PlayUncollectedSound();	
 }
 
 void AItem::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -49,7 +53,6 @@ void AItem::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor*
 	}
 }
 
-// Called every frame
 void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -62,4 +65,34 @@ void AItem::Tick(float DeltaTime)
 	}
 }
 
+void AItem::SpawnPickUpEffect() const
+{
+	if(PickUpEffect)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+			this,
+			PickUpEffect,
+			GetActorLocation()
+		);
+	}
+}
 
+void AItem::PlayUncollectedSound()
+{
+	if(UncollectedSound && ItemState != EItemState::EIS_Held)
+	{
+		UncollectedSoundPlayed = UGameplayStatics::SpawnSoundAtLocation(this, UncollectedSound, GetActorLocation());
+	}
+}
+
+void AItem::StopUncollectedSound() const
+{
+	UncollectedSoundPlayed->Stop();
+}
+
+void AItem::PlayPickUpSound() const
+{
+	if(PickUpSound == nullptr) return;
+	
+	UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, GetActorLocation());
+}

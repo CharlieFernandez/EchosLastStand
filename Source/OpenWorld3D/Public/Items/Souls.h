@@ -6,6 +6,8 @@
 #include "Items/Item.h"
 #include "Souls.generated.h"
 
+class UNiagaraSystem;
+
 /**
  * 
  */
@@ -13,6 +15,7 @@ UCLASS()
 class OPENWORLD3D_API ASouls : public AItem
 {
 	GENERATED_BODY()
-	
+
+public:
 	virtual void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
 };
