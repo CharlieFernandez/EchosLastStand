@@ -93,6 +93,11 @@ void AItem::StopUncollectedSound() const
 void AItem::PlayPickUpSound() const
 {
 	if(PickUpSound == nullptr) return;
+
+	if(UncollectedSoundPlayed)
+	{
+		StopUncollectedSound();
+	}
 	
 	UGameplayStatics::PlaySoundAtLocation(this, PickUpSound, GetActorLocation());
 }
