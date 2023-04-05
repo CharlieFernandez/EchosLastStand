@@ -24,7 +24,7 @@ class UAnimInstance;
 class UOpenWorldCharacterHUD;
 
 UCLASS(BlueprintType)
-class OPENWORLD3D_API AOpenWorldCharacter : public AGameCharacter
+class OPENWORLD3D_API AOpenWorldCharacter : public AGameCharacter, public IPickUpInterface
 {
 	GENERATED_BODY()
 
@@ -35,7 +35,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	FORCEINLINE static FName GetPlayerTag() { return PlayerTag; }
 	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
-	FORCEINLINE void SetOverlappingItem(AItem* Item){ OverlappedItem = Item; }
+	virtual void SetOverlappingItem(AItem* Item) override { OverlappedItem = Item; }
 	
 protected:
 	/* Methods */

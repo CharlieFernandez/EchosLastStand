@@ -3,7 +3,7 @@
 #include "Items/Item.h"
 
 #include "NiagaraComponent.h"
-#include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
+#include "Interfaces/PickUpInterface.h"
 #include "Components/SphereComponent.h"
 
 // Sets default values
@@ -34,18 +34,18 @@ void AItem::BeginPlay()
 void AItem::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if(AOpenWorldCharacter* OpenWorldCharacter = Cast<AOpenWorldCharacter>(OtherActor))
+	if(IPickUpInterface* PickUpInterface = Cast<IPickUpInterface>(OtherActor))
 	{
-		OpenWorldCharacter->SetOverlappingItem(this);
+		PickUpInterface->SetOverlappingItem(this);
 	}
 }
 
 void AItem::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if(AOpenWorldCharacter* OpenWorldCharacter = Cast<AOpenWorldCharacter>(OtherActor))
+	if(IPickUpInterface* PickUpInterface = Cast<IPickUpInterface>(OtherActor))
 	{
-		OpenWorldCharacter -> SetOverlappingItem(nullptr);
+		PickUpInterface -> SetOverlappingItem(nullptr);
 	}
 }
 

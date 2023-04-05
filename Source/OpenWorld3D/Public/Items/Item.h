@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/PickUpInterface.h"
 #include "Items/ItemState.h"
 #include "Item.generated.h"
 
