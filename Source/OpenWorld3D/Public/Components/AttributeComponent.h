@@ -19,8 +19,8 @@ public:
 	float GetCurrentHealthPercent() const;
 	void AddGold(int32 GoldValue);
 	void AddSouls(int32 SoulsValue);
-	FORCEINLINE int32 GetTotalGold() const { return TotalGold; }
-	FORCEINLINE int32 GetTotalSouls() const { return TotalSouls; }
+	FORCEINLINE int32 GetTotalGold() const { return Gold; }
+	FORCEINLINE int32 GetTotalSouls() const { return Souls; }
 
 	UFUNCTION(BlueprintPure)
 	bool IsAlive() const { return CurrentHealth > 0; }
@@ -29,8 +29,12 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	int32 TotalGold;
-	int32 TotalSouls;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 Gold;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 Souls;
 	
 	UPROPERTY(VisibleInstanceOnly)
 	float CurrentHealth;

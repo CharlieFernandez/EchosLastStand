@@ -31,10 +31,10 @@ float UAttributeComponent::GetCurrentHealthPercent() const
 
 void UAttributeComponent::AddGold(int32 GoldValue)
 {
-	TotalGold += GoldValue;
+	Gold += GoldValue;
 }
 
 void UAttributeComponent::AddSouls(int32 SoulsValue)
 {
-	TotalSouls += SoulsValue;
+	Souls += SoulsValue;
 }

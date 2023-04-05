@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+class ASouls;
 class UPawnSensingComponent;
 class AAIController;
 class ATargetPoint;
@@ -100,6 +101,9 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly)
 	float ChasingDistance;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ASouls> SoulsClass;
 
 	/* Functions */
 	UFUNCTION()

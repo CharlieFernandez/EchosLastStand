@@ -15,6 +15,7 @@
 #include "Perception/PawnSensingComponent.h"
 #include "Characters/CharacterTypes.h"
 #include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
+#include "Items/Souls.h"
 #include "Items/Weapons/Weapon.h"
 
 /* Core Methods */
@@ -270,6 +271,17 @@ void AEnemy::Die()
 	SetLifeSpan(10.f);
 	ToggleHealth(false);
 	AIController->StopMovement();
+
+	if(UWorld* World = GetWorld())
+	{
+		ASouls* SpawnedSouls = World->SpawnActor<ASouls>(SoulsClass, FVector(1,1,1) * 10000000, GetActorRotation());
+
+		if(SpawnedSouls)
+		{
+			SpawnedSouls->SetSoulCount(Attributes->GetTotalSouls());
+			SpawnedSouls->SetActorLocation(GetActorLocation());
+		}
+	}
 }
 
 void AEnemy::Destroyed()
