@@ -9,24 +9,10 @@
 
 void UOpenWorldCharacterAnimInstance::NativeInitializeAnimation()
 {
-	Super::NativeInitializeAnimation();
-
 	OpenWorldCharacter = Cast<AOpenWorldCharacter>(TryGetPawnOwner());
-
-	if(OpenWorldCharacter)
-	{
-		CharacterMovementComponent = OpenWorldCharacter -> GetCharacterMovement();
-	}
 }
 
 void UOpenWorldCharacterAnimInstance::NativeUpdateAnimation(float DeltaTime)
 {
 	Super::NativeUpdateAnimation(DeltaTime);
-
-	if(CharacterMovementComponent)
-	{
-		GroundSpeed = UKismetMathLibrary::VSizeXY(CharacterMovementComponent -> Velocity);
-		IsFalling = CharacterMovementComponent->IsFalling();
-		CharacterState = OpenWorldCharacter->GetCharacterState();
-	}
 }

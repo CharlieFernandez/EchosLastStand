@@ -41,7 +41,7 @@ void UDamageDealer::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 void UDamageDealer::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
+{	
 	const FDamageHitBox* DamageHitBox = DamageHitBoxes.FindByPredicate([OverlappedComponent](const FDamageHitBox DamageHitBoxTemp)
 	{
 		return DamageHitBoxTemp.GetHitBox() == OverlappedComponent;
@@ -49,8 +49,7 @@ void UDamageDealer::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, 
 
 	AActor* Actor = GetOwner();
 	
-	if(WasEnemyHit(Actor, OtherActor))
-		return;
+	if(DidEnemyHitEnemy(Actor, OtherActor)) return;
 	
 	DealDamage(
 		OverlappedComponent,
@@ -75,7 +74,7 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 		ActorsToIgnore.AddUnique(ActorHit);		
 		const FVector ImpactPoint = HitResult.ImpactPoint;
 		
-		if(WasEnemyHit(ActorOwner, ActorHit)) return;
+		if(DidEnemyHitEnemy(ActorOwner, ActorHit)) return;
 		
 		if(SoundBase && Cast<APawn>(ActorHit))
 		{
@@ -105,7 +104,7 @@ void UDamageDealer::AttackedPawn(const AActor* ActorOwner, USoundBase* SoundBase
 	ActorOwner->GetWorldTimerManager().SetTimer(ImpactTimer, this, &UDamageDealer::ImpactPause, ImpactPauseTime);
 }
 
-bool UDamageDealer::WasEnemyHit(AActor*& ActorOwner, AActor*& ActorHit)
+bool UDamageDealer::DidEnemyHitEnemy(AActor*& ActorOwner, AActor*& ActorHit)
 {
 	const APawn* AttackersInstigator = ActorOwner->GetInstigator();
 	const APawn* DefendersInstigator = ActorHit->GetInstigator();

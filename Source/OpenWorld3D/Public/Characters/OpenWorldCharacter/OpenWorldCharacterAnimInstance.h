@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "Characters/CharacterTypes.h"
+#include "Characters/GameCharacterAnimInstance.h"
 #include "OpenWorldCharacterAnimInstance.generated.h"
 
 
@@ -12,7 +13,7 @@ class AOpenWorldCharacter;
 class UCharacterMovementComponent;
 
 UCLASS()
-class OPENWORLD3D_API UOpenWorldCharacterAnimInstance : public UAnimInstance
+class OPENWORLD3D_API UOpenWorldCharacterAnimInstance : public UGameCharacterAnimInstance
 {
 	GENERATED_BODY()
 
@@ -21,17 +22,5 @@ private:
 	virtual void NativeUpdateAnimation(float DeltaTime) override;
 
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	AOpenWorldCharacter* OpenWorldCharacter;
-
-	UPROPERTY(BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
-	UCharacterMovementComponent* CharacterMovementComponent;
-
-	UPROPERTY(BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
-	float GroundSpeed;
-
-	UPROPERTY(BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
-	bool IsFalling;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Movement|Character State", meta = (AllowPrivateAccess = "true"))
-	EEquipState CharacterState;
+	TObjectPtr<AOpenWorldCharacter> OpenWorldCharacter;
 };

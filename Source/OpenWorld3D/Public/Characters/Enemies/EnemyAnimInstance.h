@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Characters/GameCharacterAnimInstance.h"
 #include "EnemyAnimInstance.generated.h"
 
 class UCharacterMovementComponent;
@@ -12,20 +13,14 @@ class AEnemy;
 class UCharacterMovementComponent;
 
 UCLASS()
-class OPENWORLD3D_API UEnemyAnimInstance : public UAnimInstance
+class OPENWORLD3D_API UEnemyAnimInstance : public UGameCharacterAnimInstance
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<AEnemy> Enemy;
-
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UCharacterMovementComponent> CharacterMovementComponent;
-
-	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	double GroundSpeed;
-	
+private:	
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<AEnemy> Enemy;
 };

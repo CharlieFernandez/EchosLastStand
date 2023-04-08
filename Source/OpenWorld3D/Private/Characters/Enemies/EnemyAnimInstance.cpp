@@ -10,18 +10,10 @@
 void UEnemyAnimInstance::NativeInitializeAnimation()
 {
 	Enemy = Cast<AEnemy>(TryGetPawnOwner());
-	
-	if (Enemy)
-	{
-		CharacterMovementComponent = Enemy->GetCharacterMovement();
-	}
 }
 
 void UEnemyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 {
-	if(CharacterMovementComponent)
-	{
-		GroundSpeed = UKismetMathLibrary::VSizeXY(CharacterMovementComponent->Velocity);
-	}
+	Super::NativeUpdateAnimation(DeltaSeconds);
 }
 

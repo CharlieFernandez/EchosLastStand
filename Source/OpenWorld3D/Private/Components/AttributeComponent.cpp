@@ -6,6 +6,8 @@
 UAttributeComponent::UAttributeComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	CurrentHealth = MaxHealth;
+	CurrentStamina = MaxStamina;
 }
 
 void UAttributeComponent::BeginPlay()

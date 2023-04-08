@@ -36,7 +36,7 @@ bool AGameCharacter::CanAttack()
 }
 
 void AGameCharacter::Attack()
-{	
+{
 	if(CanAttack())
 	{
 		PlayComboAttackMontage();

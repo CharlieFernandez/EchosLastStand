@@ -34,7 +34,6 @@ public:
 	void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	FORCEINLINE static FName GetPlayerTag() { return PlayerTag; }
-	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
 	virtual void SetOverlappingItem(AItem* Item) override { OverlappedItem = Item; }
 	virtual void AddSouls(ASouls* Souls) override;
 	virtual void AddGold(ATreasure* Treasure) override;

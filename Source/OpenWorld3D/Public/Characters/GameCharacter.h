@@ -26,6 +26,9 @@ public:
 	AGameCharacter();
 	virtual void Tick(float DeltaTime) override;
 	bool IsAlive() const;
+	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
+	FORCEINLINE UAttributeComponent* GetAttributes() const { return Attributes; }
+	FORCEINLINE AWeapon* GetWeaponHeld() const { return WeaponHeld; }
 
 protected:
 	/* Fields */
@@ -41,7 +44,6 @@ protected:
 	void PlayComboAttackMontage();	
 	virtual void BeginPlay() override;
 	void SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
-	FORCEINLINE AWeapon* GetWeaponHeld() const { return WeaponHeld; }
 	void AttachMeshToSocket(UMeshComponent* WeaponMesh, FName SocketName) const;
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	FORCEINLINE float GetMaxSprintSpeed() const { return MaxSprintSpeed; }

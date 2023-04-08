@@ -262,8 +262,10 @@ void AGameCharacter::EmitHitParticles(const FVector ImpactPoint) const
 void AEnemy::Die()
 {
 	// Death animations are handled on the blueprint side.	
+	if(State == EEnemyState::EES_Dead) return;
+	
 	Super::Die();
-
+	
 	State = EEnemyState::EES_Dead;
 	CombatTarget = nullptr;
 	ClearPatrolTimer();

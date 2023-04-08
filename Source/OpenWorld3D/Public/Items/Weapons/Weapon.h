@@ -18,8 +18,8 @@ class OPENWORLD3D_API AWeapon : public AItem
 public:
 	AWeapon();
 	void ToggleWeaponState();
-	
 	void SetToHeldItem();
+	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponType; }
 	
 protected:
 	virtual void BeginPlay() override;

@@ -143,7 +143,7 @@ void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp
 
 void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 {
-	if(!IsAlive() || !IsUnoccupied() &&!IsAttacking()) return;
+	if(!IsAlive() || !IsUnoccupied() && !IsAttacking()) return;
 	
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
