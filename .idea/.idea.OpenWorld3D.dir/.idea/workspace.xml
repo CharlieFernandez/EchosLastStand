@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8c09862-1e6c-48e4-a7d0-b4103d47c9c2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_DarkAura.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Materials/SubUV/MI_Smoke.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Effects/Materials/M_SoulsGlow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/Materials/M_SoulsGlow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Embers.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Embers.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HeavenlyGlows.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HeavenlyGlows.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Rain.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Rain.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Souls.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Souls.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_SoulsBurst.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_SoulsBurst.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
