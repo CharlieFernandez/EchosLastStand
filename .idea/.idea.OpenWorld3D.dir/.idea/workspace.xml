@@ -5,17 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8c09862-1e6c-48e4-a7d0-b4103d47c9c2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_DarkAura.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/SubUV/MI_Smoke.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/Materials/M_SoulsGlow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/Materials/M_SoulsGlow.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Embers.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Embers.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HeavenlyGlows.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HeavenlyGlows.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Rain.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Rain.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Sword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Sword.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Weapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Weapon.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_DarkAura.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_DarkAura.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_EnemySword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_EnemySword.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Souls.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Souls.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_SoulsBurst.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_SoulsBurst.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_WeaponPickUp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_WeaponPickUp.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Material/M_MS_Default_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Material/M_MS_Default_Material.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Debug/01_-_Default.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/ParagonMinions/FX/Materials/Debug/01_-_Default.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/DefaultSpriteMaterial.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_Flamethrower.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_Flamethrower.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_WeaponPickUpEffect.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_WeaponPickUpEffect.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/M_FlamethrowerBeam.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/M_DarkSword.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/M_NewWeaponPickUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/M_WeaponGlow.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/Noise/MarbleNoise/M_MarbleBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Noise/MarbleNoise/M_MarbleBase.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Megascans/3D_Assets/Sandstone_Boulder_vd4jeiy/MI_Sandstone_Boulder_vd4jeiy_2K.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Megascans/3D_Assets/Sandstone_Boulder_vd4jeiy/MI_Sandstone_Boulder_vd4jeiy_2K.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +132,7 @@
       <workItem from="1680660434930" duration="1627000" />
       <workItem from="1680687245592" duration="68253000" />
       <workItem from="1680961381551" duration="2056000" />
+      <workItem from="1681306147961" duration="490000" />
     </task>
     <servers />
   </component>
