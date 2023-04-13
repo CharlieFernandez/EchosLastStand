@@ -332,5 +332,31 @@ bool AOpenWorldCharacter::HasMovementInput() const
 
 void AOpenWorldCharacter::SpawnHammerDownParticles()
 {
-	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, GetWeaponHeld()->GetMesh()->GetSocketLocation(FName("Face1")));
+	AActor* ActorOwner = GetOwner<AActor>();
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.AddUnique(GetWeaponHeld());
+	ActorsToIgnore.AddUnique(ActorOwner);
+
+	FHitResult HitResult;
+	
+	UKismetSystemLibrary::LineTraceSingle(
+		this,
+		GetActorLocation(),
+		GetActorLocation() - 500,
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::None,
+		HitResult,
+		true
+	);
+
+	FVector SpawnLocation = GetWeaponHeld()->GetMesh()->GetSocketLocation(FName("MiddleTop"));
+	FVector Origin;
+	FVector BoxExtent;
+
+	HitResult.GetActor()->GetActorBounds(true, Origin, BoxExtent);
+	SpawnLocation.Z = Origin.Z + BoxExtent.Z + 1;
+	
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, SpawnLocation);
 }
