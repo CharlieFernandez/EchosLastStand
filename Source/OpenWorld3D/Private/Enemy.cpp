@@ -251,11 +251,11 @@ void AEnemy::ToggleHealth(bool Toggle) const
 	HealthBarComponent->SetVisibility(Toggle);
 }
 
-void AGameCharacter::EmitHitParticles(const FVector ImpactPoint) const
+void AGameCharacter::EmitParticles(FVector SpawnLocation, UParticleSystem* ParticleSystem) const
 {
-	if(HitParticles)
+	if(ParticleSystem)
 	{
-		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, ImpactPoint, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
+		UGameplayStatics::SpawnEmitterAtLocation(this, ParticleSystem, SpawnLocation, FRotator::ZeroRotator, FVector::OneVector * 0.75f);
 	}
 }
 

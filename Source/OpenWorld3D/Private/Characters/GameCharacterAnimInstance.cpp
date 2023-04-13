@@ -43,7 +43,7 @@ EWeaponType UGameCharacterAnimInstance::GetWeaponHeldType() const
 		}
 	}
 
-	return EWeaponType::EWT_OneHanded; //TODO: Check on this later
+	return EWeaponType::EWT_Light; //TODO: Check on this later
 }
 
 UBlendSpace1D* UGameCharacterAnimInstance::EvaluateGroundLocomotionBlendspace() const
@@ -57,7 +57,7 @@ UBlendSpace1D* UGameCharacterAnimInstance::EvaluateGroundLocomotionBlendspace() 
 			break;
 		case EEquipState::ECS_Equipped:
 			const EWeaponType WeaponType = GetWeaponHeldType();
-			ChosenBlendspace = WeaponType == EWeaponType::EWT_OneHanded ?  OneHandedBlendspace : TwoHandedBlendspace;
+			ChosenBlendspace = WeaponType == EWeaponType::EWT_Light ?  OneHandedBlendspace : TwoHandedBlendspace;
 			break;
 	}
 

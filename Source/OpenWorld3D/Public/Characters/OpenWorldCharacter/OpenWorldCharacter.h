@@ -6,7 +6,6 @@
 #include "Characters/GameCharacter.h"
 #include "InputActionValue.h"
 #include "Items/Item.h"
-#include "Characters/CharacterTypes.h"
 #include "Items/Weapons/EquipActionState.h"
 
 #include "OpenWorldCharacter.generated.h"
@@ -114,10 +113,16 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Stamina)
 	float DodgeRollStaminaCost;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UNiagaraSystem> HammerDownParticles;
+
 	/* Functions */
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void SpeedUpRoll();
 
 	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
 	void SlowDownRoll();
+
+	UFUNCTION(BlueprintCallable)
+	void SpawnHammerDownParticles();
 };

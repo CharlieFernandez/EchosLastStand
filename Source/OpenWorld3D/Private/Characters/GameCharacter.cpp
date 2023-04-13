@@ -39,7 +39,8 @@ void AGameCharacter::Attack()
 {
 	if(CanAttack())
 	{
-		PlayComboAttackMontage();
+		UAnimMontage* AttackMontage = WeaponHeld->GetWeaponType() == EWeaponType::EWT_Light ? SwordAttacksMontage : HammerAttacksMontage;
+		PlayComboAttackMontage(AttackMontage);
 	}
 }
 
@@ -52,18 +53,18 @@ void AGameCharacter::PlayMontageSection(UAnimMontage* Montage, FName SectionName
 	}
 }
 
-void AGameCharacter::PlayComboAttackMontage()
+void AGameCharacter::PlayComboAttackMontage(UAnimMontage* AttackMontage)
 {
-	if(NormalAttacksMontage == nullptr) return;
+	if(AttackMontage == nullptr) return;
 	
 	static uint8 AttackIndex = 0;
 	
 	ResetIfComboEnded(AttackIndex);
 	
-	if(NormalAttacksMontage->GetNumSections() <= AttackIndex) return;
+	if(AttackMontage->GetNumSections() <= AttackIndex) return;
 	
 	ActionState = EActionState::EAS_Attacking;
-	PlayMontageSection(NormalAttacksMontage, NormalAttacksMontage->GetSectionName(AttackIndex));
+	PlayMontageSection(AttackMontage, AttackMontage->GetSectionName(AttackIndex));
 	AttackIndex++;
 }
 
@@ -120,7 +121,7 @@ bool AGameCharacter::CanUnequip() const
 
 void AGameCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)
 {
-	EmitHitParticles(ImpactPoint);
+	EmitParticles(ImpactPoint, HitParticles);
 	
 	if(IsAlive())
 	{

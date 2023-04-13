@@ -2,7 +2,6 @@
 
 #include "Items/Weapons/Weapon.h"
 
-#include "Enemy.h"
 #include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/KismetSystemLibrary.h"

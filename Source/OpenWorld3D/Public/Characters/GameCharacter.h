@@ -41,7 +41,7 @@ protected:
 	bool CanEquip() const;
 	bool CanUnequip() const;
 	virtual bool CanAttack();
-	void PlayComboAttackMontage();	
+	void PlayComboAttackMontage(UAnimMontage* AttackMontage);	
 	virtual void BeginPlay() override;
 	void SetEquippedWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
 	void AttachMeshToSocket(UMeshComponent* WeaponMesh, FName SocketName) const;
@@ -50,7 +50,8 @@ protected:
 	FORCEINLINE float GetMaxRunSpeed() const { return MaxRunSpeed; }
 	FORCEINLINE float GetMaxWalkSpeed() const { return MaxWalkSpeed; }
 	void ResetIfComboEnded(uint8& AttackIndex) const;
-	FORCEINLINE UAnimMontage* GetAttackMontage() const { return NormalAttacksMontage; }
+	FORCEINLINE UAnimMontage* GetSwordAttackMontage() const { return SwordAttacksMontage; }
+	FORCEINLINE UAnimMontage* GetHammerAttackMontage() const { return HammerAttacksMontage; }
 	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
 	void SetHealthPercentage() const;
 	bool IsUnoccupied() const;
@@ -73,7 +74,7 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UHealthBarComponent> HealthBarComponent;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Visual Effects")
+	UPROPERTY(EditDefaultsOnly, Category = Particles)
 	TObjectPtr<UParticleSystem> HitParticles;
 	
 	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -83,20 +84,22 @@ protected:
 	EActionState ActionState = EActionState::EAS_Unoccupied;
 
 	/* Functions */
-	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	UFUNCTION(BlueprintCallable)
 	void AttackEnd();
-	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	UFUNCTION(BlueprintCallable)
 	void ResetActionState();
 
-	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	UFUNCTION(BlueprintCallable)
 	void Equip() const;
 
-	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
+	UFUNCTION(BlueprintCallable)
 	void Unequip();
+
+	UFUNCTION(BlueprintCallable)
+	void EmitParticles(FVector SpawnLocation, UParticleSystem* ParticleSystem) const;
 
 private:	
 	/* Methods */
-	void EmitHitParticles(FVector ImpactPoint) const;
 	static FName GenerateSectionNameByAngle(double Angle);
 	double GetAngleFromInstigatorPosition(FVector InstigatorPosition) const;
 	void FindAndPlayReactSection(const FVector InstigatorPosition) const;
@@ -109,7 +112,10 @@ private:
 	float WarpTranslationOffset = 0.75f;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	TObjectPtr<UAnimMontage> NormalAttacksMontage;
+	TObjectPtr<UAnimMontage> SwordAttacksMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TObjectPtr<UAnimMontage> HammerAttacksMontage;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage>ReactMontage;

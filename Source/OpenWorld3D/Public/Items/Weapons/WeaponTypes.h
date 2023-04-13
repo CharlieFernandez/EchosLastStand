@@ -4,6 +4,6 @@
 UENUM(BlueprintType)
 enum class EWeaponType: uint8
 {
-	EWT_OneHanded UMETA(DisplayName = "One-Handed"),
-	EWT_TwoHanded UMETA(DisplayName = "Two-Handed")
+	EWT_Light UMETA(DisplayName = "Light"),
+	EWT_Heavy UMETA(DisplayName = "Heavy")
 };

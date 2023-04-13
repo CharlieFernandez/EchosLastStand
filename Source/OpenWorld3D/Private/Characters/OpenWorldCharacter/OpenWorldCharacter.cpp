@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputState.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Components/AttributeComponent.h"
 #include "Components/LockOnComponent.h"
 #include "Components/SphereComponent.h"
@@ -22,6 +23,7 @@
 #include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Particles/ParticleSystem.h"
 
 AOpenWorldCharacter::AOpenWorldCharacter()
 {
@@ -326,4 +328,9 @@ void AOpenWorldCharacter::AddGold(ATreasure* Treasure)
 bool AOpenWorldCharacter::HasMovementInput() const
 {
 	return FVector2d(GetLastMovementInputVector()) != FVector2d::Zero();
+}
+
+void AOpenWorldCharacter::SpawnHammerDownParticles()
+{
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, GetWeaponHeld()->GetMesh()->GetSocketLocation(FName("Face1")));
 }
