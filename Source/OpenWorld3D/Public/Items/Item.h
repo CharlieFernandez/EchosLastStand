@@ -25,7 +25,8 @@ public:
 	AItem();
 	
 	virtual void Tick(float DeltaTime) override;
-	void PlayPickUpSound() const;
+
+	void PickUpItem();
 	
 	FORCEINLINE UStaticMeshComponent* GetStaticMeshComponent() const { return ItemMesh; }
 	FORCEINLINE UMeshComponent* GetMesh() const { return ItemMesh; };
@@ -33,14 +34,18 @@ public:
 	FORCEINLINE EItemState GetItemState() const { return ItemState; }
 
 protected:
+	TObjectPtr<UNiagaraComponent> UncollectedParticlesInGame;
+	
 	virtual void BeginPlay() override;
 	void SpawnPickUpEffect() const;
 	void PlayUncollectedSound();
 	void StopUncollectedSound() const;
 
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UNiagaraSystem> UncollectedParticles;
 
 	UPROPERTY(EditDefaultsOnly)
-	UNiagaraSystem* PickUpEffect;
+	TObjectPtr<UNiagaraSystem> CollectedParticles;
 	
 	UFUNCTION(BlueprintPure)
 	float TransformSine() const { return Amplitude * FMath::Sin(RunningTime * TimeConstant); }
@@ -66,11 +71,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<USoundBase> PickUpSound;
 
-	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<UNiagaraComponent> PickUpParticles;
-
 private:
 	UAudioComponent* UncollectedSoundPlayed;
+	void PlayPickUpSound() const;
 	
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadonly, meta = (AllowPrivateAccess = "true"))
 	float RunningTime;

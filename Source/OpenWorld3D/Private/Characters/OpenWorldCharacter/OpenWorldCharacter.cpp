@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputState.h"
+#include "MyUtilities.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Components/AttributeComponent.h"
 #include "Components/LockOnComponent.h"
@@ -224,7 +225,7 @@ void AOpenWorldCharacter::PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMe
 	Weapon->SetOwner(this);
 	Weapon->SetInstigator(this);
 	Weapon->ToggleWeaponState();
-	Weapon->PlayPickUpSound();
+	Weapon->PickUpItem();
 }
 
 void AOpenWorldCharacter::PlayEquipMontage(EEquipActionState EquipType) const
@@ -342,31 +343,10 @@ void AOpenWorldCharacter::SpawnHammerDownParticles()
 	FVector HammerPointEnd = HammerPointStart;
 	HammerPointStart.Z += 100;
 	HammerPointEnd.Z -= 200;
+
+	const EDrawDebugTrace::Type DebugTraceType = ShouldDrawDebugTrace ? EDrawDebugTrace::Persistent : EDrawDebugTrace::None;
 	
-	UKismetSystemLibrary::LineTraceMulti(
-		this,
-		HammerPointStart,
-		HammerPointEnd,
-		ETraceTypeQuery::TraceTypeQuery1,
-		false,
-		ActorsToIgnore,
-		EDrawDebugTrace::Persistent,
-		HitResults,
-		true
-	);
-
-	FHitResult FloorHit;
-
-	for(FHitResult HitResult: HitResults)
-	{
-		if(HitResult.GetActor()->ActorHasTag("Ground"))
-		{
-			FloorHit = HitResult;
-			break;
-		}
-	}
-
-	FloorHit.ImpactPoint.Z += 1.5f;
+	FHitResult FloorHit = MyUtilities::GetLineTraceGroundImpactPoint(this, HammerPointStart, HammerPointEnd, DebugTraceType);
 
 	if(FloorHit.GetActor() != nullptr)
 	{

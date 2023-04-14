@@ -83,6 +83,9 @@ private:
 
 	
 	/* Properties */
+	UPROPERTY(EditDefaultsOnly)
+	bool ShouldDrawDebugTrace;
+	
 	UPROPERTY(VisibleDefaultsOnly)
 	TObjectPtr<ULockOnComponent> LockOnComponent;
 	

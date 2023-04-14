@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Kismet/KismetSystemLibrary.h"
 
-static class OPENWORLD3D_API MyUtilities
+class OPENWORLD3D_API MyUtilities
 {
 public:
 	static bool InTargetRange(const float Radius, const AActor* SourceActor, const AActor* TargetActor);
+	static FHitResult GetLineTraceGroundImpactPoint(const UObject* WorldContext, FVector Start, FVector End, EDrawDebugTrace::Type TraceType);
 };

@@ -9,7 +9,6 @@ void ATreasure::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, A
 	if(IPickUpInterface* PickUpInterface = Cast<IPickUpInterface>(OtherActor))
 	{
 		PickUpInterface->AddGold(this);
-		PlayPickUpSound();
-		Destroy();
+		PickUpItem();
 	}
 }

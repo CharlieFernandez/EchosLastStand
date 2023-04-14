@@ -35,6 +35,10 @@ void AWeapon::SetToHeldItem()
 {
 	ItemState = EItemState::EIS_Held;
 	SphereComponent->SetGenerateOverlapEvents(false);
-	PickUpParticles->Deactivate();
 	ItemMesh->EmptyOverrideMaterials();
+
+	if(UncollectedParticlesInGame)
+	{
+		UncollectedParticlesInGame->Deactivate();
+	}
 }

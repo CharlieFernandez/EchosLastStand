@@ -2,10 +2,12 @@
 
 #include "Items/Item.h"
 
+#include "MyUtilities.h"
 #include "NiagaraComponent.h"
 #include "Interfaces/PickUpInterface.h"
 #include "Components/SphereComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -19,9 +21,6 @@ AItem::AItem(): Amplitude(0.25f), TimeConstant(5.f)
 
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere Comp"));
 	SphereComponent -> SetupAttachment(GetRootComponent());
-
-	PickUpParticles = CreateDefaultSubobject<UNiagaraComponent>("Pick-Up Particles");
-	PickUpParticles->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned
@@ -31,8 +30,24 @@ void AItem::BeginPlay()
 
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AItem::OnSphereBeginOverlap);
 	SphereComponent->OnComponentEndOverlap.AddDynamic(this, &AItem::OnSphereEndOverlap);
-	
-	PlayUncollectedSound();	
+
+	if(GetOwner() == nullptr)
+	{
+		PlayUncollectedSound();
+
+		if(UncollectedParticles)
+		{
+			const FVector StartLocation = GetActorLocation();
+			FVector EndLocation = StartLocation;
+			EndLocation.Z -= 200.f;
+			const FHitResult FloorHit = MyUtilities::GetLineTraceGroundImpactPoint(this, StartLocation, EndLocation, EDrawDebugTrace::Persistent);
+
+			if(FloorHit.GetActor() != nullptr)
+			{
+				UncollectedParticlesInGame = UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, UncollectedParticles, FloorHit.ImpactPoint);
+			}
+		}
+	}
 }
 
 void AItem::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -67,13 +82,25 @@ void AItem::Tick(float DeltaTime)
 
 void AItem::SpawnPickUpEffect() const
 {
-	if(PickUpEffect)
+	if(CollectedParticles)
 	{
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(
 			this,
-			PickUpEffect,
+			CollectedParticles,
 			GetActorLocation()
 		);
+	}
+}
+
+void AItem::PickUpItem()
+{
+	SpawnPickUpEffect();
+	StopUncollectedSound();
+	PlayPickUpSound();
+
+	if(!Cast<AWeapon>(this))
+	{
+		Destroy();
 	}
 }
 

@@ -12,9 +12,6 @@ void ASouls::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	if(IPickUpInterface* PickUpInterface = Cast<IPickUpInterface>(OtherActor))
 	{
 		PickUpInterface->AddSouls(this);
-		SpawnPickUpEffect();
-		StopUncollectedSound();
-		PlayPickUpSound();
-		Destroy();
+		PickUpItem();
 	}
 }
