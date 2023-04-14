@@ -240,7 +240,7 @@ void AOpenWorldCharacter::PlayEquipMontage(EEquipActionState EquipType) const
 
 void AOpenWorldCharacter::Jump()
 {
-	if(!IsAlive()) return;
+	if(!IsAlive() || !IsUnoccupied() ) return;
 	
 	Super::Jump();
 }
@@ -337,26 +337,39 @@ void AOpenWorldCharacter::SpawnHammerDownParticles()
 	ActorsToIgnore.AddUnique(GetWeaponHeld());
 	ActorsToIgnore.AddUnique(ActorOwner);
 
-	FHitResult HitResult;
+	TArray<FHitResult> HitResults;
+	FVector HammerPointStart = GetWeaponHeld()->GetMesh()->GetSocketLocation(FName("MiddleTop"));
+	FVector HammerPointEnd = HammerPointStart;
+	HammerPointStart.Z += 100;
+	HammerPointEnd.Z -= 200;
 	
-	UKismetSystemLibrary::LineTraceSingle(
+	UKismetSystemLibrary::LineTraceMulti(
 		this,
-		GetActorLocation(),
-		GetActorLocation() - 500,
+		HammerPointStart,
+		HammerPointEnd,
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
 		ActorsToIgnore,
-		EDrawDebugTrace::None,
-		HitResult,
+		EDrawDebugTrace::Persistent,
+		HitResults,
 		true
 	);
 
-	FVector SpawnLocation = GetWeaponHeld()->GetMesh()->GetSocketLocation(FName("MiddleTop"));
-	FVector Origin;
-	FVector BoxExtent;
+	FHitResult FloorHit;
 
-	HitResult.GetActor()->GetActorBounds(true, Origin, BoxExtent);
-	SpawnLocation.Z = Origin.Z + BoxExtent.Z + 1;
-	
-	UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, SpawnLocation);
+	for(FHitResult HitResult: HitResults)
+	{
+		if(HitResult.GetActor()->ActorHasTag("Ground"))
+		{
+			FloorHit = HitResult;
+			break;
+		}
+	}
+
+	FloorHit.ImpactPoint.Z += 1.5f;
+
+	if(FloorHit.GetActor() != nullptr)
+	{
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, FloorHit.ImpactPoint);
+	}
 }
