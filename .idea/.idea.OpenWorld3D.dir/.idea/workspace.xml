@@ -6,19 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e8c09862-1e6c-48e4-a7d0-b4103d47c9c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/ABP_Humanoid.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/ABP_Humanoid.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Echo_H_NormalAttacks.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Echo_H_NormalAttacks.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HammerDown.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HammerDown.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Material/M_MS_Default_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Default_Material/M_MS_Default_Material.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MSPresets/M_MS_Glass_Material/M_MS_Glass_Material.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MSPresets/M_MS_Glass_Material/M_MS_Glass_Material.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/InfinityBladeEffects/FX_Textures/Damage/T_FireCracksMask.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/InfinityBladeEffects/FX_Textures/Damage/T_FireCracksMask.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Masters/M_AlterAlpha.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Portal/NS_Portal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Portal/NS_Portal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Megascans/3D_Assets/Sandstone_Boulder_vd4jeiy/MI_Sandstone_Boulder_vd4jeiy_2K.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Megascans/3D_Assets/Sandstone_Boulder_vd4jeiy/MI_Sandstone_Boulder_vd4jeiy_2K.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Megascans/Surfaces/Canyon_Rocky_Ground_vemtfab/MI_Canyon_Rocky_Ground_vemtfab_4K.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Megascans/Surfaces/Canyon_Rocky_Ground_vemtfab/MI_Canyon_Rocky_Ground_vemtfab_4K.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +116,7 @@
       <workItem from="1681306147961" duration="490000" />
       <workItem from="1681334954986" duration="8849000" />
       <workItem from="1681391934820" duration="7559000" />
+      <workItem from="1681479509803" duration="1656000" />
     </task>
     <servers />
   </component>
