@@ -6,212 +6,97 @@
   <component name="ChangeListManager">
     <list default="true" id="e8c09862-1e6c-48e4-a7d0-b4103d47c9c2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/Attenuations/sfx_Char_Echo_Foley_Attenuation.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/Attenuations/vox_Char_Echo_Attenuation.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/ControlBuses/Echo_ControlBus.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/ControlBuses/FS_ControlBus.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/ControlBuses/Foley_ControlBus.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/ControlBuses/SFX_ControlBus.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/ControlBuses/VOX_ControlBus.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/Patches/SFX_Echo_Vox_Patch.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/Patches/SFX_FS_Echo_Patch.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/AudioModulation/Patches/SFX_Foley_Echo_Patch.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Cloth_Heavy_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Cloth_Run_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Cloth_Walk_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_FS_Rock_Run_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Footfall_Land_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Hand_Plant_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Pouch_Heavy_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Scuff_Heavy_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/sfx_Char_Echo_Foley_Scuff_Light_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/MetaSounds/vox_Char_Echo_Exertion_nl_meta.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Heavy_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Heavy_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Heavy_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Heavy_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Heavy_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Heavy_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Heavy_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Run_nl_10.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_10.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_11.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_12.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Cloth_Walk_nl_13.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_10.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_11.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_12.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_13.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_14.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_15.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_16.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_17.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Run_nl_18.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_10.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_11.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_12.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_FS_Rock_Walk_nl_13.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Footfall_Land_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Hand_Plant_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_10.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Pouch_Heavy_nl_11.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Heavy_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Heavy_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Heavy_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Heavy_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Heavy_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Heavy_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Heavy_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Foley/sfx_Char_Echo_Foley_Scuff_Light_nl_10.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_01.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_02.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_03.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_04.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_05.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_06.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_07.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_08.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_09.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Audio/SoundWaves/Echo/Vox/vox_Char_Echo_Exertion_nl_10.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_To_Jog_Fwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_To_Jog_Fwd.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Left_180.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Left_180.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Left_90.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Left_90.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Right_180.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Right_180.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Right_90.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Jog_Fwd_Right_90.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Left_180.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Left_180.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Left_90.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Left_90.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Right_180.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Right_180.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Right_90.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Idle_to_Walk_Fwd_Right_90.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jog_Fwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jog_Fwd.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jog_Fwd_to_Idle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jog_Fwd_to_Idle.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jump_Idle_Fall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jump_Idle_Fall.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jump_Idle_Land.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Jump_Idle_Land.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/ReachOut_End.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/ReachOut_End.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/ReachOut_Start.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/ReachOut_Start.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/StandFromSitting.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/StandFromSitting.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/VaultOver.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/VaultOver.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Walk_Fwd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Walk_Fwd.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Walk_Fwd_to_Idle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AncientContent/Characters/Echo/Animations/Walk_Fwd_to_Idle.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Audio/MetaSounds/SFX_Exert.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/MetaSounds/SFX_Exert.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Great_Sword_Run.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Great_Sword_Run.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Movement/S_Walk.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Movement/S_Walk.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Unequipped/Movement/U_Sprinting.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Unequipped/Movement/U_Sprinting.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Walk_Forward.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Walk_Forward.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Sword_And_Shield_Run.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Sword_And_Shield_Run.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/ABP_Humanoid.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo_IK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo_IK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/BlendSpaces/BS_EchoGroundOne-Handed.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/BlendSpaces/BS_EchoGroundTwo-Handed.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/BlendSpaces/BS_EchoGroundUnarmed.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Great_Sword_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Echo_Equip.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Echo_H_NormalAttacks.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Echo_ReactMontage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Echo_Roll.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Montages/AM_Echo_S_NormalAttacks.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Quick_Roll_To_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/RunFast_Sword.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Sprint.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Death/Standing_Death_Backward_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Death/Standing_Death_Forward_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Attacks/NormalAttacks/Echo_H_Attack1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Attacks/NormalAttacks/Echo_H_Attack2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Attacks/NormalAttacks/Echo_H_Attack3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Attacks/NormalAttacks/Echo_H_Attack4.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Movement/H_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Movement/H_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Movement/H_Sprint.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/GreatHammer/Movement/H_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Hit/HitLargeCombatBack.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Hit/HitLargeCombatFront.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Hit/HitLargeCombatLeft.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Hit/HitLargeCombatRight.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/Katana_Blade_Attack_4Combo_1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/Katana_Blade_Attack_4Combo_2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/Katana_Blade_Attack_4Combo_3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/Katana_Blade_Attack_4Combo_4.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/S_NormalAttack1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/S_NormalAttack2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/S_NormalAttack3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/S_NormalAttack4.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/Standing_Melee_Attack_360_High_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/Standing_Melee_Attack_Backhand_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Attacks/Standing_Melee_Attack_Downward_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Movement/S_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Movement/S_Idle2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Movement/S_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Sword/Movement/S_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Unequipped/Movement/THISISIT.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/StandaloneAnimations/Unequipped/Movement/U_Sprinting.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Disarm_Underarm_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Equip_Over_Shoulder_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Idle_Looking_Ver__2_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Idle_One_Handed_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Jump_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Run_Back_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Unequip_Over_Shoulder_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Walk_Forward.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Walk_Left_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Standing_Walk_Right_mixamo_com.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Animations/Sword_And_Shield_Run.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Rigs/CR_EchoFootIK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Rigs/IK_Echo.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/Rigs/IK_EchoRetargetRoot.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/ABP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/ABP_Enemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/ABP_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/ABP_AlienSoldier.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/BlendSpaces/BS_GroundLocomotion.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/Montages/AM_NormalAttacks.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/StandaloneAnimations/Attacks/Katana_Blade_Attack_5Combo_1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/StandaloneAnimations/Attacks/Katana_Blade_Attack_5Combo_2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/StandaloneAnimations/Attacks/Katana_Blade_Attack_5Combo_3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/StandaloneAnimations/Attacks/Katana_Blade_Attack_5Combo_4.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/StandaloneAnimations/Attacks/Katana_Blade_Attack_5Combo_5.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/StandaloneAnimations/Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/Animations/StandaloneAnimations/Walk.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/BP_AlienSoldier.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/BP_Item.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/BP_Item.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/BP_Souls.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/BP_Souls.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Crystal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Crystal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Emerald.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Emerald.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_GoldBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_GoldBar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_GoldCoin.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_GoldCoin.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Ruby.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Ruby.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Sapphire.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Pickups/Treasures/BP_Sapphire.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Sword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Sword.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Weapon.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_Weapon.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_DarkAura.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_EnemySword.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HammerDown.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_HealthRelic.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Souls.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_SoulsBurst.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_SteppingParticles.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_Waterfall.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Effects/ParticleSystems/NS_WeaponPickUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/BP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/BP_Enemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/ABP_Crypto.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/ABP_Crypto.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/AM_React.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/BlendSpaces/Crypto_IdleToRun.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/Deaths/Death_From_The_Back.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/Deaths/Flying_Back_Death.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/Deaths/Standing_Death_Backward_01.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/Deaths/Standing_Death_Backward_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/Deaths/Standing_Death_Forward_02.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/Deaths/Standing_React_Death_Backward.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/Crypto/Deaths/Zombie_Death.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/Testing.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/Testing.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_Flamethrower.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_Flamethrower.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_WeaponPickUpEffect.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/FlamethrowerBeam/MI_WeaponPickUpEffect.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Glow/M_WeaponGlow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Glow/M_WeaponGlow.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Masters/MI_HammerDownCrack.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Masters/M_NonHardened.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Masters/M_NonHardened.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Masters/M_PanDistortion.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Meteor/MI_MeteorShell.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Meteor/MI_MeteorShell.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Noise/MarbleNoise/TextureFromRT.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Portal/MI_PortalCenterDistortion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Portal/MI_PortalCenterDistortion.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Portal/NS_Portal.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Portal/NS_Portal.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Item.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Item.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Souls.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Souls.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Treasures/Treasure.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Treasures/Treasure.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/MyUtilities.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/MyUtilities.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Items/Item.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Items/Item.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/MyUtilities.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/MyUtilities.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IKR_ManequinnToEcho.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IKR_ManequinnToEcho.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IKR_ManequinnUE4ToEcho.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/IKR_ManequinnUE4ToEcho.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/SwordAnimationPack/Animations/IKR_MannyToEcho.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/SwordAnimationPack/Animations/IKR_MannyToEcho.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Mixamo/Crypto/IKR_Crypto.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mixamo/Crypto/IKR_Crypto.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Mixamo/XBot/Rigs/RTG_XBot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Mixamo/XBot/Rigs/RTG_XBot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Enemy.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

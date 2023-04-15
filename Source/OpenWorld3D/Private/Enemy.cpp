@@ -50,7 +50,7 @@ void AEnemy::BeginPlay()
 	StartWithWeapon();
 	State = EEnemyState::EES_Patrolling;
 	ToggleHealth(false);
-	DrawAllWaypoints();
+	// DrawAllWaypoints();
 	GenerateNewPatrolTarget();
 	OnFinishedPatrolTimer(); //Starts moving to the next waypoint.
 
