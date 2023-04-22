@@ -37,3 +37,11 @@ FHitResult MyUtilities::GetLineTraceGroundImpactPoint(const UObject* WorldContex
 
 	return FloorHit;
 }
+
+FRotator MyUtilities::GetRotationFromNormalVector(FHitResult HitResult)
+{
+	const FVector UpVector = FVector::UpVector;
+	const FVector Axis = UpVector.Cross(HitResult.Normal).GetSafeNormal();
+	const float Angle = FMath::Acos(UpVector.Dot(HitResult.Normal));
+	return FQuat(Axis, Angle).Rotator();
+}

@@ -350,6 +350,7 @@ void AOpenWorldCharacter::SpawnHammerDownParticles()
 
 	if(FloorHit.GetActor() != nullptr)
 	{
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, FloorHit.ImpactPoint);
+		FRotator RotationToPlantOnFloor = MyUtilities::GetRotationFromNormalVector(FloorHit);		
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, FloorHit.ImpactPoint, RotationToPlantOnFloor);
 	}
 }
