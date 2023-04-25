@@ -108,6 +108,13 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 		Attributes->RegenerateStamina(DeltaTime);
 		OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
 	}
+
+	const AEnemy* Target = Cast<AEnemy>(LockOnComponent->LockedOnTarget);
+	
+	if(Target && !Target->IsAlive())
+	{		
+		LockOnComponent->Unlock();
+	}
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -344,7 +351,7 @@ void AOpenWorldCharacter::SpawnHammerDownParticles()
 	HammerPointStart.Z += 100;
 	HammerPointEnd.Z -= 200;
 
-	const EDrawDebugTrace::Type DebugTraceType = ShouldDrawDebugTrace ? EDrawDebugTrace::Persistent : EDrawDebugTrace::None;
+	const EDrawDebugTrace::Type DebugTraceType = ShouldDrawHammerDownDebugTrace ? EDrawDebugTrace::Persistent : EDrawDebugTrace::None;
 	
 	FHitResult FloorHit = MyUtilities::GetLineTraceGroundImpactPoint(this, HammerPointStart, HammerPointEnd, DebugTraceType);
 

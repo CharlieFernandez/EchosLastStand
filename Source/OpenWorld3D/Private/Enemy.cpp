@@ -15,6 +15,7 @@
 #include "Perception/PawnSensingComponent.h"
 #include "Characters/CharacterTypes.h"
 #include "Characters/OpenWorldCharacter/OpenWorldCharacter.h"
+#include "Components/LockableComponent.h"
 #include "Items/Souls.h"
 #include "Items/Weapons/Weapon.h"
 
@@ -39,6 +40,7 @@ AEnemy::AEnemy()
 	bUseControllerRotationYaw = false;
 
 	PawnSensingComponent = CreateDefaultSubobject<UPawnSensingComponent>("Pawn Sensor");
+	LockableComponent = CreateDefaultSubobject<ULockableComponent>("Lockable");
 
 	Tags.AddUnique("Enemy");
 }

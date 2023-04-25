@@ -5,9 +5,10 @@
 #include "CoreMinimal.h"
 #include "Characters/CharacterTypes.h"
 #include "Characters/GameCharacter.h"
-#include "GameFramework/Character.h"
 #include "Enemy.generated.h"
 
+class ULockableComponent;
+class UNiagaraSystem;
 class ASouls;
 class UPawnSensingComponent;
 class AAIController;
@@ -28,6 +29,8 @@ public:
 	void DrawAllWaypoints();
 	void ToggleHealth(bool Toggle) const;	
 	virtual void Tick(float DeltaTime) override;
+
+	inline const static FName EnemyTag = "Enemy";
 
 protected:
 	/* Methods */
@@ -68,7 +71,10 @@ private:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 
-	/* Properties */	
+	/* Properties */
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<ULockableComponent> LockableComponent;
+	
 	UPROPERTY()
 	TObjectPtr<AAIController> AIController;
 
@@ -104,7 +110,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ASouls> SoulsClass;
-
+	
 	/* Functions */
 	UFUNCTION()
 	void OnPawnSeen(APawn* PawnSeen);

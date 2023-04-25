@@ -40,7 +40,9 @@ void AItem::BeginPlay()
 			const FVector StartLocation = GetActorLocation();
 			FVector EndLocation = StartLocation;
 			EndLocation.Z -= 200.f;
-			const FHitResult FloorHit = MyUtilities::GetLineTraceGroundImpactPoint(this, StartLocation, EndLocation, EDrawDebugTrace::Persistent);
+
+			const EDrawDebugTrace::Type DrawDebugTrace = DrawItemRingLineTrace ? EDrawDebugTrace::Persistent : EDrawDebugTrace::None;			
+			const FHitResult FloorHit = MyUtilities::GetLineTraceGroundImpactPoint(this, StartLocation, EndLocation, DrawDebugTrace);
 
 			if(FloorHit.GetActor() != nullptr)
 			{
@@ -48,6 +50,8 @@ void AItem::BeginPlay()
 			}
 		}
 	}
+
+	
 }
 
 void AItem::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,

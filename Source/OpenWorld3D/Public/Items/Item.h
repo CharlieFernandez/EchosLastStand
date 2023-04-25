@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Interfaces/PickUpInterface.h"
 #include "Items/ItemState.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "Item.generated.h"
 
 class USphereComponent;
@@ -83,4 +84,8 @@ private:
 	float TimeConstant;
 	UPROPERTY(EditAnywhere, Category = "Hover")
 	float SpinSpeed = 100;
+
+	// DEBUGS
+	UPROPERTY(EditDefaultsOnly, Category = Debug, meta = (AllowPrivateAccess = "true"))
+	bool DrawItemRingLineTrace;
 };

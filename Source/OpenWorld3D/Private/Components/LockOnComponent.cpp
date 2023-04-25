@@ -3,6 +3,9 @@
 
 #include "Components/LockOnComponent.h"
 
+#include "Enemy.h"
+#include "NiagaraComponent.h"
+#include "Components/LockableComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -42,12 +45,13 @@ void ULockOnComponent::Lock()
 	TArray<AActor*> ActorsToIgnore;
 	TArray<FHitResult> HitResults;
 	ActorsToIgnore.AddUnique(GetOwner());
-	const FVector ActorLocation =  GetOwner()->GetActorLocation();	
 	FindAndFilterEnemies(ActorsToIgnore, HitResults);
 
 	if(HitResults.Num() == 0) return;
 
 	SetLockOnTarget(HitResults);
+	const ULockableComponent* LockableComponent = Cast<ULockableComponent>(LockedOnTarget->GetComponentByClass(ULockableComponent::StaticClass()));
+	CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
 	SpringArmComponent->TargetOffset = LockOnOffset;
 }
 
@@ -65,6 +69,11 @@ void ULockOnComponent::SetLockOnTarget(const TArray<FHitResult>& HitResults)
 		if(CurrentClosestDistance > NextDistance)
 		{
 			LockedOnTarget = EnemyToInspect;
+
+			if(CurrentlyUsedLockOnNC)
+			{
+				CurrentlyUsedLockOnNC->Activate();
+			}
 		}
 	}
 }
@@ -87,12 +96,15 @@ void ULockOnComponent::FindAndFilterEnemies(TArray<AActor*> ActorsToIgnore, TArr
 
 	HitResults.RemoveAll([](FHitResult HitResult)
 	{
-		return !HitResult.GetActor()->ActorHasTag("Enemy");
+		const AEnemy* Enemy = Cast<AEnemy>(HitResult.GetActor());
+		
+		return Enemy == nullptr || !Enemy->IsAlive();
 	});
 }
 
 void ULockOnComponent::Unlock()
 {
+	CurrentlyUsedLockOnNC->DeactivateImmediate();
 	LockedOnTarget = nullptr;
 	SpringArmComponent->TargetOffset = FVector();
 }

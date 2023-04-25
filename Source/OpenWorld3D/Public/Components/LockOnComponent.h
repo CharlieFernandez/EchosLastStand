@@ -7,6 +7,7 @@
 #include "LockOnComponent.generated.h"
 
 
+class UNiagaraComponent;
 class USpringArmComponent;
 class UCameraComponent;
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -21,18 +22,18 @@ public:
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void ToggleLockOntoTarget();
+	void Unlock();
 
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	void Lock();
-	void Unlock();
+	void Lock();	
 	void FindAndFilterEnemies(TArray<AActor*> ActorsToIgnore, TArray<FHitResult>& HitResults) const;
 	void SetLockOnTarget(const TArray<FHitResult>& HitResults);
 
-
+	TObjectPtr<UNiagaraComponent> CurrentlyUsedLockOnNC;
 
 	UPROPERTY(EditDefaultsOnly)
 	FVector LockOnOffset;

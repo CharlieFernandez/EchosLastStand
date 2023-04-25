@@ -84,7 +84,7 @@ private:
 	
 	/* Properties */
 	UPROPERTY(EditDefaultsOnly)
-	bool ShouldDrawDebugTrace;
+	bool ShouldDrawHammerDownDebugTrace;
 	
 	UPROPERTY(VisibleDefaultsOnly)
 	TObjectPtr<ULockOnComponent> LockOnComponent;
