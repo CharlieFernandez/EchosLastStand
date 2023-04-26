@@ -58,6 +58,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> AttackPressedAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> RollAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOnAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOffAction;
 
 	/* Functions */
 	UFUNCTION()
@@ -79,10 +80,13 @@ private:
 	void PlayRollMontage(const FInputActionValue& Value);
 	void PlayEquipMontage(EEquipActionState EquipType) const;
 	void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
-	void ToggleLockOn();
-
+	void LockOn();
+	void LockOff();
 	
 	/* Properties */
+	UPROPERTY(EditDefaultsOnly)
+	float DefaultCameraDistance;
+	
 	UPROPERTY(EditDefaultsOnly)
 	bool ShouldDrawHammerDownDebugTrace;
 	

@@ -77,6 +77,8 @@ void AOpenWorldCharacter::InitializeHUD(const APlayerController* PlayerControlle
 
 void AOpenWorldCharacter::BeginPlay()
 {
+	SpringArm->TargetArmLength = DefaultCameraDistance;
+	LockOnComponent->InitializeVariablesOnBeginPlay(DefaultCameraDistance);
 	Super::BeginPlay();
 	Tags.AddUnique(PlayerTag);
 	BindHealthRadiusSphereComponents();
@@ -129,7 +131,8 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
 		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
 		EnhancedInputComponent -> BindAction(RollAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Roll);
-		EnhancedInputComponent -> BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ToggleLockOn);
+		EnhancedInputComponent -> BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOn);
+		EnhancedInputComponent -> BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
 	}
 }
 
@@ -294,9 +297,14 @@ void AOpenWorldCharacter::SlowDownRoll()
 	CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
 }
 
-void AOpenWorldCharacter::ToggleLockOn()
+void AOpenWorldCharacter::LockOn()
 {
-	LockOnComponent->ToggleLockOntoTarget();
+	LockOnComponent->Lock();
+}
+
+void AOpenWorldCharacter::LockOff()
+{
+	LockOnComponent->Unlock();
 }
 
 void AOpenWorldCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)

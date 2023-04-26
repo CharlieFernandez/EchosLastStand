@@ -19,14 +19,19 @@ ULockOnComponent::ULockOnComponent()
 }
 
 void ULockOnComponent::InitializeVariables() const
-{
+{	
 	MidPointLockOn->SetupAttachment(GetOwner()->GetRootComponent());
 }
 
+void ULockOnComponent::InitializeVariablesOnBeginPlay(float DefaultDistance)
+{
+	DefaultCameraDistance = DefaultDistance;
+}
 
 void ULockOnComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	LockOnRadius = MaxCameraDistance;
 	SpringArmComponent = Cast<USpringArmComponent>(GetOwner()->GetComponentByClass(USpringArmComponent::StaticClass()));
 	CameraComponent = Cast<UCameraComponent>(GetOwner()->GetComponentByClass(UCameraComponent::StaticClass()));
 	PlayerController = Cast<APlayerController>(GetOwner()->GetInstigatorController());	
@@ -41,13 +46,18 @@ void ULockOnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	{
 		const AActor* Owner = GetOwner();
 		MidPointLockOn->SetWorldLocation((Owner->GetActorLocation() + LockedOnTarget->GetActorLocation()) / 2);
-	}
-}
 
-void ULockOnComponent::ToggleLockOntoTarget()
-{
-	if(LockedOnTarget) Unlock();
-	else Lock();
+		const float SpringArmLength = FVector::Distance(Owner->GetActorLocation(), LockedOnTarget->GetActorLocation());
+
+		if(SpringArmLength > MaxCameraDistance)
+		{
+			Unlock();
+		} else
+		{
+			SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmLength, MinCameraDistance, MaxCameraDistance);
+		}
+		
+	}
 }
 
 void ULockOnComponent::Lock()
@@ -115,8 +125,10 @@ void ULockOnComponent::FindAndFilterEnemies(TArray<AActor*> ActorsToIgnore, TArr
 
 void ULockOnComponent::Unlock()
 {
+	if(LockedOnTarget == nullptr) return;
+	
 	CurrentlyUsedLockOnNC->DeactivateImmediate();
 	LockedOnTarget = nullptr;
-	SpringArmComponent->TargetOffset = FVector();
 	SpringArmComponent->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+	SpringArmComponent->TargetArmLength = DefaultCameraDistance;
 }

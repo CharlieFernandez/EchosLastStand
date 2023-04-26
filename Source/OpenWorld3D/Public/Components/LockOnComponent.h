@@ -7,7 +7,6 @@
 #include "LockOnComponent.generated.h"
 
 
-class AMidPointLockOn;
 class UNiagaraComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -19,36 +18,34 @@ class OPENWORLD3D_API ULockOnComponent : public UActorComponent
 public:
 	ULockOnComponent();
 	void InitializeVariables() const;
+	void InitializeVariablesOnBeginPlay(float DefaultCameraDistance);
 	TObjectPtr<AActor> LockedOnTarget;	
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void ToggleLockOntoTarget();
 	void Unlock();
-
+	void Lock();
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	float DefaultCameraDistance;
+	float LockOnRadius;	
 	TObjectPtr<APlayerController> PlayerController;
 	TObjectPtr<UNiagaraComponent> CurrentlyUsedLockOnNC;
+	TObjectPtr<USpringArmComponent> SpringArmComponent;	
+	TObjectPtr<UCameraComponent> CameraComponent;
 	
-	void Lock();
 	void FindAndFilterEnemies(TArray<AActor*> ActorsToIgnore, TArray<FHitResult>& HitResults) const;
 	void SetLockOnTarget(const TArray<FHitResult>& HitResults);
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> MidPointLockOn;
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USpringArmComponent> SpringArmComponent;
-	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UCameraComponent> CameraComponent;
+	UPROPERTY(EditDefaultsOnly)
+	float MinCameraDistance;
 
 	UPROPERTY(EditDefaultsOnly)
-	FVector LockOnOffset;
-
-	UPROPERTY(EditDefaultsOnly)
-	float LockOnRadius = 1000.f;
+	float MaxCameraDistance;
 };

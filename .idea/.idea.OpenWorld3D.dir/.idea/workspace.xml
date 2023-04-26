@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d25f1416-0efd-47b1-b13f-6028f7df7490" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_LockOn.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_LockOn.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,7 +111,7 @@
       <updated>1682472637610</updated>
       <workItem from="1682472650563" duration="7368000" />
       <workItem from="1682486868206" duration="997000" />
-      <workItem from="1682519828640" duration="7637000" />
+      <workItem from="1682519828640" duration="11926000" />
     </task>
     <servers />
   </component>
