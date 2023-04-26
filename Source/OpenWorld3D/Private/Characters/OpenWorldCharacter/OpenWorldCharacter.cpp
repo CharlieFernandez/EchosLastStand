@@ -117,6 +117,15 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 	{		
 		LockOnComponent->Unlock();
 	}
+
+	if(LockOnComponent->LockedOnTarget)
+	{
+		CombatTarget = LockOnComponent->LockedOnTarget;
+	}
+	else
+	{
+		CombatTarget = nullptr;
+	}
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -301,13 +310,12 @@ void AOpenWorldCharacter::SlowDownRoll()
 
 void AOpenWorldCharacter::LockOn()
 {
-	CombatTarget = LockOnComponent->Lock();
+	LockOnComponent->Lock();
 }
 
 void AOpenWorldCharacter::LockOff()
 {
 	LockOnComponent->Unlock();
-	CombatTarget = nullptr;
 }
 
 void AOpenWorldCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)

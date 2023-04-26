@@ -55,26 +55,24 @@ void ULockOnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		} else
 		{
 			SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmLength, MinCameraDistance, MaxCameraDistance);
-		}
-		
+		}		
 	}
 }
 
-AActor* ULockOnComponent::Lock()
+void ULockOnComponent::Lock()
 {
 	TArray<AActor*> ActorsToIgnore;
 	TArray<FHitResult> HitResults;
 	ActorsToIgnore.AddUnique(GetOwner());
 	FindAndFilterEnemies(ActorsToIgnore, HitResults);
 
-	if(HitResults.Num() == 0) return nullptr;
+	if(HitResults.Num() == 0) return;
 
 	SetLockOnTarget(HitResults);
 	const ULockableComponent* LockableComponent = Cast<ULockableComponent>(LockedOnTarget->GetComponentByClass(ULockableComponent::StaticClass()));
 	CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
 	MidPointLockOn->SetWorldLocation((GetOwner()->GetActorLocation() + LockedOnTarget->GetActorLocation()) / 2);
 	SpringArmComponent->AttachToComponent(MidPointLockOn, FAttachmentTransformRules::KeepRelativeTransform);
-	return LockedOnTarget;
 }
 
 void ULockOnComponent::SetLockOnTarget(const TArray<FHitResult>& HitResults)
