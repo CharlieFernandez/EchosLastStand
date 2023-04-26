@@ -235,7 +235,7 @@ FVector AGameCharacter::GetTranslationWarp() const
 
 FVector AGameCharacter::GetRotationWarp() const
 {
-	if(CombatTarget == nullptr) return FVector();
+	if(CombatTarget == nullptr) return GetActorLocation()+GetActorForwardVector() ;
 
 	return CombatTarget->GetActorLocation();
 }

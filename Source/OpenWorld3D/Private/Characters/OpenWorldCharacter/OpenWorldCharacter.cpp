@@ -156,9 +156,11 @@ void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp
 
 void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 {
-	if(!IsAlive() || !IsUnoccupied() && !IsAttacking()) return;
+	if( !IsAlive() || !IsUnoccupied() && !IsAttacking()) return;
 	
 	const FVector2D MovementVector = Value.Get<FVector2D>();
+
+	if(MovementVector.IsZero()) return;
 
 	if(ActionState == EActionState::EAS_Unoccupied)
 	{
@@ -299,12 +301,13 @@ void AOpenWorldCharacter::SlowDownRoll()
 
 void AOpenWorldCharacter::LockOn()
 {
-	LockOnComponent->Lock();
+	CombatTarget = LockOnComponent->Lock();
 }
 
 void AOpenWorldCharacter::LockOff()
 {
 	LockOnComponent->Unlock();
+	CombatTarget = nullptr;
 }
 
 void AOpenWorldCharacter::GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition)

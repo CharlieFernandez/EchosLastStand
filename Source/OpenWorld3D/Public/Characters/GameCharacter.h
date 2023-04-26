@@ -104,7 +104,7 @@ private:
 	double GetAngleFromInstigatorPosition(FVector InstigatorPosition) const;
 	void FindAndPlayReactSection(const FVector InstigatorPosition) const;
 
-	/* Properties */
+	/* Properties */	
 	UPROPERTY(EditDefaultsOnly)
 	bool CanBeStaggered = true;
 

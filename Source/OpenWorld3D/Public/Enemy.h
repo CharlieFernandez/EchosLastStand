@@ -45,6 +45,9 @@ protected:
 	bool IsEngaged() const;
 	virtual void Destroyed() override;
 
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<ULockableComponent> LockableComponent;
+
 private:
 	/* Fields */
 	FTimerHandle PatrolTimerHandle;
@@ -71,10 +74,7 @@ private:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 
-	/* Properties */
-	UPROPERTY(EditDefaultsOnly)
-	TObjectPtr<ULockableComponent> LockableComponent;
-	
+	/* Properties */	
 	UPROPERTY()
 	TObjectPtr<AAIController> AIController;
 

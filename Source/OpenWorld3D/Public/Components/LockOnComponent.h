@@ -22,9 +22,8 @@ public:
 	TObjectPtr<AActor> LockedOnTarget;	
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void ToggleLockOntoTarget();
 	void Unlock();
-	void Lock();
+	AActor* Lock();
 
 protected:
 	virtual void BeginPlay() override;
