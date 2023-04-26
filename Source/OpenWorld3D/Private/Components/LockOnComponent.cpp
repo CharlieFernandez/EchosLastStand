@@ -5,6 +5,7 @@
 
 #include "Enemy.h"
 #include "NiagaraComponent.h"
+#include "Camera/CameraComponent.h"
 #include "Components/LockableComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -13,24 +14,33 @@
 ULockOnComponent::ULockOnComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+
+	MidPointLockOn = CreateDefaultSubobject<USceneComponent>(TEXT("Target MidPoint"));
+}
+
+void ULockOnComponent::InitializeVariables() const
+{
+	MidPointLockOn->SetupAttachment(GetOwner()->GetRootComponent());
 }
 
 
 void ULockOnComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SetTickGroup(ETickingGroup::TG_PostPhysics);
+	SpringArmComponent = Cast<USpringArmComponent>(GetOwner()->GetComponentByClass(USpringArmComponent::StaticClass()));
+	CameraComponent = Cast<UCameraComponent>(GetOwner()->GetComponentByClass(UCameraComponent::StaticClass()));
+	PlayerController = Cast<APlayerController>(GetOwner()->GetInstigatorController());	
+	SetTickGroup(ETickingGroup::TG_EndPhysics);
 }
 
 void ULockOnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+	
 	if(LockedOnTarget)
-	{				
-		const FRotator LookAtRotation = UKismetMathLibrary::FindLookAtRotation(GetOwner()->GetActorLocation(), LockedOnTarget->GetActorLocation());
-		UGameplayStatics::GetPlayerController(this, 0)->SetControlRotation(LookAtRotation);	
+	{
+		const AActor* Owner = GetOwner();
+		MidPointLockOn->SetWorldLocation((Owner->GetActorLocation() + LockedOnTarget->GetActorLocation()) / 2);
 	}
 }
 
@@ -52,7 +62,8 @@ void ULockOnComponent::Lock()
 	SetLockOnTarget(HitResults);
 	const ULockableComponent* LockableComponent = Cast<ULockableComponent>(LockedOnTarget->GetComponentByClass(ULockableComponent::StaticClass()));
 	CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
-	SpringArmComponent->TargetOffset = LockOnOffset;
+	MidPointLockOn->SetWorldLocation((GetOwner()->GetActorLocation() + LockedOnTarget->GetActorLocation()) / 2);
+	SpringArmComponent->AttachToComponent(MidPointLockOn, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 void ULockOnComponent::SetLockOnTarget(const TArray<FHitResult>& HitResults)
@@ -107,4 +118,5 @@ void ULockOnComponent::Unlock()
 	CurrentlyUsedLockOnNC->DeactivateImmediate();
 	LockedOnTarget = nullptr;
 	SpringArmComponent->TargetOffset = FVector();
+	SpringArmComponent->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 }

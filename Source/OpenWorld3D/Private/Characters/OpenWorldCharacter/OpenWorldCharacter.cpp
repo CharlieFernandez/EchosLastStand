@@ -41,7 +41,7 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 	CharacterMovementComponent -> RotationRate = FRotator(0.f, 400.f, 0.f);
 
 	LockOnComponent = CreateDefaultSubobject<ULockOnComponent>(TEXT("Lock-On Component"));
-	LockOnComponent->SpringArmComponent = SpringArm;
+	LockOnComponent->InitializeVariables();
 
 	HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
 	HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());
@@ -103,7 +103,7 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 		AddMovementInput(GetActorForwardVector(), RollDisplacement.Length());
 	}
 
-	if(Attributes)
+	if(Attributes && OpenWorldCharacterHUD)
 	{
 		Attributes->RegenerateStamina(DeltaTime);
 		OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
@@ -180,14 +180,12 @@ void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 }
 
 void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
-{
-	if(LockOnComponent->LockedOnTarget) return;
-	
+{	
 	const FVector2D InputRotationValue = Value.Get<FVector2D>();
+	const FVector2d RotationValue = InputRotationValue * CameraRotationSpeed;
 
 	if(Controller && !InputRotationValue.IsZero())
-	{
-		const FVector2d RotationValue = InputRotationValue * CameraRotationSpeed;		
+	{		
 		AddControllerPitchInput(RotationValue.Y);
 		AddControllerYawInput(RotationValue.X);
 	}
@@ -257,7 +255,7 @@ void AOpenWorldCharacter::Roll(const FInputActionValue& Value)
 {
 	if(ActionState != EActionState::EAS_Unoccupied || CharacterMovementComponent->IsFalling() || !IsAlive()) return;
 
-	if(Attributes && Attributes->GetCurrentStamina() > DodgeRollStaminaCost && HasMovementInput())
+	if(Attributes && OpenWorldCharacterHUD && Attributes->GetCurrentStamina() > DodgeRollStaminaCost && HasMovementInput())
 	{
 		PlayRollMontage(Value);
 		Attributes->UpdateStamina(-DodgeRollStaminaCost);

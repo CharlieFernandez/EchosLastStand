@@ -7,6 +7,7 @@
 #include "LockOnComponent.generated.h"
 
 
+class AMidPointLockOn;
 class UNiagaraComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -17,8 +18,8 @@ class OPENWORLD3D_API ULockOnComponent : public UActorComponent
 
 public:
 	ULockOnComponent();
-	TObjectPtr<AActor> LockedOnTarget;
-	TObjectPtr<USpringArmComponent> SpringArmComponent;
+	void InitializeVariables() const;
+	TObjectPtr<AActor> LockedOnTarget;	
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	void ToggleLockOntoTarget();
@@ -29,11 +30,21 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	void Lock();	
+	TObjectPtr<APlayerController> PlayerController;
+	TObjectPtr<UNiagaraComponent> CurrentlyUsedLockOnNC;
+	
+	void Lock();
 	void FindAndFilterEnemies(TArray<AActor*> ActorsToIgnore, TArray<FHitResult>& HitResults) const;
 	void SetLockOnTarget(const TArray<FHitResult>& HitResults);
 
-	TObjectPtr<UNiagaraComponent> CurrentlyUsedLockOnNC;
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent> MidPointLockOn;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USpringArmComponent> SpringArmComponent;
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UCameraComponent> CameraComponent;
 
 	UPROPERTY(EditDefaultsOnly)
 	FVector LockOnOffset;
