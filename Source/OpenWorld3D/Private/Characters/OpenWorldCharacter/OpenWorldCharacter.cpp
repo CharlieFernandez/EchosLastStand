@@ -196,11 +196,19 @@ void AOpenWorldCharacter::Move(const FInputActionValue& Value)
 void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 {	
 	const FVector2D InputRotationValue = Value.Get<FVector2D>();
-	const FVector2d RotationValue = InputRotationValue * CameraRotationSpeed;
+	const FVector2D RotationValue = InputRotationValue * CameraRotationSpeed;
 
 	if(Controller && !InputRotationValue.IsZero())
-	{		
-		AddControllerPitchInput(RotationValue.Y);
+	{
+		if
+		(
+			(RotationValue.Y < 0 && CameraBoom->GetComponentLocation().Z > GetActorLocation().Z - LowestCameraPositionRelativeToPlayer) ||
+			(RotationValue.Y > 0 && CameraBoom->GetComponentLocation().Z < GetActorLocation().Z + HighestCameraPositionRelativeToPlayer)
+		)
+		{
+			AddControllerPitchInput(RotationValue.Y);
+		}
+		
 		AddControllerYawInput(RotationValue.X);
 	}
 }

@@ -84,8 +84,14 @@ private:
 	void LockOff();
 	
 	/* Properties */
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Camera)
 	float DefaultCameraDistance;
+
+	UPROPERTY(EditDefaultsOnly, Category = Camera)
+	float LowestCameraPositionRelativeToPlayer;
+
+	UPROPERTY(EditDefaultsOnly, Category = Camera)
+	float HighestCameraPositionRelativeToPlayer;
 	
 	UPROPERTY(EditDefaultsOnly)
 	bool ShouldDrawHammerDownDebugTrace;
