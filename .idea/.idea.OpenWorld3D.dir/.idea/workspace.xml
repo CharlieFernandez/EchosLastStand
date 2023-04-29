@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d25f1416-0efd-47b1-b13f-6028f7df7490" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/MyUtilities.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/MyUtilities.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/MyUtilities.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/MyUtilities.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +108,7 @@
       <workItem from="1682519828640" duration="23318000" />
       <workItem from="1682602748771" duration="25103000" />
       <workItem from="1682679941850" duration="38820000" />
-      <workItem from="1682778324829" duration="7312000" />
+      <workItem from="1682778324829" duration="8389000" />
     </task>
     <servers />
   </component>

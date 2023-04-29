@@ -70,10 +70,11 @@ void ULockOnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		
 		SpringArmLength = FMath::Clamp(SpringArmLength, MinCameraDistance, MaxDistanceFromLockedTarget);
 		SpringArmComponent->TargetArmLength = FMath::Lerp(SpringArmComponent->TargetArmLength, SpringArmLength, Alpha);
+
+		const float CameraBackModifier = FVector::Distance(PlayerLocation,CameraComponent->GetComponentLocation() - SpringArmComponent->TargetOffset) / SpringArmComponent->TargetArmLength;
+		const FVector SpringTargetOffset = PlayerToEnemyNormalized * FMath::Abs(DistanceBetweenPlayerAndEnemy) * 0.5f * OffsetMultiplier * CameraBackModifier;
 		
-		const FVector SpringTargetOffset = PlayerToEnemyNormalized * FMath::Abs(DistanceBetweenPlayerAndEnemy) * 0.5f * OffsetMultiplier;
-		
-		SpringArmComponent->TargetOffset = FMath::Lerp(SpringArmComponent->TargetOffset, SpringTargetOffset, Alpha) ;
+		SpringArmComponent->TargetOffset = FMath::Lerp(SpringArmComponent->TargetOffset, SpringTargetOffset, Alpha);
 
 		if(FVector::Distance(PlayerLocation, EnemyLocation) > MaxDistanceFromLockedTarget)
 		{
