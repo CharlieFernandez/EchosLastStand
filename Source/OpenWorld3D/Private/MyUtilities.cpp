@@ -17,10 +17,12 @@ bool MyUtilities::InTargetRange(const float Radius, const AActor* SourceActor, c
 	return false;
 }
 
-FHitResult MyUtilities::GetLineTraceGroundImpactPoint(const UObject* WorldContext, FVector Start, FVector End, EDrawDebugTrace::Type TraceType)
+FHitResult MyUtilities::GetLineTraceGroundImpactPoint(const UObject* WorldContext, FVector Start, FVector End, EDrawDebugTrace::Type DrawDebugType)
 {
 	TArray<FHitResult> HitResults;
-	UKismetSystemLibrary::LineTraceMulti(WorldContext, Start, End, ETraceTypeQuery::TraceTypeQuery1, false, TArray<AActor*>(), TraceType, HitResults, true);
+	const ETraceTypeQuery TraceType = UEngineTypes::ConvertToTraceType(ECollisionChannel::ECC_WorldStatic);
+	
+	UKismetSystemLibrary::LineTraceMulti(WorldContext, Start, End, TraceType, false, TArray<AActor*>(), DrawDebugType, HitResults, true);
 
 	FHitResult FloorHit;
 	

@@ -7,9 +7,12 @@
 #include "LockOnComponent.generated.h"
 
 
+class USphereComponent;
 class UNiagaraComponent;
 class USpringArmComponent;
 class UCameraComponent;
+class AEnemy;
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class OPENWORLD3D_API ULockOnComponent : public UActorComponent
 {
@@ -17,7 +20,7 @@ class OPENWORLD3D_API ULockOnComponent : public UActorComponent
 
 public:
 	ULockOnComponent();
-	void InitializeVariables() const;
+	void InitializeVariables();
 	void InitializeVariablesOnBeginPlay(float DefaultCameraDistance);
 	TObjectPtr<AActor> LockedOnTarget;	
 
@@ -29,22 +32,30 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	float DefaultCameraDistance;
-	float LockOnRadius;	
+	float DefaultCameraDistance;	
 	TObjectPtr<APlayerController> PlayerController;
 	TObjectPtr<UNiagaraComponent> CurrentlyUsedLockOnNC;
 	TObjectPtr<USpringArmComponent> SpringArmComponent;	
 	TObjectPtr<UCameraComponent> CameraComponent;
 	
-	void FindAndFilterEnemies(TArray<AActor*> ActorsToIgnore, TArray<FHitResult>& HitResults) const;
-	void SetLockOnTarget(const TArray<FHitResult>& HitResults);
+	TArray<AEnemy*> FindAndFilterEnemies() const;
+	void SetLockOnTarget(const TArray<AEnemy*>Enemies);
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditDefaultsOnly)
+	float SpringArmExtraSlack;
+
+	UPROPERTY(VisibleInstanceOnly, Category = Targeting)
 	TObjectPtr<USceneComponent> MidPointLockOn;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(VisibleInstanceOnly)
+	TObjectPtr<USphereComponent> MidPointSphereCollider;
+
+	UPROPERTY(EditDefaultsOnly, Category = Targeting)
+	float LockOnRadius;
+
+	UPROPERTY(EditDefaultsOnly, Category = Targeting)
 	float MinCameraDistance;
 
-	UPROPERTY(EditDefaultsOnly)
-	float MaxCameraDistance;
+	UPROPERTY(EditDefaultsOnly, Category = Targeting)
+	float MaxDistanceFromLockedTarget;
 };
