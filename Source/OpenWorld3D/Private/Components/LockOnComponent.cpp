@@ -7,7 +7,7 @@
 #include "NiagaraComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/LockableComponent.h"
-#include "Components/SphereComponent.h"
+#include "Engine/RendererSettings.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -17,24 +17,9 @@ ULockOnComponent::ULockOnComponent()
 	PrimaryComponentTick.bCanEverTick = true;	
 }
 
-void ULockOnComponent::InitializeVariables()
-{
-
-}
-
 void ULockOnComponent::InitializeVariablesOnBeginPlay(float DefaultDistance)
 {
 	DefaultCameraDistance = DefaultDistance;
-	MidPointLockOn = NewObject<USceneComponent>();
-	MidPointSphereCollider = NewObject<USphereComponent>();
-	MidPointSphereCollider->Deactivate();
-	MidPointSphereCollider->SetSphereRadius(50);
-	MidPointSphereCollider->SetUseCCD(true);
-	MidPointSphereCollider->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-	MidPointSphereCollider->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
-	
-	MidPointLockOn->SetupAttachment(GetOwner()->GetRootComponent());
-	MidPointSphereCollider->SetupAttachment(MidPointLockOn);
 }
 
 void ULockOnComponent::BeginPlay()
@@ -42,50 +27,81 @@ void ULockOnComponent::BeginPlay()
 	Super::BeginPlay();
 	SpringArmComponent = Cast<USpringArmComponent>(GetOwner()->GetComponentByClass(USpringArmComponent::StaticClass()));
 	CameraComponent = Cast<UCameraComponent>(GetOwner()->GetComponentByClass(UCameraComponent::StaticClass()));
-	PlayerController = Cast<APlayerController>(GetOwner()->GetInstigatorController());	
 	SetTickGroup(ETickingGroup::TG_EndPhysics);
+}
+
+void ULockOnComponent::EvaluateVectorsForDotProduct()
+{
+	CameraToPlayerNormalized = (PlayerLocation - CameraComponent->GetComponentLocation()).GetSafeNormal();
+	PlayerToEnemyNormalized = (EnemyLocation - PlayerLocation).GetSafeNormal();
+}
+
+void ULockOnComponent::EvaluateSpringArmLengthMultiplier()
+{
+	Dot = FVector::DotProduct(CameraToPlayerNormalized, PlayerToEnemyNormalized);
+	InvertedDot = 1 - FMath::Abs(Dot);
+	SpringArmLengthMultiplier = Dot <= 0 ? 1 : InvertedDot;
+}
+
+void ULockOnComponent::SetSpringArmLength()
+{
+	DistanceBetweenPlayerAndEnemy = FVector::Distance(PlayerLocation, EnemyLocation);		
+	DesiredSpringArmLength = DistanceBetweenPlayerAndEnemy * SpringArmLengthMultiplier * 0.5 + SpringArmExtraSlack;
+	DesiredSpringArmLength = FMath::Clamp(DesiredSpringArmLength, MinCameraDistance, MaxDistanceFromLockedTarget);
+	SpringArmComponent->TargetArmLength = FMath::Lerp(SpringArmComponent->TargetArmLength, DesiredSpringArmLength, Alpha);
+}
+
+void ULockOnComponent::SetSpringArmTargetOffset()
+{
+	CameraBackModifier = FVector::Distance(PlayerLocation,CameraComponent->GetComponentLocation() - SpringArmComponent->TargetOffset) / SpringArmComponent->TargetArmLength;
+	const FVector SpringTargetOffset = PlayerToEnemyNormalized * FMath::Abs(DistanceBetweenPlayerAndEnemy) * HalfDistanceMultiplierForCameraOffset * SpringArmLengthMultiplier * CameraBackModifier;
+	SpringArmComponent->TargetOffset = FMath::Lerp(SpringArmComponent->TargetOffset, SpringTargetOffset, Alpha);
+}
+
+void ULockOnComponent::EvaluateSpringArmAndCameraProperties()
+{
+	EvaluateVectorsForDotProduct();
+	EvaluateSpringArmLengthMultiplier();
+	SetSpringArmLength();
+	SetSpringArmTargetOffset();
+}
+
+void ULockOnComponent::AdjustCameraDuringLockOn()
+{
+	EvaluateSpringArmAndCameraProperties();
+	
+	if(FVector::Distance(PlayerLocation, EnemyLocation) > MaxDistanceFromLockedTarget)
+	{
+		Unlock();
+	}
+}
+
+void ULockOnComponent::AdjustCameraWhenUnlocking() const
+{
+	SpringArmComponent->TargetArmLength = FMath::Lerp(SpringArmComponent->TargetArmLength, DefaultCameraDistance, Alpha);
+	SpringArmComponent->TargetOffset = FMath::Lerp(SpringArmComponent->TargetOffset, FVector::Zero(), Alpha);
 }
 
 void ULockOnComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	constexpr float Alpha = 0.05f;
 	
 	if(LockedOnTarget)
 	{
-		const AActor* Owner = GetOwner();
-		const FVector PlayerLocation = Owner->GetActorLocation();
-		const FVector EnemyLocation = LockedOnTarget->GetActorLocation();
-
-		const FVector CameraToPlayerNormalized = (PlayerLocation - (CameraComponent->GetComponentLocation())).GetSafeNormal();
-		const FVector PlayerToEnemyNormalized = (EnemyLocation - PlayerLocation).GetSafeNormal();
-		const float Dot = FVector::DotProduct(CameraToPlayerNormalized, PlayerToEnemyNormalized);
-		const float InvertedDot = 1 - FMath::Abs(Dot);
-		const float OffsetMultiplier = Dot <= 0 ? 1 : InvertedDot;
-
-		const float DistanceBetweenPlayerAndEnemy = FVector::Distance(PlayerLocation, EnemyLocation);
-		
-		float SpringArmLength = DistanceBetweenPlayerAndEnemy * OffsetMultiplier * 0.5 + SpringArmExtraSlack;
-		
-		SpringArmLength = FMath::Clamp(SpringArmLength, MinCameraDistance, MaxDistanceFromLockedTarget);
-		SpringArmComponent->TargetArmLength = FMath::Lerp(SpringArmComponent->TargetArmLength, SpringArmLength, Alpha);
-
-		const float CameraBackModifier = FVector::Distance(PlayerLocation,CameraComponent->GetComponentLocation() - SpringArmComponent->TargetOffset) / SpringArmComponent->TargetArmLength;
-		const FVector SpringTargetOffset = PlayerToEnemyNormalized * FMath::Abs(DistanceBetweenPlayerAndEnemy) * 0.5f * OffsetMultiplier * CameraBackModifier;
-		
-		SpringArmComponent->TargetOffset = FMath::Lerp(SpringArmComponent->TargetOffset, SpringTargetOffset, Alpha);
-
-		if(FVector::Distance(PlayerLocation, EnemyLocation) > MaxDistanceFromLockedTarget)
-		{
-			Unlock();
-		}
+		PlayerLocation = GetOwner()->GetActorLocation();
+		EnemyLocation = LockedOnTarget->GetActorLocation();
+		AdjustCameraDuringLockOn();
 	}
 	else
 	{
-		SpringArmComponent->TargetArmLength = FMath::Lerp(SpringArmComponent->TargetArmLength, DefaultCameraDistance, Alpha);
-		SpringArmComponent->TargetOffset = FMath::Lerp(SpringArmComponent->TargetOffset, FVector::Zero(), Alpha);
+		AdjustCameraWhenUnlocking();
 	}
+}
+
+void ULockOnComponent::ActivateTargetingVFX()
+{
+	const ULockableComponent* LockableComponent = Cast<ULockableComponent>(LockedOnTarget->GetComponentByClass(ULockableComponent::StaticClass()));
+	CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
 }
 
 void ULockOnComponent::Lock()
@@ -93,22 +109,17 @@ void ULockOnComponent::Lock()
 	const TArray<AEnemy*> TargetsFound = FindAndFilterEnemies();
 
 	if(TargetsFound.Num() == 0) return;
-	MidPointLockOn->SetWorldLocation(GetOwner()->GetActorLocation());
+	
 	SetLockOnTarget(TargetsFound);
-	const ULockableComponent* LockableComponent = Cast<ULockableComponent>(LockedOnTarget->GetComponentByClass(ULockableComponent::StaticClass()));
-	CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
-	//SpringArmComponent->AttachToComponent(MidPointLockOn, FAttachmentTransformRules::KeepRelativeTransform);
-	MidPointSphereCollider->Activate();
+	ActivateTargetingVFX();
 }
 
 void ULockOnComponent::Unlock()
 {
 	if(LockedOnTarget == nullptr) return;
 	
-	CurrentlyUsedLockOnNC->DeactivateImmediate();
 	LockedOnTarget = nullptr;
-	SpringArmComponent->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
-	MidPointSphereCollider->Deactivate();
+	CurrentlyUsedLockOnNC->DeactivateImmediate();
 }
 
 TArray<AEnemy*> ULockOnComponent::FindAndFilterEnemies() const

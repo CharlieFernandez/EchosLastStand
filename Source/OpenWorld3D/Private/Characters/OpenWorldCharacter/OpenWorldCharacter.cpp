@@ -24,7 +24,6 @@
 #include "Items/Weapons/Weapon.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Particles/ParticleSystem.h"
 
 AOpenWorldCharacter::AOpenWorldCharacter()
 {
@@ -41,7 +40,6 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 	CharacterMovementComponent -> RotationRate = FRotator(0.f, 400.f, 0.f);
 
 	LockOnComponent = CreateDefaultSubobject<ULockOnComponent>(TEXT("Lock-On Component"));
-	LockOnComponent->InitializeVariables();
 
 	HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
 	HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());

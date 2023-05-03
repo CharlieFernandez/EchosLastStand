@@ -20,35 +20,48 @@ class OPENWORLD3D_API ULockOnComponent : public UActorComponent
 
 public:
 	ULockOnComponent();
-	void InitializeVariables();
 	void InitializeVariablesOnBeginPlay(float DefaultCameraDistance);
 	TObjectPtr<AActor> LockedOnTarget;	
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void ActivateTargetingVFX();
 	void Unlock();
 	void Lock();
 
 protected:
 	virtual void BeginPlay() override;
+	void EvaluateVectorsForDotProduct();
+	void EvaluateSpringArmLengthMultiplier();
+	void SetSpringArmLength();
+	void SetSpringArmTargetOffset();
+	void AdjustCameraDuringLockOn();
+	void AdjustCameraWhenUnlocking() const;
 
 private:
-	float DefaultCameraDistance;	
-	TObjectPtr<APlayerController> PlayerController;
+	FVector PlayerLocation;
+	FVector EnemyLocation;
+	FVector CameraToPlayerNormalized;
+	FVector PlayerToEnemyNormalized;
+	const float Alpha = 0.05f;
+	const float HalfDistanceMultiplierForCameraOffset = 0.5f;
+	float DefaultCameraDistance;
+	float Dot;
+	float InvertedDot;
+	float SpringArmLengthMultiplier;
+	float DistanceBetweenPlayerAndEnemy;		
+	float DesiredSpringArmLength;
+	float CameraBackModifier;
 	TObjectPtr<UNiagaraComponent> CurrentlyUsedLockOnNC;
 	TObjectPtr<USpringArmComponent> SpringArmComponent;	
 	TObjectPtr<UCameraComponent> CameraComponent;
+	void EvaluateSpringArmAndCameraProperties();
+
 	
 	TArray<AEnemy*> FindAndFilterEnemies() const;
 	void SetLockOnTarget(const TArray<AEnemy*>Enemies);
 
 	UPROPERTY(EditDefaultsOnly)
 	float SpringArmExtraSlack;
-
-	UPROPERTY(VisibleInstanceOnly, Category = Targeting)
-	TObjectPtr<USceneComponent> MidPointLockOn;
-
-	UPROPERTY(VisibleInstanceOnly)
-	TObjectPtr<USphereComponent> MidPointSphereCollider;
 
 	UPROPERTY(EditDefaultsOnly, Category = Targeting)
 	float LockOnRadius;
