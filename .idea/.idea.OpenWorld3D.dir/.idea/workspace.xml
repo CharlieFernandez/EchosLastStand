@@ -4,15 +4,7 @@
     <projectFile>OpenWorld3D.uproject</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d25f1416-0efd-47b1-b13f-6028f7df7490" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_Dash.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
-    </list>
+    <list default="true" id="d25f1416-0efd-47b1-b13f-6028f7df7490" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -118,7 +110,7 @@
       <workItem from="1683061324509" duration="7068000" />
       <workItem from="1683121838344" duration="19037000" />
       <workItem from="1683209632012" duration="8907000" />
-      <workItem from="1683227687032" duration="2195000" />
+      <workItem from="1683227687032" duration="2595000" />
     </task>
     <servers />
   </component>
