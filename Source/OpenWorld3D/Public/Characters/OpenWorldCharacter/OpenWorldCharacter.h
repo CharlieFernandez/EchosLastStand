@@ -39,12 +39,13 @@ public:
 	
 protected:
 	/* Methods */
+	virtual void ResetActionState() override;
 	void ObtainOrEquip();
 	virtual void Jump() override;
 	bool HasMovementInput() const;
 	virtual void BeginPlay() override;
-	void Move(const FInputActionValue& Value);
-	void Roll(const FInputActionValue& Value);
+	void MoveInput(const FInputActionValue& Value);
+	void DashInput(const FInputActionValue& Value);
 	void LookAround(const FInputActionValue& Value);
 	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 
@@ -56,7 +57,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> JumpAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> EKeyPressedAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> AttackPressedAction;
-	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> RollAction;
+	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> DashAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOnAction;
 	UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOffAction;
 
@@ -65,25 +66,30 @@ protected:
 	void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 	void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
+	void Move(FVector2D MovementVector);
 
 private:
 	/* Fields */
-	FVector DirectionToRoll;
 	inline static const FName PlayerTag = FName("Player");
 	TObjectPtr<UOpenWorldCharacterHUD> OpenWorldCharacterHUD;
+	float CurrentDashTime = 0;
+	FVector2D LastNonZeroMovementInput;
 
 	/* Methods */
 	void BindHealthRadiusSphereComponents();
 	void InitializeHUD(const APlayerController* PlayerController);
 	void EquipOrUnequipWeapon();
-	void PlayRollMontage(const FInputActionValue& Value);
 	void PlayEquipMontage(EEquipActionState EquipType) const;
 	void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
 	void LockOn();
 	void LockOff();
+	void ToggleAllMeshVisibility(bool IsVisible) const;
 	
 	/* Properties */
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USkeletalMeshComponent> HairMeshComponent;
+	
 	UPROPERTY(EditDefaultsOnly, Category = Camera)
 	float DefaultCameraDistance;
 
@@ -107,9 +113,12 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> CameraBoom;
+
+	UPROPERTY(EditDefaultsOnly)
+	float DashDurationInSeconds;
 	
 	UPROPERTY(EditDefaultsOnly)
-	float RollSpeed;
+	float DashSpeed;
 	
 	UPROPERTY(VisibleInstanceOnly)
 	TObjectPtr<AItem> OverlappedItem;
@@ -117,25 +126,19 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage> EquipMontage;
 
-	UPROPERTY(EditDefaultsOnly, Category = Montages)
-	TObjectPtr<UAnimMontage> RollMontage;
-
 	UPROPERTY(EditDefaultsOnly, Category = Camera)
 	float CameraRotationSpeed;
 
 	UPROPERTY(EditDefaultsOnly, Category = Stamina)
-	float DodgeRollStaminaCost;
+	float DashStaminaCost;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UNiagaraSystem> HammerDownParticles;
+	
+	UPROPERTY(EditDefaultsOnly, Category = Particles)
+	TObjectPtr<UNiagaraComponent> DashNiagaraComponent;
 
 	/* Functions */
-	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
-	void SpeedUpRoll();
-
-	UFUNCTION(BlueprintCallable, meta = (AllowPrivateAccess = "true"))
-	void SlowDownRoll();
-
 	UFUNCTION(BlueprintCallable)
 	void SpawnHammerDownParticles();
 };

@@ -144,6 +144,11 @@ bool AGameCharacter::IsUnoccupied() const
 	return ActionState == EActionState::EAS_Unoccupied;
 }
 
+bool AGameCharacter::IsDashing() const
+{
+	return ActionState == EActionState::EAS_Dashing;
+}
+
 bool AGameCharacter::IsAttacking() const
 {
 	return ActionState == EActionState::EAS_Attacking;

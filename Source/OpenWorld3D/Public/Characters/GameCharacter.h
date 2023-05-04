@@ -55,11 +55,10 @@ protected:
 	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
 	void SetHealthPercentage() const;
 	bool IsUnoccupied() const;
+	bool IsDashing() const;
 	bool IsAttacking() const;
 	bool IsAttackEnding() const;
 	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
-
-
 
 	/* Properties */
 	UPROPERTY(VisibleInstanceOnly)
@@ -87,7 +86,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void AttackEnd();
 	UFUNCTION(BlueprintCallable)
-	void ResetActionState();
+	virtual void ResetActionState();
 
 	UFUNCTION(BlueprintCallable)
 	void Equip() const;

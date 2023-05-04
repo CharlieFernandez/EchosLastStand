@@ -6,10 +6,21 @@
   <component name="ChangeListManager">
     <list default="true" id="d25f1416-0efd-47b1-b13f-6028f7df7490" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Echo/Montages/AM_Echo_Roll.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Echo/Montages/AM_Echo_Roll.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/BP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/BP_Enemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_Move.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_Move.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_Roll.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_Roll.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Meshes/Echo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Meshes/Echo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Materials/Masters/M_PerlinBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Masters/M_PerlinBase.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/Player/P_body_bullet_impact.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/CharacterTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/CharacterTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +124,9 @@
       <workItem from="1682679941850" duration="38820000" />
       <workItem from="1682778324829" duration="8389000" />
       <workItem from="1683031272918" duration="7089000" />
-      <workItem from="1683061324509" duration="5518000" />
+      <workItem from="1683061324509" duration="7068000" />
+      <workItem from="1683121838344" duration="19037000" />
+      <workItem from="1683209632012" duration="6769000" />
     </task>
     <servers />
   </component>

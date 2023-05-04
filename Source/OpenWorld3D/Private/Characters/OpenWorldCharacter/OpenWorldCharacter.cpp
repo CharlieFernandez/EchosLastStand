@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputState.h"
 #include "MyUtilities.h"
+#include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Components/AttributeComponent.h"
 #include "Components/LockOnComponent.h"
@@ -48,6 +49,12 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 	GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
+
+	HairMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>("Hair Mesh Component");
+	HairMeshComponent->SetupAttachment(GetMesh(), FName(TEXT("head")));
+
+	DashNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>("Dash VFX");
+	DashNiagaraComponent->SetupAttachment(GetRootComponent());
 }
 
 void AOpenWorldCharacter::BindHealthRadiusSphereComponents()
@@ -95,13 +102,6 @@ void AOpenWorldCharacter::BeginPlay()
 void AOpenWorldCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	if(ActionState == EActionState::EAS_Rolling)
-	{
-		const FVector RollDisplacement = DirectionToRoll * RollSpeed * DeltaTime;
-
-		AddMovementInput(GetActorForwardVector(), RollDisplacement.Length());
-	}
 
 	if(Attributes && OpenWorldCharacterHUD)
 	{
@@ -124,6 +124,23 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 	{
 		CombatTarget = nullptr;
 	}
+
+	if(ActionState == EActionState::EAS_Dashing)
+	{
+		CurrentDashTime += DeltaTime;
+
+		if(CurrentDashTime >= DashDurationInSeconds)
+		{
+			ResetActionState();
+		}
+		else
+		{
+			if(GetLastMovementInputVector() == FVector::Zero())
+			{
+				Move(LastNonZeroMovementInput.GetSafeNormal());
+			}
+		}
+	}
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -132,12 +149,12 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		EnhancedInputComponent -> BindAction(MovementAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Move);
+		EnhancedInputComponent -> BindAction(MovementAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::MoveInput);
 		EnhancedInputComponent -> BindAction(LookAroundAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LookAround);
 		EnhancedInputComponent -> BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
 		EnhancedInputComponent -> BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
 		EnhancedInputComponent -> BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
-		EnhancedInputComponent -> BindAction(RollAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Roll);
+		EnhancedInputComponent -> BindAction(DashAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashInput);
 		EnhancedInputComponent -> BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOn);
 		EnhancedInputComponent -> BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
 	}
@@ -161,28 +178,35 @@ void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp
 	}
 }
 
-void AOpenWorldCharacter::Move(const FInputActionValue& Value)
+void AOpenWorldCharacter::Move(FVector2D MovementVector)
 {
-	if( !IsAlive() || !IsUnoccupied() && !IsAttacking()) return;
+	const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+	AddMovementInput(ForwardDirection, MovementVector.Y);
+	AddMovementInput(RightDirection, MovementVector.X);
+}
+
+void AOpenWorldCharacter::MoveInput(const FInputActionValue& Value)
+{	
+	if( !IsAlive() || !IsUnoccupied() && !IsAttacking() && !IsDashing()) return;
+
+	LastNonZeroMovementInput = Value.Get<FVector2D>();
 	
-	const FVector2D MovementVector = Value.Get<FVector2D>();
-
-	if(MovementVector.IsZero()) return;
-
-	if(ActionState == EActionState::EAS_Unoccupied)
-	{
-		const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);	
-		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-		AddMovementInput(ForwardDirection, MovementVector.Y);
-		AddMovementInput(RightDirection, MovementVector.X);	
+	if(IsUnoccupied())
+	{		
+		Move(LastNonZeroMovementInput);
 	}
-	else
+	else if(IsDashing())
+	{
+		Move(LastNonZeroMovementInput.GetSafeNormal());
+	}
+	else if(IsAttacking())
 	{
 		const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
 			FVector::ZeroVector,
-			FVector(MovementVector.Y, MovementVector.X, 0)
+			FVector(LastNonZeroMovementInput.Y, LastNonZeroMovementInput.X, 0)
 		);
 
 		const FRotator CameraRotation = CameraBoom->GetComponentRotation();
@@ -271,47 +295,27 @@ void AOpenWorldCharacter::Jump()
 	Super::Jump();
 }
 
-void AOpenWorldCharacter::Roll(const FInputActionValue& Value)
+void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
 {
-	if(ActionState != EActionState::EAS_Unoccupied || CharacterMovementComponent->IsFalling() || !IsAlive()) return;
+	if(!IsUnoccupied() || !IsAlive()) return;
 
-	if(Attributes && OpenWorldCharacterHUD && Attributes->GetCurrentStamina() > DodgeRollStaminaCost && HasMovementInput())
+	if(Attributes && OpenWorldCharacterHUD && Attributes->GetCurrentStamina() > DashStaminaCost && HasMovementInput())
 	{
-		PlayRollMontage(Value);
-		Attributes->UpdateStamina(-DodgeRollStaminaCost);
+		CurrentDashTime = 0;
+		ActionState = EActionState::EAS_Dashing;
+
+		CharacterMovementComponent->MaxWalkSpeed = DashSpeed;
+		CharacterMovementComponent->MaxAcceleration = 50000;
+		
+		Attributes->UpdateStamina(-DashStaminaCost);
 		OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
+
+		if(DashNiagaraComponent)
+		{
+			DashNiagaraComponent->Activate();
+			ToggleAllMeshVisibility(false);
+		}
 	}
-}
-
-void AOpenWorldCharacter::PlayRollMontage(const FInputActionValue& Value)
-{
-	if(RollMontage)
-	{
-		const FVector MovementVector = Value.Get<FVector>();
-		DirectionToRoll = MovementVector.GetSafeNormal(0.f);
-
-		const FVector CurrentActorLocation = GetActorLocation();
-		
-		const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
-			CurrentActorLocation,
-			CurrentActorLocation + GetLastMovementInputVector()
-		);
-		
-		SetActorRelativeRotation(DirectionToFace);
-	
-		ActionState = EActionState::EAS_Rolling;
-		AnimInstance->Montage_Play(RollMontage);
-	}
-}
-
-void AOpenWorldCharacter::SpeedUpRoll()
-{
-	CharacterMovementComponent->MaxWalkSpeed = RollSpeed;
-}
-
-void AOpenWorldCharacter::SlowDownRoll()
-{
-	CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
 }
 
 void AOpenWorldCharacter::LockOn()
@@ -383,4 +387,25 @@ void AOpenWorldCharacter::SpawnHammerDownParticles()
 		FRotator RotationToPlantOnFloor = MyUtilities::GetRotationFromNormalVector(FloorHit);		
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(this, HammerDownParticles, FloorHit.ImpactPoint, RotationToPlantOnFloor);
 	}
+}
+
+void AOpenWorldCharacter::ToggleAllMeshVisibility(bool IsVisible) const
+{
+	GetMesh()->SetVisibility(IsVisible);
+
+	if(HairMeshComponent) HairMeshComponent->SetVisibility(IsVisible);
+	if(GetWeaponHeld()) GetWeaponHeld()->GetMesh()->SetVisibility(IsVisible);
+}
+
+void AOpenWorldCharacter::ResetActionState()
+{
+	if(DashNiagaraComponent)
+	{
+		DashNiagaraComponent->Deactivate();
+		ToggleAllMeshVisibility(true);
+		CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
+		CharacterMovementComponent->MaxAcceleration = 2048;
+	}
+	
+	Super::ResetActionState();
 }
