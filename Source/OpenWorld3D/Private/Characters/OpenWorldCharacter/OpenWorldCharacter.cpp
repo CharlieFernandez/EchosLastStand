@@ -14,6 +14,7 @@
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Components/AttributeComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/LockOnComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -44,7 +45,8 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 
    HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
    HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());
-   
+
+   SetBodyCollisions();   
    GetMesh()->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
    GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
    GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
@@ -114,7 +116,7 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
 {
    Super::Tick(DeltaTime);
 
-   if(Attributes && OpenWorldCharacterHUD && !IsDashing())
+   if(Attributes && OpenWorldCharacterHUD && !IsDashing() && !IsDashNearingEnd())
    {
       Attributes->RegenerateStamina(DeltaTime);
       OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
@@ -135,25 +137,8 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
    {
       CombatTarget = nullptr;
    }
-
-   FrameDashStaminaDeduction = DashStaminaCost * DeltaTime;
-
-   if(IsDashing())
-   {
-      if(Attributes)
-      {         
-         if(Attributes->GetCurrentStamina() >= FrameDashStaminaDeduction && OpenWorldCharacterHUD)
-         {
-            Attributes->UpdateStamina(-FrameDashStaminaDeduction);
-            OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
-         }
-         if(Attributes->GetCurrentStamina() < FrameDashStaminaDeduction)
-         {
-            DashNearingEnd();
-         }        
-      }     
-   }
-   else if(IsDashNearingEnd())
+   
+   if(IsDashNearingEnd())
    {
       if(TimeForDashEnd > CurrentDashEndTimer)
       {
@@ -319,12 +304,17 @@ void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
 {
    if(!IsUnoccupied() && !IsAttacking() && !IsAttackEnding() || !IsAlive()) return;
 
-   if(OpenWorldCharacterHUD && Attributes->GetCurrentStamina() >= FrameDashStaminaDeduction)
+   if(OpenWorldCharacterHUD && Attributes && Attributes->GetCurrentStamina() >= DashStaminaCost)
    {
       ActionState = EActionState::EAS_Dashing;
 
+      Attributes->UpdateStamina(-DashStaminaCost);
+      OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
+
       CharacterMovementComponent->MaxWalkSpeed = DashSpeed;
       CharacterMovementComponent->MaxAcceleration = 50000;
+      
+      SetSpiritCollisions();
 
       if(DashingNiagaraComponent)
       {
@@ -337,18 +327,37 @@ void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
 
 void AOpenWorldCharacter::DashNearingEnd()
 {
-   if(DashingNiagaraComponent) DashingNiagaraComponent->Deactivate();
+   if(IsDashing())
+   {
+      if(DashingNiagaraComponent) DashingNiagaraComponent->Deactivate();
 
-   if(DashEndComponent) DashEndComponent->Activate();
+      if(DashEndComponent) DashEndComponent->Activate();
 
-   CurrentDashEndTimer = 0;
-   ActionState = EActionState::EAS_DashNearingEnd;
+      CurrentDashEndTimer = 0;
+      ActionState = EActionState::EAS_DashNearingEnd;  
+   }
+}
+
+void AOpenWorldCharacter::SetBodyCollisions()
+{
+   GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+   GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Overlap);
+   GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+   GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+}
+
+void AOpenWorldCharacter::SetSpiritCollisions()
+{
+   GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+   GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
+   GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
 
 void AOpenWorldCharacter::DashEnd()
 {
    if(DashEndComponent) DashEndComponent->Deactivate();
-   
+
+   SetBodyCollisions();
    ToggleAllMeshVisibility(true);
    CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
    CharacterMovementComponent->MaxAcceleration = 2048;

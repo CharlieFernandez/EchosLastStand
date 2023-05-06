@@ -41,6 +41,7 @@ protected:
    /* Methods */
    void ObtainOrEquip();
    virtual void Jump() override;
+   void SetSpiritCollisions();
    bool HasMovementInput() const;
    virtual void BeginPlay() override;
    bool IsDashNearingEnd();
@@ -74,7 +75,6 @@ private:
    inline static const FName PlayerTag = FName("Player");
    TObjectPtr<UOpenWorldCharacterHUD> OpenWorldCharacterHUD;
    FVector2D LastNonZeroMovementInput;
-   float FrameDashStaminaDeduction;
    float CurrentDashEndTimer;
 
    /* Methods */
@@ -87,6 +87,7 @@ private:
    void LockOff();
    void ToggleAllMeshVisibility(bool IsVisible) const;
    void DashNearingEnd();
+   void SetBodyCollisions();
    void DashEnd();
    
    /* Properties */
