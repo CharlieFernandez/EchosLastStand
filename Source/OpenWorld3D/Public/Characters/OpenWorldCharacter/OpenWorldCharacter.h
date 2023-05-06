@@ -43,9 +43,9 @@ protected:
    virtual void Jump() override;
    bool HasMovementInput() const;
    virtual void BeginPlay() override;
+   bool IsDashNearingEnd();
    void MoveInput(const FInputActionValue& Value);
    void DashInput(const FInputActionValue& Value);
-   void DashEnd();
    void LookAround(const FInputActionValue& Value);
    virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 
@@ -75,6 +75,7 @@ private:
    TObjectPtr<UOpenWorldCharacterHUD> OpenWorldCharacterHUD;
    FVector2D LastNonZeroMovementInput;
    float FrameDashStaminaDeduction;
+   float CurrentDashEndTimer;
 
    /* Methods */
    void BindHealthRadiusSphereComponents();
@@ -85,6 +86,8 @@ private:
    void LockOn();
    void LockOff();
    void ToggleAllMeshVisibility(bool IsVisible) const;
+   void DashNearingEnd();
+   void DashEnd();
    
    /* Properties */
 
@@ -114,9 +117,6 @@ private:
 
    UPROPERTY(VisibleAnywhere)
    TObjectPtr<UCameraComponent> CameraBoom;
-
-   UPROPERTY(EditDefaultsOnly)
-   float DashDurationInSeconds;
    
    UPROPERTY(EditDefaultsOnly)
    float DashSpeed;
@@ -132,12 +132,21 @@ private:
 
    UPROPERTY(EditDefaultsOnly, Category = Stamina)
    float DashStaminaCost;
-
+   
    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
    TObjectPtr<UNiagaraSystem> HammerDownParticles;
+
+   UPROPERTY(EditDefaultsOnly)
+   float TimeForDashEnd;
+
+   UPROPERTY(VisibleDefaultsOnly)
+   TObjectPtr<USceneComponent> DashContainer;
+
+   UPROPERTY(EditDefaultsOnly, Category = Particles)
+   TObjectPtr<UNiagaraComponent> DashEndComponent;
    
    UPROPERTY(EditDefaultsOnly, Category = Particles)
-   TObjectPtr<UNiagaraComponent> DashNiagaraComponent;
+   TObjectPtr<UNiagaraComponent> DashingNiagaraComponent;
 
    /* Functions */
    UFUNCTION(BlueprintCallable)

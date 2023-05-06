@@ -15,6 +15,7 @@ enum class EActionState: uint8
 	EAS_AttackEnd UMETA(DisplayName = "Attack End"),
 	EAS_Equipping UMETA(DisplayName = "Equipping"),
 	EAS_Dashing UMETA(DisplayName = "Dashing"),
+	EAS_DashNearingEnd UMETA(DisplayName = "Dash Nearing End"),
 	EAS_HitReact UMETA(DisplayName = "Hit React")
 };
 

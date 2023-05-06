@@ -32,11 +32,11 @@ AOpenWorldCharacter::AOpenWorldCharacter()
 
    SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
    SpringArm->SetupAttachment(GetRootComponent());
+   
    CameraBoom = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
    CameraBoom->SetupAttachment(SpringArm);
 
    CharacterMovementComponent = GetCharacterMovement();
-
    CharacterMovementComponent -> bOrientRotationToMovement = true;
    CharacterMovementComponent -> RotationRate = FRotator(0.f, 400.f, 0.f);
 
@@ -53,8 +53,14 @@ AOpenWorldCharacter::AOpenWorldCharacter()
    HairMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>("Hair Mesh Component");
    HairMeshComponent->SetupAttachment(GetMesh(), FName(TEXT("head")));
 
-   DashNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>("Dash VFX");
-   DashNiagaraComponent->SetupAttachment(GetRootComponent());
+   DashContainer = CreateDefaultSubobject<USceneComponent>("Dash Container");
+   DashContainer->SetupAttachment(GetRootComponent());
+   
+   DashingNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash VFX"));
+   DashingNiagaraComponent->SetupAttachment(DashContainer);
+
+   DashEndComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash End VFX"));
+   DashEndComponent->SetupAttachment(DashContainer);
 }
 
 void AOpenWorldCharacter::BindHealthRadiusSphereComponents()
@@ -99,6 +105,11 @@ void AOpenWorldCharacter::BeginPlay()
    }
 }
 
+bool AOpenWorldCharacter::IsDashNearingEnd()
+{
+   return ActionState == EActionState::EAS_DashNearingEnd;
+}
+
 void AOpenWorldCharacter::Tick(float DeltaTime)
 {
    Super::Tick(DeltaTime);
@@ -135,17 +146,23 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
          {
             Attributes->UpdateStamina(-FrameDashStaminaDeduction);
             OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
-
-            if(GetLastMovementInputVector() == FVector::Zero())
-            {
-               Move(LastNonZeroMovementInput.GetSafeNormal());
-            }
          }
          if(Attributes->GetCurrentStamina() < FrameDashStaminaDeduction)
          {
-            DashEnd();
+            DashNearingEnd();
          }        
       }     
+   }
+   else if(IsDashNearingEnd())
+   {
+      if(TimeForDashEnd > CurrentDashEndTimer)
+      {
+         CurrentDashEndTimer += DeltaTime;
+      }
+      else
+      {
+         DashEnd();  
+      }
    }
 }
 
@@ -161,7 +178,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
       EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
       EnhancedInputComponent->BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
       EnhancedInputComponent->BindAction(DashPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashInput);
-      EnhancedInputComponent->BindAction(DashReleasedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashEnd);
+      EnhancedInputComponent->BindAction(DashReleasedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashNearingEnd);
       EnhancedInputComponent->BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOn);
       EnhancedInputComponent->BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
    }
@@ -197,17 +214,13 @@ void AOpenWorldCharacter::Move(FVector2D MovementVector)
 
 void AOpenWorldCharacter::MoveInput(const FInputActionValue& Value)
 {  
-   if( !IsAlive() || !IsUnoccupied() && !IsAttacking() && !IsDashing()) return;
+   if( !IsAlive() || !IsUnoccupied() && !IsAttacking() && !IsDashing() && !IsDashNearingEnd()) return;
 
    LastNonZeroMovementInput = Value.Get<FVector2D>();
    
-   if(IsUnoccupied())
+   if(!IsAttacking())
    {     
       Move(LastNonZeroMovementInput);
-   }
-   else if(IsDashing())
-   {
-      Move(LastNonZeroMovementInput.GetSafeNormal());
    }
    else if(IsAttacking())
    {
@@ -304,27 +317,38 @@ void AOpenWorldCharacter::Jump()
 
 void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
 {
-   if(!IsUnoccupied() || !IsAlive()) return;
+   if(!IsUnoccupied() && !IsAttacking() && !IsAttackEnding() || !IsAlive()) return;
 
-   if(OpenWorldCharacterHUD && Attributes->GetCurrentStamina() >= FrameDashStaminaDeduction && HasMovementInput())
+   if(OpenWorldCharacterHUD && Attributes->GetCurrentStamina() >= FrameDashStaminaDeduction)
    {
       ActionState = EActionState::EAS_Dashing;
 
       CharacterMovementComponent->MaxWalkSpeed = DashSpeed;
       CharacterMovementComponent->MaxAcceleration = 50000;
 
-      if(DashNiagaraComponent)
+      if(DashingNiagaraComponent)
       {
-         DashNiagaraComponent->Activate();
+         DashingNiagaraComponent->Activate();
          ToggleAllMeshVisibility(false);
+         AnimInstance->Montage_Stop(0);
       }
    }
 }
 
+void AOpenWorldCharacter::DashNearingEnd()
+{
+   if(DashingNiagaraComponent) DashingNiagaraComponent->Deactivate();
+
+   if(DashEndComponent) DashEndComponent->Activate();
+
+   CurrentDashEndTimer = 0;
+   ActionState = EActionState::EAS_DashNearingEnd;
+}
+
 void AOpenWorldCharacter::DashEnd()
 {
-   if(DashNiagaraComponent) DashNiagaraComponent->Deactivate();
-
+   if(DashEndComponent) DashEndComponent->Deactivate();
+   
    ToggleAllMeshVisibility(true);
    CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
    CharacterMovementComponent->MaxAcceleration = 2048;
