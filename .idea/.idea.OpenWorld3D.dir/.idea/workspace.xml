@@ -4,14 +4,207 @@
     <projectFile>OpenWorld3D.uproject</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80a9a82f-ef31-4bad-ab44-85e8833bd642" name="Changes" comment="">
+    <list default="true" id="85d95ede-8dec-4f3c-a753-7be151ff65a1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Global/ABP_Humanoid.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Global/ABP_Humanoid.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/BlinkAndDashVFX/Materials/Master/M_VFX_Smoke_1_Refraction.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/BlinkAndDashVFX/Materials/Master/M_VFX_Smoke_1_Refraction.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/BlinkAndDashVFX/Materials/Shared/MI_VFX_Smoke_Refraction_Add.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/BlinkAndDashVFX/Materials/Shared/MI_VFX_Smoke_Refraction_Add.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/Player/Dash/NS_DashEdited.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/Player/Dash/NS_DashEdited.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/GameMode/BP_BirdGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/GameMode/BP_BirdGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Pawns/BP_Bird.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Pawns/BP_Bird.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/Bird/IA_Look.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/Bird/IA_Move.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_Bird.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_Bird.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Animations/Dodge_To_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Animations/Dodge_To_Idle_Montage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Animations/Dodge_To_Idle_Montage.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Meshes/Echo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Meshes/Echo.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_DeathGrounded.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_DeathGrounded.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_DeathHitTheGround.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_DeathHitTheGround.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_EatSomething.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_EatSomething.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Falling.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Falling.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Fly.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Fly.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_FlyingAttack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_FlyingAttack.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Glide.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Glide.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Hop.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Hop.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Hop_RM.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Hop_RM.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_IdleLookAround.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_IdleLookAround.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_IdleScratchWing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_IdleScratchWing.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_IdleStretchWings.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_IdleStretchWings.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_InAirDeathGoToFall.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_InAirDeathGoToFall.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Landing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Landing.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_TakeOff.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_TakeOff.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Walk.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Walk.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Walk_RM.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Animations/ANIM_Crow_Walk_RM.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Maps/Overview.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Maps/Overview.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Maps/Overview_BuiltData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Maps/Overview_BuiltData.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Materials/M_Crow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Materials/M_Crow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Meshes/SK_Crow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Meshes/SK_Crow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Meshes/SK_Crow_PhysicsAsset.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Meshes/SK_Crow_PhysicsAsset.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Meshes/SK_Crow_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Meshes/SK_Crow_Skeleton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_BaseColor.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_BaseColor.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_Nml.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_Nml.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_OcclusionRoughnessMetallic.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_OcclusionRoughnessMetallic.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_Specular.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Crow/Textures/T_Crow_Specular.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_Death.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_GetHit.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_GoToRest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_GrazeOnce.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_IdleBreathe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_IdleChew.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_IdleGraze.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_IdleLookAround.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_IdleRest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_IdleSleep.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_RestToGoBackUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_Run_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_SleepToGoBackUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_WalkGraze.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_WalkGraze_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_WalkTurnL.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_WalkTurnL_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_WalkTurnR.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_WalkTurnR_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerDoe_Walk_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_AntlersAttack.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_AntlersComboAttack.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_AntlersComboAttack_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_Death.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_GetHit.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_GoToRest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_GrazeOnce.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_IdleBreathe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_IdleChew.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_IdleGraze.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_IdleLookAround.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_Rest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_RestToGoBackUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_Run_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_Sleep.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_SleepToGoBackUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_WalkGraze_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_WalkTurnL.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_WalkTurnL_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_WalkTurnR.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_WalkTurnR_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Animations/ANIM_DeerStag_Walk_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Maps/Overview.umap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Maps/Overview_BuiltData.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Materials/M_DeerDoe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Materials/M_DeerDoeFur.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Materials/M_DeerStag.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Materials/M_DeerStagFur.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Meshes/SK_DeerDoe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Meshes/SK_DeerDoe_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Meshes/SK_DeerDoe_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Meshes/SK_DeerStag.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Meshes/SK_DeerStag_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Meshes/SK_DeerStag_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Textures/T_DeeDoe_BaseColor.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Textures/T_DeeDoe_Nml.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Textures/T_DeerDoe_OcclusionRoughnessMetallic.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Textures/T_Stag_BaseColor.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Textures/T_Stag_Nml.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Textures/T_Stag_OcclusionRoughnessMetllic.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/DeerStagAndDoe/Textures/T_Stag_Specular.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Bite.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Death.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_GetHitFront.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_GetHitLeft.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_GetHitRight.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_GoToRest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_IdleAggressive.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_IdleBreathe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_IdleLookAround.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_JumpBite.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_JumpBite_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_RestToGoBackUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Resting.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_RunBite.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_RunBite_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_RunTurnL.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_RunTurnL_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_RunTurnR.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_RunTurnR_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Run_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Sleeping.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_WalkTurnL.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_WalkTurnL_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_WalkTurnR.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_WalkTurnR_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Animations/ANIM_Fox_Walk_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Maps/Overview.umap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Maps/Overview_BuiltData.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Materials/M_Fox.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Materials/M_FoxFur.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Meshes/SK_Fox.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Meshes/SK_Fox_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Meshes/SK_Fox_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Textures/T_Fox_BaseColor.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Textures/T_Fox_Nml.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Textures/T_Fox_OcclusionRoughnessMetallic.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Fox/Textures/T_Fox_Specular.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Bite.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Death.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_GetHitFront.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_GetHitLeft.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_GetHitRight.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_GoToRest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Howl.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_IdleAggressive.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_IdleBreathe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_IdleLookAround.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_JumpBite.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_JumpBite_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Rest.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_RestToGoBackUp.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_RunBite.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_RunBite_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_RunTurnL.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_RunTurnL_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_RunTurnR.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_RunTurnR_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Run_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Sleep.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_WalkTurnL.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_WalkTurnL_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_WalkTurnR.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_WalkTurnR_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Animations/ANIM_Wolf_Walk_RM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Maps/Overview.umap" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Maps/Overview_BuiltData.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Materials/M_Wolf.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Materials/M_WolfArctic.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Materials/M_WolfDark.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Materials/M_WolfFur.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Materials/M_WolfFurArctic.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Materials/M_WolfFurDark.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Meshes/SK_Wolf.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Meshes/SK_Wolf_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Meshes/SK_Wolf_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Textures/T_WolfArctic_BaseColorAlpha.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Textures/T_WolfDark_BaseColorAlpha.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Textures/T_WolfDark_Illum.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Textures/T_Wolf_BaseColorAlpha.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Textures/T_Wolf_Nml.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Textures/T_Wolf_OcclusionRoughnessMetallic.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AnimalVarietyPack/Wolf/Textures/T_Wolf_Specular.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/Player/Dash/NS_DashEdited.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/Player/Dash/NS_PlayerDashEnd.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/Player/Dash/NS_PlayerDashEnd.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Bird.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Bird.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Bird.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Bird.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,26 +215,26 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2PQFdr2wlAd1LtC6e4rDID3YDxv" />
+  <component name="ProjectId" id="2PRjiDuZ6PIpWvncBzhr3EoSs9I" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\Charlie\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache",
-      "C:\\Users\\Charlie\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache",
-      "C:\\Users\\Charlie\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Charlie\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Charlie\\AppData\\Roaming\\JetBrains\\Rider2022.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Charlie\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="OpenWorld3D" type="Uproject" factoryName="rider.uproject">
       <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/OpenWorld3D.uproject" />
@@ -103,12 +296,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="80a9a82f-ef31-4bad-ab44-85e8833bd642" name="Changes" comment="" />
-      <created>1683381509068</created>
+      <changelist id="85d95ede-8dec-4f3c-a753-7be151ff65a1" name="Changes" comment="" />
+      <created>1683426930763</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1683381509068</updated>
-      <workItem from="1683381549663" duration="5594000" />
+      <updated>1683426930763</updated>
+      <workItem from="1683426955152" duration="8069000" />
+      <workItem from="1683466936638" duration="23680000" />
+      <workItem from="1683553674146" duration="27151000" />
+      <workItem from="1683632526073" duration="27688000" />
+      <workItem from="1683724101526" duration="9551000" />
     </task>
     <servers />
   </component>

@@ -17,6 +17,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/LockOnComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/TransformComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "HUD/OpenWorldCharacterHUD.h"
 #include "HUD/OpenWorldCharacterHUD_Master.h"
@@ -46,23 +47,26 @@ AOpenWorldCharacter::AOpenWorldCharacter()
    HealthRadiusSphereComponent = CreateDefaultSubobject<USphereComponent>("Combat Radius");
    HealthRadiusSphereComponent->SetupAttachment(GetRootComponent());
 
-   SetBodyCollisions();   
-   GetMesh()->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
-   GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-   GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
-   GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
+   SetCollisionsForBody();
 
    HairMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>("Hair Mesh Component");
-   HairMeshComponent->SetupAttachment(GetMesh(), FName(TEXT("head")));
+   HairMeshComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName(TEXT("head")));
 
    DashContainer = CreateDefaultSubobject<USceneComponent>("Dash Container");
    DashContainer->SetupAttachment(GetRootComponent());
+
+   DashBeginComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash Begin VFX"));
+   DashBeginComponent->SetupAttachment(DashContainer);
    
    DashingNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash VFX"));
    DashingNiagaraComponent->SetupAttachment(DashContainer);
 
    DashEndComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash End VFX"));
    DashEndComponent->SetupAttachment(DashContainer);
+
+   TransformComponent = CreateDefaultSubobject<UTransformComponent>(TEXT("Transform"));
+
+   IsSpiritForm = false;
 }
 
 void AOpenWorldCharacter::BindHealthRadiusSphereComponents()
@@ -71,7 +75,7 @@ void AOpenWorldCharacter::BindHealthRadiusSphereComponents()
    HealthRadiusSphereComponent->OnComponentEndOverlap.AddDynamic(this, &AOpenWorldCharacter::OnSphereEndOverlap);
 }
 
-void AOpenWorldCharacter::InitializeHUD(const APlayerController* PlayerController)
+void AOpenWorldCharacter::InitializeHUD()
 {
    if(const AOpenWorldCharacterHUD_Master* OpenWorldCharacterHUD_Master = Cast<AOpenWorldCharacterHUD_Master>(PlayerController->GetHUD()))
    {
@@ -90,46 +94,58 @@ void AOpenWorldCharacter::InitializeHUD(const APlayerController* PlayerControlle
 
 void AOpenWorldCharacter::BeginPlay()
 {
+   Super::BeginPlay();   
+   PlayerController = UGameplayStatics::GetPlayerController(this, 0);
    SpringArm->TargetArmLength = DefaultCameraDistance;
    LockOnComponent->InitializeVariablesOnBeginPlay(DefaultCameraDistance);
-   Super::BeginPlay();
    Tags.AddUnique(PlayerTag);
-   BindHealthRadiusSphereComponents();
+   BindHealthRadiusSphereComponents();   
    
-   if (const APlayerController* PlayerController = Cast<APlayerController>(Controller))
+   if (UEnhancedInputLocalPlayerSubsystem* Subsystem = PlayerController->GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
    {
-      if (UEnhancedInputLocalPlayerSubsystem* Subsystem = PlayerController->GetLocalPlayer()->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
-      {
-         Subsystem->AddMappingContext(OpenWorldCharacterContext, 0);
-      }
-
-      InitializeHUD(PlayerController);
+      Subsystem->AddMappingContext(OpenWorldCharacterContext, 0);
    }
+
+   InitializeHUD();
 }
 
-bool AOpenWorldCharacter::IsDashNearingEnd()
-{
-   return ActionState == EActionState::EAS_DashNearingEnd;
-}
+// void AOpenWorldCharacter::CheckToEndDash(float DeltaTime)
+// {
+//    if(IsDashNearingEnd())
+//    {
+//       if(TimeForDashEnd > CurrentDashTimer)
+//       {
+//          CurrentDashTimer += DeltaTime;
+//       }
+//       else
+//       {
+//          DashEnd();  
+//       }
+//    }
+// }
 
-void AOpenWorldCharacter::Tick(float DeltaTime)
+void AOpenWorldCharacter::RegenerateStamina(float DeltaTime)
 {
-   Super::Tick(DeltaTime);
-
    if(Attributes && OpenWorldCharacterHUD && !IsDashing() && !IsDashNearingEnd())
    {
       Attributes->RegenerateStamina(DeltaTime);
       OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
    }
+}
 
+void AOpenWorldCharacter::UnlockIfTargetIsDead()
+{
    const AEnemy* Target = Cast<AEnemy>(LockOnComponent->LockedOnTarget);
    
    if(Target && !Target->IsAlive())
-   {     
+   {      
       LockOnComponent->Unlock();
    }
+}
 
-   if(LockOnComponent->LockedOnTarget)
+void AOpenWorldCharacter::SetCombatTargetToLockedOnEnemy()
+{
+   if(LockOnComponent && LockOnComponent->LockedOnTarget)
    {
       CombatTarget = LockOnComponent->LockedOnTarget;
    }
@@ -137,18 +153,15 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
    {
       CombatTarget = nullptr;
    }
-   
-   if(IsDashNearingEnd())
-   {
-      if(TimeForDashEnd > CurrentDashEndTimer)
-      {
-         CurrentDashEndTimer += DeltaTime;
-      }
-      else
-      {
-         DashEnd();  
-      }
-   }
+}
+
+void AOpenWorldCharacter::Tick(float DeltaTime)
+{
+   Super::Tick(DeltaTime);
+   RegenerateStamina(DeltaTime);
+   SetCombatTargetToLockedOnEnemy();
+   UnlockIfTargetIsDead();
+   CheckToEndDash(DeltaTime);
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -156,7 +169,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
    Super::SetupPlayerInputComponent(PlayerInputComponent);
 
    if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent))
-   {
+   {      
       EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::MoveInput);
       EnhancedInputComponent->BindAction(LookAroundAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LookAround);
       EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
@@ -166,6 +179,9 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
       EnhancedInputComponent->BindAction(DashReleasedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashNearingEnd);
       EnhancedInputComponent->BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOn);
       EnhancedInputComponent->BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
+      EnhancedInputComponent->BindAction( FlyUpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::FlyUp);
+      EnhancedInputComponent->BindAction( FlyDownAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::FlyDown);
+
    }
 }
 
@@ -187,37 +203,41 @@ void AOpenWorldCharacter::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComp
    }
 }
 
-void AOpenWorldCharacter::Move(FVector2D MovementVector)
+void AOpenWorldCharacter::IfNotAttackingThenMove()
 {
-   const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
-   const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-   const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+   if(!IsAttacking())
+   {
+      const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
+      const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+      const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-   AddMovementInput(ForwardDirection, MovementVector.Y);
-   AddMovementInput(RightDirection, MovementVector.X);
+      AddMovementInput(ForwardDirection, LastNonZeroMovementInput.Y);
+      AddMovementInput(RightDirection, LastNonZeroMovementInput.X);
+   }   
 }
 
-void AOpenWorldCharacter::MoveInput(const FInputActionValue& Value)
-{  
-   if( !IsAlive() || !IsUnoccupied() && !IsAttacking() && !IsDashing() && !IsDashNearingEnd()) return;
-
-   LastNonZeroMovementInput = Value.Get<FVector2D>();
-   
-   if(!IsAttacking())
-   {     
-      Move(LastNonZeroMovementInput);
-   }
-   else if(IsAttacking())
+void AOpenWorldCharacter::IfAttackingThenChangeFacingDirection()
+{
+   if(IsAttacking())
    {
       const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
-         FVector::ZeroVector,
-         FVector(LastNonZeroMovementInput.Y, LastNonZeroMovementInput.X, 0)
-      );
+   FVector::ZeroVector,
+   FVector(LastNonZeroMovementInput.Y, LastNonZeroMovementInput.X, 0)
+);
 
       const FRotator CameraRotation = CameraBoom->GetComponentRotation();
       const FRotator CameraYawRotation (0, CameraRotation.Yaw, 0);
       SetActorRotation(DirectionToFace + CameraYawRotation);
    }
+}
+
+void AOpenWorldCharacter::MoveInput(const FInputActionValue& Value)
+{  
+   if( !CanMove()) return;
+
+   LastNonZeroMovementInput = Value.Get<FVector2D>();   
+   IfNotAttackingThenMove();
+   IfAttackingThenChangeFacingDirection();
 }
 
 void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
@@ -240,11 +260,25 @@ void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
    }
 }
 
+void AOpenWorldCharacter::FlyUp(const FInputActionValue& Value)
+{
+   // const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
+   // const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+   // const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+   AddMovementInput(FVector::UpVector, Value.Get<float>());
+}
+
+void AOpenWorldCharacter::FlyDown(const FInputActionValue& Value)
+{
+   AddMovementInput(FVector::DownVector, Value.Get<float>());
+}
+
 void AOpenWorldCharacter::ObtainOrEquip()
 {
    if(!IsAlive()) return;
    
-   if(    AWeapon* Weapon = Cast<AWeapon>(OverlappedItem))
+   if(AWeapon* Weapon = Cast<AWeapon>(OverlappedItem))
    {
       PickUpWeapon(Weapon, Weapon->GetStaticMeshComponent(), rightHandItemSocket);
    }
@@ -300,53 +334,65 @@ void AOpenWorldCharacter::Jump()
    Super::Jump();
 }
 
-void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
+void AOpenWorldCharacter::TurnToSpiritForm()
 {
-   if(!IsUnoccupied() && !IsAttacking() && !IsAttackEnding() || !IsAlive()) return;
-
    if(OpenWorldCharacterHUD && Attributes && Attributes->GetCurrentStamina() >= DashStaminaCost)
    {
       ActionState = EActionState::EAS_Dashing;
+      IsSpiritForm = true;
 
       Attributes->UpdateStamina(-DashStaminaCost);
       OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
 
-      CharacterMovementComponent->MaxWalkSpeed = DashSpeed;
-      CharacterMovementComponent->MaxAcceleration = 50000;
-      
-      SetSpiritCollisions();
+      TransformComponent->TransformToSecondForm.Broadcast();
 
       if(DashingNiagaraComponent)
       {
-         DashingNiagaraComponent->Activate();
-         ToggleAllMeshVisibility(false);
-         AnimInstance->Montage_Stop(0);
+         AnimInstance->Montage_Stop(0.01);         
       }
    }
 }
 
-void AOpenWorldCharacter::DashNearingEnd()
+void AOpenWorldCharacter::TurnToHumanForm()
 {
-   if(IsDashing())
-   {
-      if(DashingNiagaraComponent) DashingNiagaraComponent->Deactivate();
-
-      if(DashEndComponent) DashEndComponent->Activate();
-
-      CurrentDashEndTimer = 0;
-      ActionState = EActionState::EAS_DashNearingEnd;  
-   }
+   ResetActionState();
+   IsSpiritForm = false;
+   TransformComponent->TransformToFirstForm.Broadcast();
 }
 
-void AOpenWorldCharacter::SetBodyCollisions()
+void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
+{
+   if(!IsUnoccupied() && !IsDashing() && !IsAttacking() && !IsAttackEnding() || !IsAlive()) return;
+
+   if(!IsSpiritForm) TurnToSpiritForm();
+   else  TurnToHumanForm();
+
+   AnimInstance = GetMesh()->GetAnimInstance();
+}
+
+// void AOpenWorldCharacter::DashNearingEnd()
+// {
+//    if(IsDashing())
+//    {
+//       if(DashingNiagaraComponent) DashingNiagaraComponent->Deactivate();
+//
+//       if(DashEndComponent) DashEndComponent->Activate();
+//
+//       ActionState = EActionState::EAS_DashNearingEnd;  
+//    }
+// }
+
+void AOpenWorldCharacter::SetCollisionsForBody() const
 {
    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
    GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Overlap);
-   GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
-   GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Ignore);
+   GetMesh()->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+   GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+   GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
+   GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 }
 
-void AOpenWorldCharacter::SetSpiritCollisions()
+void AOpenWorldCharacter::SetCollisionsForSpirit() const
 {
    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
    GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
@@ -355,13 +401,13 @@ void AOpenWorldCharacter::SetSpiritCollisions()
 
 void AOpenWorldCharacter::DashEnd()
 {
-   if(DashEndComponent) DashEndComponent->Deactivate();
-
-   SetBodyCollisions();
-   ToggleAllMeshVisibility(true);
-   CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
-   CharacterMovementComponent->MaxAcceleration = 2048;
-   ResetActionState();
+   // if(DashEndComponent) DashEndComponent->Deactivate();
+   //
+   // // SetCollisionsForBody();
+   // // ToggleAllMeshVisibility(true);
+   // // CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
+   // // CharacterMovementComponent->MaxAcceleration = 2048;
+   // // ResetActionState();
 }
 
 void AOpenWorldCharacter::LockOn()

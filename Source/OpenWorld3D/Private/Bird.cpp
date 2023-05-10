@@ -8,14 +8,14 @@
 #include "EnhancedInputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/TransformComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ABird::ABird()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	//Capsule -> SetCapsuleRadius(15.f);
-	//Capsule -> SetCapsuleHalfHeight(20.f);
 	SetRootComponent(Capsule);
 
 	BirdMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeleton"));
@@ -24,23 +24,24 @@ ABird::ABird()
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	SpringArmComponent->SetupAttachment(GetRootComponent());
 	SpringArmComponent->TargetArmLength = 300.f;
-
+	
 	ViewCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("View Camera"));
 	ViewCamera->SetupAttachment(SpringArmComponent);
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
+	TransformComponent = CreateDefaultSubobject<UTransformComponent>(TEXT("Transforms"));
 }
 
 void ABird::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			Subsystem->AddMappingContext(BirdMappingContext, 0);
-		}
+		Subsystem->AddMappingContext(BirdMappingContext, 0);
 	}
 }
 

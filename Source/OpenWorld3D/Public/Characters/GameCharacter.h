@@ -54,8 +54,10 @@ protected:
 	FORCEINLINE UAnimMontage* GetHammerAttackMontage() const { return HammerAttacksMontage; }
 	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
 	void SetHealthPercentage() const;
+	bool CanMove();
 	bool IsUnoccupied() const;
 	bool IsDashing() const;
+	bool IsDashNearingEnd() const;
 	bool IsAttacking() const;
 	bool IsAttackEnding() const;
 	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;

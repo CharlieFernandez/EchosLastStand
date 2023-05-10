@@ -10,6 +10,7 @@
 
 #include "OpenWorldCharacter.generated.h"
 
+class UTransformComponent;
 class ULockOnComponent;
 class UInputMappingContext;
 class UInputAction;
@@ -41,13 +42,19 @@ protected:
    /* Methods */
    void ObtainOrEquip();
    virtual void Jump() override;
-   void SetSpiritCollisions();
+   void TurnToSpiritForm();
+   void TurnToHumanForm();
    bool HasMovementInput() const;
    virtual void BeginPlay() override;
-   bool IsDashNearingEnd();
+   void CheckToEndDash(float DeltaTime);
+   void RegenerateStamina(float DeltaTime);
+   void UnlockIfTargetIsDead();
+   void SetCombatTargetToLockedOnEnemy();
    void MoveInput(const FInputActionValue& Value);
    void DashInput(const FInputActionValue& Value);
    void LookAround(const FInputActionValue& Value);
+   void FlyUp(const FInputActionValue& Value);
+   void FlyDown(const FInputActionValue& Value);
    virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 
    
@@ -62,24 +69,28 @@ protected:
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> DashReleasedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOnAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOffAction;
+   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> FlyUpAction;
+   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> FlyDownAction;
 
    /* Functions */
    UFUNCTION()
    void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
    UFUNCTION()
    void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-   void Move(FVector2D MovementVector);
+   void IfNotAttackingThenMove();
+   void IfAttackingThenChangeFacingDirection();
 
 private:
    /* Fields */
    inline static const FName PlayerTag = FName("Player");
+   
    TObjectPtr<UOpenWorldCharacterHUD> OpenWorldCharacterHUD;
    FVector2D LastNonZeroMovementInput;
-   float CurrentDashEndTimer;
+   bool IsSpiritForm;
 
    /* Methods */
    void BindHealthRadiusSphereComponents();
-   void InitializeHUD(const APlayerController* PlayerController);
+   void InitializeHUD();
    void EquipOrUnequipWeapon();
    void PlayEquipMontage(EEquipActionState EquipType) const;
    void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
@@ -87,11 +98,17 @@ private:
    void LockOff();
    void ToggleAllMeshVisibility(bool IsVisible) const;
    void DashNearingEnd();
-   void SetBodyCollisions();
+   void SetCollisionsForBody() const;
+   void SetCollisionsForSpirit() const;
    void DashEnd();
    
    /* Properties */
-
+   
+   TObjectPtr<APlayerController> PlayerController;
+   
+   UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+   TObjectPtr<UTransformComponent> TransformComponent;
+   
    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
    TObjectPtr<USkeletalMeshComponent> HairMeshComponent;
    
@@ -107,7 +124,7 @@ private:
    UPROPERTY(EditDefaultsOnly)
    bool ShouldDrawHammerDownDebugTrace;
    
-   UPROPERTY(VisibleDefaultsOnly)
+   UPROPERTY(VisibleAnywhere)
    TObjectPtr<ULockOnComponent> LockOnComponent;
    
    UPROPERTY(VisibleAnywhere)
@@ -143,11 +160,14 @@ private:
    UPROPERTY(VisibleDefaultsOnly)
    TObjectPtr<USceneComponent> DashContainer;
 
-   UPROPERTY(EditDefaultsOnly, Category = Particles)
-   TObjectPtr<UNiagaraComponent> DashEndComponent;
+   UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
+   TObjectPtr<UNiagaraComponent> DashBeginComponent;
    
-   UPROPERTY(EditDefaultsOnly, Category = Particles)
+   UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
    TObjectPtr<UNiagaraComponent> DashingNiagaraComponent;
+   
+   UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
+   TObjectPtr<UNiagaraComponent> DashEndComponent;
 
    /* Functions */
    UFUNCTION(BlueprintCallable)

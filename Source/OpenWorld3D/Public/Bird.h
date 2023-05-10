@@ -13,6 +13,7 @@ class UInputMappingContext;
 class UInputAction;
 class USpringArmComponent;
 class UCameraComponent;
+class UTransformComponent;
 
 UCLASS()
 class OPENWORLD3D_API ABird : public APawn
@@ -23,6 +24,9 @@ public:
 	ABird();
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void Move(const FInputActionValue& Value);
+
+	FORCEINLINE APlayerController* GetPlayerController() const { return PlayerController; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -36,11 +40,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputAction* LookAction;
 
-	void Move(const FInputActionValue& Value);
+	
 
 	void Look(const FInputActionValue& Value);
 
 private:
+	TObjectPtr<APlayerController> PlayerController;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UTransformComponent> TransformComponent;
+	
 	UPROPERTY(VisibleAnywhere)
 	UCapsuleComponent* Capsule;
 
@@ -49,7 +58,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComponent;
-
+	
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* ViewCamera;
 };
