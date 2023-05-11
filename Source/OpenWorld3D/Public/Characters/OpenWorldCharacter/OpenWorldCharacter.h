@@ -46,9 +46,8 @@ protected:
    void TurnToHumanForm();
    bool HasMovementInput() const;
    virtual void BeginPlay() override;
-   void CheckToEndDash(float DeltaTime);
-   void RegenerateStamina(float DeltaTime);
-   void UnlockIfTargetIsDead();
+   void RegenerateStamina(float DeltaTime) const;
+   void UnlockIfTargetIsDead() const;
    void SetCombatTargetToLockedOnEnemy();
    void MoveInput(const FInputActionValue& Value);
    void DashInput(const FInputActionValue& Value);
@@ -66,7 +65,6 @@ protected:
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> EKeyPressedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> AttackPressedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> DashPressedAction;
-   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> DashReleasedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOnAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOffAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> FlyUpAction;
@@ -97,10 +95,8 @@ private:
    void LockOn();
    void LockOff();
    void ToggleAllMeshVisibility(bool IsVisible) const;
-   void DashNearingEnd();
    void SetCollisionsForBody() const;
    void SetCollisionsForSpirit() const;
-   void DashEnd();
    
    /* Properties */
    

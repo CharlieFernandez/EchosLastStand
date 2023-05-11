@@ -83,11 +83,10 @@ void AOpenWorldCharacter::InitializeHUD()
 
       if(OpenWorldCharacterHUD)
       {
-         OpenWorldCharacterHUD->SetHealthPercent(Attributes->GetCurrentHealthPercent());
-         OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
+         OpenWorldCharacterHUD->SetHealthPercent(1.f);
          OpenWorldCharacterHUD->SetStaminaPercent(1.f);
-         OpenWorldCharacterHUD->SetGold(0);
-         OpenWorldCharacterHUD->SetSouls(0);
+         OpenWorldCharacterHUD->SetGold(0.f);
+         OpenWorldCharacterHUD->SetSouls(0.f);
       }
    }
 }
@@ -109,22 +108,7 @@ void AOpenWorldCharacter::BeginPlay()
    InitializeHUD();
 }
 
-// void AOpenWorldCharacter::CheckToEndDash(float DeltaTime)
-// {
-//    if(IsDashNearingEnd())
-//    {
-//       if(TimeForDashEnd > CurrentDashTimer)
-//       {
-//          CurrentDashTimer += DeltaTime;
-//       }
-//       else
-//       {
-//          DashEnd();  
-//       }
-//    }
-// }
-
-void AOpenWorldCharacter::RegenerateStamina(float DeltaTime)
+void AOpenWorldCharacter::RegenerateStamina(float DeltaTime) const
 {
    if(Attributes && OpenWorldCharacterHUD && !IsDashing() && !IsDashNearingEnd())
    {
@@ -133,7 +117,7 @@ void AOpenWorldCharacter::RegenerateStamina(float DeltaTime)
    }
 }
 
-void AOpenWorldCharacter::UnlockIfTargetIsDead()
+void AOpenWorldCharacter::UnlockIfTargetIsDead() const
 {
    const AEnemy* Target = Cast<AEnemy>(LockOnComponent->LockedOnTarget);
    
@@ -161,7 +145,6 @@ void AOpenWorldCharacter::Tick(float DeltaTime)
    RegenerateStamina(DeltaTime);
    SetCombatTargetToLockedOnEnemy();
    UnlockIfTargetIsDead();
-   CheckToEndDash(DeltaTime);
 }
 
 void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -176,7 +159,6 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
       EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
       EnhancedInputComponent->BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
       EnhancedInputComponent->BindAction(DashPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashInput);
-      EnhancedInputComponent->BindAction(DashReleasedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashNearingEnd);
       EnhancedInputComponent->BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOn);
       EnhancedInputComponent->BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
       EnhancedInputComponent->BindAction( FlyUpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::FlyUp);
@@ -262,15 +244,11 @@ void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 
 void AOpenWorldCharacter::FlyUp(const FInputActionValue& Value)
 {
-   // const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
-   // const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-   // const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
    AddMovementInput(FVector::UpVector, Value.Get<float>());
 }
 
 void AOpenWorldCharacter::FlyDown(const FInputActionValue& Value)
-{
+{   
    AddMovementInput(FVector::DownVector, Value.Get<float>());
 }
 
@@ -370,18 +348,6 @@ void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
    AnimInstance = GetMesh()->GetAnimInstance();
 }
 
-// void AOpenWorldCharacter::DashNearingEnd()
-// {
-//    if(IsDashing())
-//    {
-//       if(DashingNiagaraComponent) DashingNiagaraComponent->Deactivate();
-//
-//       if(DashEndComponent) DashEndComponent->Activate();
-//
-//       ActionState = EActionState::EAS_DashNearingEnd;  
-//    }
-// }
-
 void AOpenWorldCharacter::SetCollisionsForBody() const
 {
    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
@@ -397,17 +363,6 @@ void AOpenWorldCharacter::SetCollisionsForSpirit() const
    GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
    GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
    GetMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-}
-
-void AOpenWorldCharacter::DashEnd()
-{
-   // if(DashEndComponent) DashEndComponent->Deactivate();
-   //
-   // // SetCollisionsForBody();
-   // // ToggleAllMeshVisibility(true);
-   // // CharacterMovementComponent->MaxWalkSpeed = GetMaxSprintSpeed();
-   // // CharacterMovementComponent->MaxAcceleration = 2048;
-   // // ResetActionState();
 }
 
 void AOpenWorldCharacter::LockOn()
