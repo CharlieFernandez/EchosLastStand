@@ -50,7 +50,7 @@ protected:
    void UnlockIfTargetIsDead() const;
    void SetCombatTargetToLockedOnEnemy();
    void MoveInput(const FInputActionValue& Value);
-   void DashInput(const FInputActionValue& Value);
+   void TransformationInput(const FInputActionValue& Value);
    void LookAround(const FInputActionValue& Value);
    void FlyUp(const FInputActionValue& Value);
    void FlyDown(const FInputActionValue& Value);
@@ -64,7 +64,7 @@ protected:
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> JumpAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> EKeyPressedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> AttackPressedAction;
-   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> DashPressedAction;
+   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> TransformPressedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOnAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOffAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> FlyUpAction;
@@ -132,9 +132,6 @@ private:
    UPROPERTY(VisibleAnywhere)
    TObjectPtr<UCameraComponent> CameraBoom;
    
-   UPROPERTY(EditDefaultsOnly)
-   float DashSpeed;
-   
    UPROPERTY(VisibleInstanceOnly)
    TObjectPtr<AItem> OverlappedItem;
 
@@ -145,25 +142,22 @@ private:
    float CameraRotationSpeed;
 
    UPROPERTY(EditDefaultsOnly, Category = Stamina)
-   float DashStaminaCost;
+   float TransformationStaminaCost;
    
    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
    TObjectPtr<UNiagaraSystem> HammerDownParticles;
 
-   UPROPERTY(EditDefaultsOnly)
-   float TimeForDashEnd;
-
    UPROPERTY(VisibleDefaultsOnly)
-   TObjectPtr<USceneComponent> DashContainer;
+   TObjectPtr<USceneComponent> TransformationVFXContainer;
 
    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
-   TObjectPtr<UNiagaraComponent> DashBeginComponent;
+   TObjectPtr<UNiagaraComponent> BodyToSpiritVFXComponent;
    
    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
-   TObjectPtr<UNiagaraComponent> DashingNiagaraComponent;
+   TObjectPtr<UNiagaraComponent> SpiritVFXComponent;
    
    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Particles, meta = (AllowPrivateAccess = "true"))
-   TObjectPtr<UNiagaraComponent> DashEndComponent;
+   TObjectPtr<UNiagaraComponent> SpiritToBodyVFXComponent;
 
    /* Functions */
    UFUNCTION(BlueprintCallable)

@@ -33,14 +33,14 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	UPROPERTY(VisibleInstanceOnly)
-	float CurrentHealth;
 	UPROPERTY(EditDefaultsOnly)
 	float MaxHealth;
-	UPROPERTY(VisibleInstanceOnly)
-	float CurrentStamina;
 	UPROPERTY(EditDefaultsOnly)
 	float MaxStamina;
+	UPROPERTY(VisibleInstanceOnly)
+	float CurrentHealth;
+	UPROPERTY(VisibleInstanceOnly)
+	float CurrentStamina;
 	UPROPERTY(EditDefaultsOnly)
 	float StaminaRegenPerSecond;
 	UPROPERTY(EditDefaultsOnly)

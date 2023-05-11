@@ -30,11 +30,7 @@ void AGameCharacter::Tick(float DeltaTime)
 }
 
 bool AGameCharacter::CanAttack()
-{
-	// UEnum* EnumPtr = FindObject<UEnum>(ANY_PACKAGE, TEXT("EActionState"), true);
-	// FString EnumString = EnumPtr ? EnumPtr->GetNameStringByIndex(static_cast<uint8>(ActionState)) : FString("Invalid");
-	// GEngine->AddOnScreenDebugMessage(0, 1, FColor::Red, EnumString);
-	
+{	
 	return IsAlive() && (ActionState == EActionState::EAS_Unoccupied || ActionState == EActionState::EAS_AttackEnd)
 	&& EquipState != EEquipState::ECS_Unequipped;
 }
@@ -145,22 +141,12 @@ bool AGameCharacter::IsAlive() const
 
 bool AGameCharacter::CanMove()
 {
-	return IsAlive() && (IsUnoccupied() || IsAttacking() || IsDashing() || IsDashNearingEnd());
+	return IsAlive() && (IsUnoccupied() || IsAttacking());
 }
 
 bool AGameCharacter::IsUnoccupied() const
 {
 	return ActionState == EActionState::EAS_Unoccupied;
-}
-
-bool AGameCharacter::IsDashing() const
-{
-	return ActionState == EActionState::EAS_Dashing;
-}
-
-bool AGameCharacter::IsDashNearingEnd() const
-{
-	return ActionState == EActionState::EAS_DashNearingEnd;
 }
 
 bool AGameCharacter::IsAttacking() const

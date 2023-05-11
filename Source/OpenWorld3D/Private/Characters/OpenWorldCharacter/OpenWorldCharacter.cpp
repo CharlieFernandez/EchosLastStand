@@ -52,17 +52,17 @@ AOpenWorldCharacter::AOpenWorldCharacter()
    HairMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>("Hair Mesh Component");
    HairMeshComponent->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, FName(TEXT("head")));
 
-   DashContainer = CreateDefaultSubobject<USceneComponent>("Dash Container");
-   DashContainer->SetupAttachment(GetRootComponent());
+   TransformationVFXContainer = CreateDefaultSubobject<USceneComponent>("Transformation VFX Container");
+   TransformationVFXContainer->SetupAttachment(GetRootComponent());
 
-   DashBeginComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash Begin VFX"));
-   DashBeginComponent->SetupAttachment(DashContainer);
+   BodyToSpiritVFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Body to Spirit VFX"));
+   BodyToSpiritVFXComponent->SetupAttachment(TransformationVFXContainer);
    
-   DashingNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash VFX"));
-   DashingNiagaraComponent->SetupAttachment(DashContainer);
+   SpiritVFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Spirit VFX"));
+   SpiritVFXComponent->SetupAttachment(TransformationVFXContainer);
 
-   DashEndComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Dash End VFX"));
-   DashEndComponent->SetupAttachment(DashContainer);
+   SpiritToBodyVFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("Spirit to Body VFX"));
+   SpiritToBodyVFXComponent->SetupAttachment(TransformationVFXContainer);
 
    TransformComponent = CreateDefaultSubobject<UTransformComponent>(TEXT("Transform"));
 
@@ -110,7 +110,7 @@ void AOpenWorldCharacter::BeginPlay()
 
 void AOpenWorldCharacter::RegenerateStamina(float DeltaTime) const
 {
-   if(Attributes && OpenWorldCharacterHUD && !IsDashing() && !IsDashNearingEnd())
+   if(Attributes && OpenWorldCharacterHUD && !IsSpiritForm)
    {
       Attributes->RegenerateStamina(DeltaTime);
       OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
@@ -158,7 +158,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
       EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
       EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
       EnhancedInputComponent->BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
-      EnhancedInputComponent->BindAction(DashPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::DashInput);
+      EnhancedInputComponent->BindAction(TransformPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::TransformationInput);
       EnhancedInputComponent->BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOn);
       EnhancedInputComponent->BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
       EnhancedInputComponent->BindAction( FlyUpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::FlyUp);
@@ -314,17 +314,17 @@ void AOpenWorldCharacter::Jump()
 
 void AOpenWorldCharacter::TurnToSpiritForm()
 {
-   if(OpenWorldCharacterHUD && Attributes && Attributes->GetCurrentStamina() >= DashStaminaCost)
+   if(OpenWorldCharacterHUD && Attributes && Attributes->GetCurrentStamina() >= TransformationStaminaCost)
    {
-      ActionState = EActionState::EAS_Dashing;
+      ResetActionState();
       IsSpiritForm = true;
 
-      Attributes->UpdateStamina(-DashStaminaCost);
+      Attributes->UpdateStamina(-TransformationStaminaCost);
       OpenWorldCharacterHUD->SetStaminaPercent(Attributes->GetCurrentStaminaPercent());
 
       TransformComponent->TransformToSecondForm.Broadcast();
 
-      if(DashingNiagaraComponent)
+      if(SpiritVFXComponent)
       {
          AnimInstance->Montage_Stop(0.01);         
       }
@@ -335,12 +335,13 @@ void AOpenWorldCharacter::TurnToHumanForm()
 {
    ResetActionState();
    IsSpiritForm = false;
+   SetActorRotation(FRotator(0, GetActorRotation().Yaw, 0));
    TransformComponent->TransformToFirstForm.Broadcast();
 }
 
-void AOpenWorldCharacter::DashInput(const FInputActionValue& Value)
+void AOpenWorldCharacter::TransformationInput(const FInputActionValue& Value)
 {
-   if(!IsUnoccupied() && !IsDashing() && !IsAttacking() && !IsAttackEnding() || !IsAlive()) return;
+   if(!IsUnoccupied() && !IsAttacking() && !IsAttackEnding() || !IsAlive()) return;
 
    if(!IsSpiritForm) TurnToSpiritForm();
    else  TurnToHumanForm();

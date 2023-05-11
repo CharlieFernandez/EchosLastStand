@@ -56,8 +56,6 @@ protected:
 	void SetHealthPercentage() const;
 	bool CanMove();
 	bool IsUnoccupied() const;
-	bool IsDashing() const;
-	bool IsDashNearingEnd() const;
 	bool IsAttacking() const;
 	bool IsAttackEnding() const;
 	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
@@ -117,6 +115,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage> HammerAttacksMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = Montages)
+	TObjectPtr<UAnimMontage> RollMontage;
 	
 	UPROPERTY(EditDefaultsOnly, Category = Montages)
 	TObjectPtr<UAnimMontage>ReactMontage;

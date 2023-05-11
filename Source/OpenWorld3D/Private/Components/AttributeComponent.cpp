@@ -12,6 +12,7 @@ UAttributeComponent::UAttributeComponent()
 
 void UAttributeComponent::BeginPlay()
 {
+	GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, FString::Printf(TEXT("%f"), CurrentHealth));
 	CurrentHealth = MaxHealth;
 	CurrentStamina = MaxStamina;
 	Super::BeginPlay();
