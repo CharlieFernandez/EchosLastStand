@@ -4,6 +4,7 @@
 #include "Damage Dealer/DamageDealer.h"
 
 #include "NetworkReplayStreaming.h"
+#include "Characters/GameCharacter.h"
 #include "Components/ShapeComponent.h"
 #include "Field/FieldSystemComponent.h"
 #include "Interfaces/HitInterface.h"
@@ -71,14 +72,22 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 	
 	if(AActor* ActorHit = HitResult.GetActor())
 	{
+		if(AGameCharacter* GameCharacterHit = Cast<AGameCharacter>(ActorHit) )
+		{
+			if(GameCharacterHit->GetIsInvulnerable())
+			{
+				return;
+			}
+		}
+		
 		ActorsToIgnore.AddUnique(ActorHit);		
 		const FVector ImpactPoint = HitResult.ImpactPoint;
 		
 		if(DidEnemyHitEnemy(ActorOwner, ActorHit)) return;
-		
+
 		if(SoundBase && Cast<APawn>(ActorHit))
 		{
-			AttackedPawn(ActorOwner, SoundBase, ImpactPoint, PrimitiveComponent, ImpactPauseTime);
+			AttackedGameCharacter(ActorOwner, SoundBase, ImpactPoint, PrimitiveComponent, ImpactPauseTime);
 		}
 
 		UGameplayStatics::ApplyDamage(ActorHit,
@@ -97,7 +106,7 @@ void UDamageDealer::DealDamage(UPrimitiveComponent* PrimitiveComponent, FVector 
 	}
 }
 
-void UDamageDealer::AttackedPawn(const AActor* ActorOwner, USoundBase* SoundBase, FVector ImpactPoint, const UPrimitiveComponent* PrimitiveComponent, const float ImpactPauseTime)
+void UDamageDealer::AttackedGameCharacter(const AActor* ActorOwner, USoundBase* SoundBase, FVector ImpactPoint, const UPrimitiveComponent* PrimitiveComponent, const float ImpactPauseTime)
 {
 	UGameplayStatics::PlaySoundAtLocation(this, SoundBase, ImpactPoint, PrimitiveComponent -> GetComponentRotation());
 	UGameplayStatics::SetGlobalTimeDilation(this, 0.01f);

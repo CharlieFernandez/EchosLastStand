@@ -50,8 +50,9 @@ protected:
    void UnlockIfTargetIsDead() const;
    void SetCombatTargetToLockedOnEnemy();
    void MoveInput(const FInputActionValue& Value);
-   void TransformationInput(const FInputActionValue& Value);
    void LookAround(const FInputActionValue& Value);
+   void RollInput();
+   void TransformationInput(const FInputActionValue& Value);
    void FlyUp(const FInputActionValue& Value);
    void FlyDown(const FInputActionValue& Value);
    virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
@@ -64,6 +65,7 @@ protected:
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> JumpAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> EKeyPressedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> AttackPressedAction;
+   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> RollPressedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> TransformPressedAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOnAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOffAction;
@@ -97,6 +99,7 @@ private:
    void ToggleAllMeshVisibility(bool IsVisible) const;
    void SetCollisionsForBody() const;
    void SetCollisionsForSpirit() const;
+   void FaceTheLastMoveInput();
    
    /* Properties */
    

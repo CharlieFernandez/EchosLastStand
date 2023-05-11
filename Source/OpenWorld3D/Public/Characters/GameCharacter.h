@@ -29,6 +29,7 @@ public:
 	FORCEINLINE EEquipState GetCharacterState() const { return EquipState; }
 	FORCEINLINE UAttributeComponent* GetAttributes() const { return Attributes; }
 	FORCEINLINE AWeapon* GetWeaponHeld() const { return WeaponHeld; }
+	FORCEINLINE bool GetIsInvulnerable() const { return IsInvulnerable; }
 
 protected:
 	/* Fields */
@@ -37,6 +38,7 @@ protected:
 
 	/* Methods */
 	void Attack();
+	void TryToRoll();
 	virtual void Die();
 	bool CanEquip() const;
 	bool CanUnequip() const;
@@ -52,12 +54,13 @@ protected:
 	void ResetIfComboEnded(uint8& AttackIndex) const;
 	FORCEINLINE UAnimMontage* GetSwordAttackMontage() const { return SwordAttacksMontage; }
 	FORCEINLINE UAnimMontage* GetHammerAttackMontage() const { return HammerAttacksMontage; }
-	void PlayMontageSection(UAnimMontage* Montage, FName SectionName) const;
+	void PlayMontageSection(UAnimMontage* Montage, FName SectionName = FName("Default")) const;
 	void SetHealthPercentage() const;
 	bool CanMove();
 	bool IsUnoccupied() const;
 	bool IsAttacking() const;
 	bool IsAttackEnding() const;
+	bool IsRolling() const;	
 	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 
 	/* Properties */
@@ -97,7 +100,13 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void EmitParticles(FVector SpawnLocation, UParticleSystem* ParticleSystem) const;
 
-private:	
+	UFUNCTION(BlueprintCallable)
+	void BecomeInvulnerable(bool Value);
+
+private:
+	/* Fields */
+	bool IsInvulnerable;
+	
 	/* Methods */
 	static FName GenerateSectionNameByAngle(double Angle);
 	double GetAngleFromInstigatorPosition(FVector InstigatorPosition) const;

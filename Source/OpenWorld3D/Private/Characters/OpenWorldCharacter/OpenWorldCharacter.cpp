@@ -158,6 +158,7 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
       EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Jump);
       EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::ObtainOrEquip);
       EnhancedInputComponent->BindAction(AttackPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::Attack);
+      EnhancedInputComponent->BindAction(RollPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::RollInput);
       EnhancedInputComponent->BindAction(TransformPressedAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::TransformationInput);
       EnhancedInputComponent->BindAction( LockOnAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOn);
       EnhancedInputComponent->BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
@@ -198,19 +199,21 @@ void AOpenWorldCharacter::IfNotAttackingThenMove()
    }   
 }
 
+void AOpenWorldCharacter::FaceTheLastMoveInput()
+{
+   const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
+      FVector::ZeroVector,
+      FVector(LastNonZeroMovementInput.Y, LastNonZeroMovementInput.X, 0)
+   );
+
+   const FRotator CameraRotation = CameraBoom->GetComponentRotation();
+   const FRotator CameraYawRotation (0, CameraRotation.Yaw, 0);
+   SetActorRotation(DirectionToFace + CameraYawRotation);
+}
+
 void AOpenWorldCharacter::IfAttackingThenChangeFacingDirection()
 {
-   if(IsAttacking())
-   {
-      const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
-   FVector::ZeroVector,
-   FVector(LastNonZeroMovementInput.Y, LastNonZeroMovementInput.X, 0)
-);
-
-      const FRotator CameraRotation = CameraBoom->GetComponentRotation();
-      const FRotator CameraYawRotation (0, CameraRotation.Yaw, 0);
-      SetActorRotation(DirectionToFace + CameraYawRotation);
-   }
+   if(IsAttacking()) FaceTheLastMoveInput();
 }
 
 void AOpenWorldCharacter::MoveInput(const FInputActionValue& Value)
@@ -239,6 +242,15 @@ void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
       }
       
       AddControllerYawInput(RotationValue.X);
+   }
+}
+
+void AOpenWorldCharacter::RollInput()
+{
+   if(!IsSpiritForm)
+   {
+      FaceTheLastMoveInput();
+      TryToRoll();
    }
 }
 

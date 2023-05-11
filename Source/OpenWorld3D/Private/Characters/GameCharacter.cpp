@@ -44,6 +44,15 @@ void AGameCharacter::Attack()
 	}
 }
 
+void AGameCharacter::TryToRoll()
+{
+	if((IsUnoccupied() || IsAttackEnding()) && !CharacterMovementComponent->IsFalling())
+	{		
+		ActionState = EActionState::EAS_Rolling;
+		PlayMontageSection(RollMontage);
+	}
+}
+
 void AGameCharacter::PlayMontageSection(UAnimMontage* Montage, FName SectionName) const
 {
 	if(AnimInstance && Montage)
@@ -105,6 +114,11 @@ void AGameCharacter::Unequip()
 	WeaponHeld = nullptr;
 }
 
+void AGameCharacter::BecomeInvulnerable(bool Value)
+{
+	IsInvulnerable = Value;
+}
+
 bool AGameCharacter::CanEquip() const
 {
 	return WeaponHeld &&
@@ -159,6 +173,10 @@ bool AGameCharacter::IsAttackEnding() const
 	return ActionState == EActionState::EAS_AttackEnd;
 }
 
+bool AGameCharacter::IsRolling() const
+{
+	return ActionState == EActionState::EAS_Rolling;
+}
 
 void AGameCharacter::FindAndPlayReactSection(const FVector InstigatorPosition) const
 {

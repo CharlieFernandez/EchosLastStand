@@ -37,7 +37,7 @@ private:
 	FTimerHandle ImpactTimer;
 	void ImpactPause() const;
 	void BoxTrace(const UPrimitiveComponent* PrimitiveComponent, FVector StartTracePos, FVector EndTracePos, FHitResult& HitResult);
-	void AttackedPawn(const AActor* ActorOwner, USoundBase* SoundBase, FVector ImpactPoint, const UPrimitiveComponent* PrimitiveComponent, const float ImpactPauseTime);
+	void AttackedGameCharacter(const AActor* ActorOwner, USoundBase* SoundBase, FVector ImpactPoint, const UPrimitiveComponent* PrimitiveComponent, const float ImpactPauseTime);
 	static bool DidEnemyHitEnemy(AActor*& ActorOwner, AActor*& ActorHit);
 
 	UPROPERTY(EditDefaultsOnly)
