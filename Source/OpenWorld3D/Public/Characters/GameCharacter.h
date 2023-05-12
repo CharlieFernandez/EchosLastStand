@@ -38,7 +38,7 @@ protected:
 
 	/* Methods */
 	void Attack();
-	void TryToRoll();
+	bool TryToRoll();
 	virtual void Die();
 	bool CanEquip() const;
 	bool CanUnequip() const;
@@ -60,7 +60,9 @@ protected:
 	bool IsUnoccupied() const;
 	bool IsAttacking() const;
 	bool IsAttackEnding() const;
-	bool IsRolling() const;	
+	bool IsRolling() const;
+	bool IsInHitReact() const;
+
 	virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
 
 	/* Properties */

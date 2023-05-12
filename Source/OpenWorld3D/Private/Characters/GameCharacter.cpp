@@ -44,13 +44,16 @@ void AGameCharacter::Attack()
 	}
 }
 
-void AGameCharacter::TryToRoll()
+bool AGameCharacter::TryToRoll()
 {
 	if((IsUnoccupied() || IsAttackEnding()) && !CharacterMovementComponent->IsFalling())
 	{		
 		ActionState = EActionState::EAS_Rolling;
 		PlayMontageSection(RollMontage);
+		return true;
 	}
+
+	return false;
 }
 
 void AGameCharacter::PlayMontageSection(UAnimMontage* Montage, FName SectionName) const
@@ -176,6 +179,11 @@ bool AGameCharacter::IsAttackEnding() const
 bool AGameCharacter::IsRolling() const
 {
 	return ActionState == EActionState::EAS_Rolling;
+}
+
+bool AGameCharacter::IsInHitReact() const
+{
+	return ActionState == EActionState::EAS_HitReact;
 }
 
 void AGameCharacter::FindAndPlayReactSection(const FVector InstigatorPosition) const

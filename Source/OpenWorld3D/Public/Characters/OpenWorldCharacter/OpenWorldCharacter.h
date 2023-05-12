@@ -52,7 +52,7 @@ protected:
    void MoveInput(const FInputActionValue& Value);
    void LookAround(const FInputActionValue& Value);
    void RollInput();
-   void TransformationInput(const FInputActionValue& Value);
+   void TransformationInput();
    void FlyUp(const FInputActionValue& Value);
    void FlyDown(const FInputActionValue& Value);
    virtual void GetHit_Implementation(const FVector ImpactPoint, const FVector InstigatorPosition) override;
@@ -85,6 +85,7 @@ private:
    inline static const FName PlayerTag = FName("Player");
    
    TObjectPtr<UOpenWorldCharacterHUD> OpenWorldCharacterHUD;
+   FVector2D CurrentMovementInput;
    FVector2D LastNonZeroMovementInput;
    bool IsSpiritForm;
 

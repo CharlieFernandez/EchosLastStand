@@ -201,9 +201,11 @@ void AOpenWorldCharacter::IfNotAttackingThenMove()
 
 void AOpenWorldCharacter::FaceTheLastMoveInput()
 {
+   const FVector2D MovementInputToUse = CurrentMovementInput == FVector2D::ZeroVector ? LastNonZeroMovementInput : CurrentMovementInput;
+   
    const FRotator DirectionToFace = UKismetMathLibrary::FindLookAtRotation(
       FVector::ZeroVector,
-      FVector(LastNonZeroMovementInput.Y, LastNonZeroMovementInput.X, 0)
+      FVector(MovementInputToUse.Y, MovementInputToUse.X, 0)
    );
 
    const FRotator CameraRotation = CameraBoom->GetComponentRotation();
@@ -217,10 +219,12 @@ void AOpenWorldCharacter::IfAttackingThenChangeFacingDirection()
 }
 
 void AOpenWorldCharacter::MoveInput(const FInputActionValue& Value)
-{  
+{
+   CurrentMovementInput = Value.Get<FVector2D>();
+   
    if( !CanMove()) return;
 
-   LastNonZeroMovementInput = Value.Get<FVector2D>();   
+   LastNonZeroMovementInput = Value.Get<FVector2D>();
    IfNotAttackingThenMove();
    IfAttackingThenChangeFacingDirection();
 }
@@ -247,10 +251,9 @@ void AOpenWorldCharacter::LookAround(const FInputActionValue& Value)
 
 void AOpenWorldCharacter::RollInput()
 {
-   if(!IsSpiritForm)
+   if(!IsSpiritForm && TryToRoll())
    {
       FaceTheLastMoveInput();
-      TryToRoll();
    }
 }
 
@@ -351,9 +354,9 @@ void AOpenWorldCharacter::TurnToHumanForm()
    TransformComponent->TransformToFirstForm.Broadcast();
 }
 
-void AOpenWorldCharacter::TransformationInput(const FInputActionValue& Value)
+void AOpenWorldCharacter::TransformationInput()
 {
-   if(!IsUnoccupied() && !IsAttacking() && !IsAttackEnding() || !IsAlive()) return;
+   if(!IsAlive() || IsInHitReact()) return;
 
    if(!IsSpiritForm) TurnToSpiritForm();
    else  TurnToHumanForm();

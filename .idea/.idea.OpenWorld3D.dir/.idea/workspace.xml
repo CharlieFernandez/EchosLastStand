@@ -6,24 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="85d95ede-8dec-4f3c-a753-7be151ff65a1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Animations/Echo/Montages/AM_Echo_Roll.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Echo/Montages/AM_Echo_Roll.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Animations/Echo/StandaloneAnimations/Miscellaneous/Dodge_To_Idle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Echo/StandaloneAnimations/Miscellaneous/Dodge_To_Idle.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Animations/Global/ABP_Humanoid.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Global/ABP_Humanoid.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/ABP_Echo.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Echo/BP_OpenWorldCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_DashBegin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_DashEnd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_Roll.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputActions/OpenWorldCharacter/IA_Roll.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/InputMappingContext/IMC_OpenWorldCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Meshes/Echo_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/AncientContent/Characters/Echo/Meshes/Echo_Skeleton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Animations/Sequence/07_Roll/01_Roll/AS_Roll_B_180_Seq.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Animations/Sequence/07_Roll/01_Roll/AS_Roll_B_180_Seq.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Animations/Sequence/07_Roll/01_Roll/AS_Roll_B_L_45_Seq.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Animations/Sequence/07_Roll/01_Roll/AS_Roll_B_L_45_Seq.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Animations/Sequence/07_Roll/01_Roll/AS_Roll_F_0_Seq.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Animations/Sequence/07_Roll/01_Roll/AS_Roll_F_0_Seq.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Demo/Mannequin/Character/Mesh/UE4_Mannequin_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/MarketplaceAssets/WeaponPacks/BestWeaponPack/Great_Sword/Demo/Mannequin/Character/Mesh/UE4_Mannequin_Skeleton.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Damage Dealer/DamageDealer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Damage Dealer/DamageDealer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/CharacterTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/CharacterTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/AttributeComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/AttributeComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/GameCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Characters/OpenWorldCharacter/OpenWorldCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Damage Dealer/DamageDealer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Damage Dealer/DamageDealer.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +122,7 @@
       <workItem from="1683766397190" duration="2804000" />
       <workItem from="1683812357496" duration="6443000" />
       <workItem from="1683823236297" duration="16278000" />
+      <workItem from="1683847206214" duration="5203000" />
     </task>
     <servers />
   </component>
