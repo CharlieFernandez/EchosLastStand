@@ -114,6 +114,70 @@ void ULockOnComponent::Lock()
 	ActivateTargetingVFX();
 }
 
+void ULockOnComponent::SwitchTargetRight()
+{
+	if(LockedOnTarget == nullptr) return;
+	
+	TArray<AEnemy*> EnemiesFound = FindAndFilterEnemies();
+	
+	AActor* NewLockedOnTarget = nullptr;
+	TMap<AEnemy*, FVector> EnemiesAndLocationsRelativeToCameraRight_M;
+	TMap<AEnemy*, FVector> EnemiesAndLocationsRelativeToCameraLeft_M;
+
+	const FVector LockedOnEnemyLocationRelativeToCamera = CameraComponent->GetComponentTransform().InverseTransformVector(LockedOnTarget->GetActorLocation());
+	
+	for(AEnemy* Enemy: EnemiesFound)
+	{
+		if(Enemy == LockedOnTarget) continue;
+		
+		FVector NewEnemyLocationRelativeToCamera = CameraComponent->GetComponentTransform().InverseTransformVector(Enemy->GetActorLocation());
+
+		if(NewEnemyLocationRelativeToCamera.Y >= LockedOnEnemyLocationRelativeToCamera.Y)
+		{
+			EnemiesAndLocationsRelativeToCameraRight_M.Add(Enemy, NewEnemyLocationRelativeToCamera);			
+			GEngine->AddOnScreenDebugMessage(0, 1, FColor::Red, "Right!");
+		}
+		else
+		{
+			EnemiesAndLocationsRelativeToCameraLeft_M.Add(Enemy, NewEnemyLocationRelativeToCamera);			
+			GEngine->AddOnScreenDebugMessage(0, 1, FColor::Red, "Left!");
+		}
+	}
+
+	float ClosestDistance = MaxDistanceFromLockedTarget;
+	for(const TPair<AEnemy*, FVector>& KeyValue: EnemiesAndLocationsRelativeToCameraRight_M)
+	{
+		if(FVector::Distance(LockedOnEnemyLocationRelativeToCamera, KeyValue.Value) < ClosestDistance)
+		{
+			NewLockedOnTarget = KeyValue.Key;
+			ClosestDistance = FVector::Distance(LockedOnTarget->GetActorLocation(), KeyValue.Value);
+		}
+	}
+	
+	if(NewLockedOnTarget == nullptr)
+	{
+		float FarthestDistance = 0;
+		
+		for(const TPair<AEnemy*, FVector>& KeyValue: EnemiesAndLocationsRelativeToCameraLeft_M)
+		{
+			if(FVector::Distance(LockedOnTarget->GetActorLocation(), KeyValue.Value) > FarthestDistance)
+			{
+				NewLockedOnTarget = KeyValue.Key;
+				FarthestDistance = FVector::Distance(LockedOnTarget->GetActorLocation(), KeyValue.Value);
+			}
+		}
+	}
+
+	if(NewLockedOnTarget)
+	{
+		LockedOnTarget = NewLockedOnTarget;
+		CurrentlyUsedLockOnNC->DeactivateImmediate();
+		
+		const ULockableComponent* LockableComponent = Cast<ULockableComponent>(NewLockedOnTarget->GetComponentByClass(ULockableComponent::StaticClass()));
+		CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
+	}
+}
+
 void ULockOnComponent::Unlock()
 {
 	if(LockedOnTarget == nullptr) return;
@@ -160,17 +224,12 @@ void ULockOnComponent::SetLockOnTarget(const TArray<AEnemy*> Enemies)
 	for(int i = 1; i < Enemies.Num(); i++)
 	{
 		const TObjectPtr<AEnemy> EnemyToInspect = Enemies[i];
-		const float CurrentClosestDistance =(LockedOnTarget->GetActorLocation() - ActorLocation).SquaredLength();
-		const float NextDistance = (EnemyToInspect->GetActorLocation() - ActorLocation).SquaredLength();
+		const float CurrentClosestDistance = FVector::Distance(LockedOnTarget->GetActorLocation(), ActorLocation);
+		const float NextDistance = FVector::Distance(EnemyToInspect->GetActorLocation(), ActorLocation);
 
 		if(CurrentClosestDistance > NextDistance)
 		{
 			LockedOnTarget = EnemyToInspect;
-
-			if(CurrentlyUsedLockOnNC)
-			{
-				CurrentlyUsedLockOnNC->Activate();
-			}
 		}
 	}
 }

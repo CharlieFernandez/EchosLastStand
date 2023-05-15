@@ -27,6 +27,8 @@ public:
 	void ActivateTargetingVFX();
 	void Unlock();
 	void Lock();
+	void SwitchTargetRight();
+	void SwitchTargetLeft();
 
 protected:
 	virtual void BeginPlay() override;
@@ -71,4 +73,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Targeting)
 	float MaxDistanceFromLockedTarget;
+
+	UPROPERTY(EditDefaultsOnly, Category = Targeting)
+	TObjectPtr<USphereComponent> LockOnSensor;
 };

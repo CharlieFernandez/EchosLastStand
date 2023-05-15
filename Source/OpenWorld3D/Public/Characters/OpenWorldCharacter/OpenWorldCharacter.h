@@ -71,6 +71,9 @@ protected:
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LockOffAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> FlyUpAction;
    UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> FlyDownAction;
+   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> LeftToggleAction;
+   UPROPERTY(EditDefaultsOnly, Category = Input) TObjectPtr<UInputAction> RightToggleAction;
+
 
    /* Functions */
    UFUNCTION()
@@ -97,6 +100,8 @@ private:
    void PickUpWeapon(AWeapon* Weapon, UMeshComponent* WeaponMesh, FName SN);
    void LockOn();
    void LockOff();
+   void LeftToggleInput();
+   void RightToggleInput();
    void ToggleAllMeshVisibility(bool IsVisible) const;
    void SetCollisionsForBody() const;
    void SetCollisionsForSpirit() const;

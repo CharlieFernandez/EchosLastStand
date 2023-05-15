@@ -164,7 +164,8 @@ void AOpenWorldCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
       EnhancedInputComponent->BindAction( LockOffAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LockOff);
       EnhancedInputComponent->BindAction( FlyUpAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::FlyUp);
       EnhancedInputComponent->BindAction( FlyDownAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::FlyDown);
-
+      EnhancedInputComponent->BindAction( LeftToggleAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::LeftToggleInput);
+      EnhancedInputComponent->BindAction( RightToggleAction, ETriggerEvent::Triggered, this, &AOpenWorldCharacter::RightToggleInput);
    }
 }
 
@@ -266,6 +267,18 @@ void AOpenWorldCharacter::FlyDown(const FInputActionValue& Value)
 {   
    AddMovementInput(FVector::DownVector, Value.Get<float>());
 }
+
+void AOpenWorldCharacter::LeftToggleInput()
+{
+   // LockOnComponent->L
+}
+
+void AOpenWorldCharacter::RightToggleInput()
+{
+   LockOnComponent->SwitchTargetRight();
+   CombatTarget = LockOnComponent->LockedOnTarget;
+}
+
 
 void AOpenWorldCharacter::ObtainOrEquip()
 {
