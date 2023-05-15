@@ -114,66 +114,62 @@ void ULockOnComponent::Lock()
 	ActivateTargetingVFX();
 }
 
+void ULockOnComponent::SwitchTarget()
+{
+	
+}
+
 void ULockOnComponent::SwitchTargetRight()
 {
 	if(LockedOnTarget == nullptr) return;
 	
 	TArray<AEnemy*> EnemiesFound = FindAndFilterEnemies();
-	
-	AActor* NewLockedOnTarget = nullptr;
-	TMap<AEnemy*, FVector> EnemiesAndLocationsRelativeToCameraRight_M;
-	TMap<AEnemy*, FVector> EnemiesAndLocationsRelativeToCameraLeft_M;
 
-	const FVector LockedOnEnemyLocationRelativeToCamera = CameraComponent->GetComponentTransform().InverseTransformVector(LockedOnTarget->GetActorLocation());
+	FVector2D PotentialTargetScreenPosition;
+	FVector2D LockedOnTargetLocationRelativeToScreen;
+	UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), LockedOnTarget->GetActorLocation(), LockedOnTargetLocationRelativeToScreen);
+	float CurrentSmallestDistance = FLT_MAX;
+	AEnemy* PotentialEnemyToTarget = nullptr;
 	
 	for(AEnemy* Enemy: EnemiesFound)
 	{
 		if(Enemy == LockedOnTarget) continue;
-		
-		FVector NewEnemyLocationRelativeToCamera = CameraComponent->GetComponentTransform().InverseTransformVector(Enemy->GetActorLocation());
 
-		if(NewEnemyLocationRelativeToCamera.Y >= LockedOnEnemyLocationRelativeToCamera.Y)
+		if(UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), Enemy->GetActorLocation(), PotentialTargetScreenPosition))
 		{
-			EnemiesAndLocationsRelativeToCameraRight_M.Add(Enemy, NewEnemyLocationRelativeToCamera);			
-			GEngine->AddOnScreenDebugMessage(0, 1, FColor::Red, "Right!");
-		}
-		else
-		{
-			EnemiesAndLocationsRelativeToCameraLeft_M.Add(Enemy, NewEnemyLocationRelativeToCamera);			
-			GEngine->AddOnScreenDebugMessage(0, 1, FColor::Red, "Left!");
-		}
-	}
-
-	float ClosestDistance = MaxDistanceFromLockedTarget;
-	for(const TPair<AEnemy*, FVector>& KeyValue: EnemiesAndLocationsRelativeToCameraRight_M)
-	{
-		if(FVector::Distance(LockedOnEnemyLocationRelativeToCamera, KeyValue.Value) < ClosestDistance)
-		{
-			NewLockedOnTarget = KeyValue.Key;
-			ClosestDistance = FVector::Distance(LockedOnTarget->GetActorLocation(), KeyValue.Value);
-		}
-	}
-	
-	if(NewLockedOnTarget == nullptr)
-	{
-		float FarthestDistance = 0;
-		
-		for(const TPair<AEnemy*, FVector>& KeyValue: EnemiesAndLocationsRelativeToCameraLeft_M)
-		{
-			if(FVector::Distance(LockedOnTarget->GetActorLocation(), KeyValue.Value) > FarthestDistance)
+			if(LockedOnTargetLocationRelativeToScreen.X < PotentialTargetScreenPosition.X && FMath::Abs(PotentialTargetScreenPosition.X - LockedOnTargetLocationRelativeToScreen.X) < CurrentSmallestDistance)
 			{
-				NewLockedOnTarget = KeyValue.Key;
-				FarthestDistance = FVector::Distance(LockedOnTarget->GetActorLocation(), KeyValue.Value);
+				CurrentSmallestDistance = FMath::Abs(PotentialTargetScreenPosition.X - LockedOnTargetLocationRelativeToScreen.X);
+				PotentialEnemyToTarget = Enemy;
 			}
 		}
 	}
 
-	if(NewLockedOnTarget)
+	if(PotentialEnemyToTarget == nullptr)
 	{
-		LockedOnTarget = NewLockedOnTarget;
+		float MinScreenX = LockedOnTargetLocationRelativeToScreen.X;
+
+		for(AEnemy* Enemy: EnemiesFound)
+		{
+			if(Enemy == LockedOnTarget) continue;
+
+			if(UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), Enemy->GetActorLocation(), PotentialTargetScreenPosition))
+			{
+				if(PotentialTargetScreenPosition.X < MinScreenX)
+				{
+					MinScreenX = PotentialTargetScreenPosition.X;
+					PotentialEnemyToTarget = Enemy;
+				}
+			}
+		}
+	}
+
+	if(PotentialEnemyToTarget)
+	{
+		LockedOnTarget = PotentialEnemyToTarget;
 		CurrentlyUsedLockOnNC->DeactivateImmediate();
 		
-		const ULockableComponent* LockableComponent = Cast<ULockableComponent>(NewLockedOnTarget->GetComponentByClass(ULockableComponent::StaticClass()));
+		const ULockableComponent* LockableComponent = Cast<ULockableComponent>(PotentialEnemyToTarget->GetComponentByClass(ULockableComponent::StaticClass()));
 		CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
 	}
 }

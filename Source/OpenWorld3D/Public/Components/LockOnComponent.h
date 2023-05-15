@@ -57,6 +57,7 @@ private:
 	TObjectPtr<USpringArmComponent> SpringArmComponent;	
 	TObjectPtr<UCameraComponent> CameraComponent;
 	void EvaluateSpringArmAndCameraProperties();
+	void SwitchTarget();
 
 	
 	TArray<AEnemy*> FindAndFilterEnemies() const;
@@ -76,4 +77,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Targeting)
 	TObjectPtr<USphereComponent> LockOnSensor;
+
+	UPROPERTY(VisibleInstanceOnly)
+	FVector EnemyLocationRelativeToCamera;
 };
