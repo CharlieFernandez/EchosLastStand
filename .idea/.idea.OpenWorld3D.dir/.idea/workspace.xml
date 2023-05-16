@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85d95ede-8dec-4f3c-a753-7be151ff65a1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Animations/Echo/BlendSpaces/BS_EchoGroundTwo-Handed.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Echo/BlendSpaces/BS_EchoGroundTwo-Handed.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Animations/Echo/BlendSpaces/BS_EchoGroundUnarmed.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Echo/BlendSpaces/BS_EchoGroundUnarmed.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Items/Weapons/BP_GreatHammer.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/WeaponPickUp/NS_WeaponPickUp.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParticleSystems/Gameplay/WeaponPickUp/NS_WeaponPickUp.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
