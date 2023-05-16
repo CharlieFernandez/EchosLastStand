@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="85d95ede-8dec-4f3c-a753-7be151ff65a1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/ForestMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/OpenWorldCharacter/OpenWorldCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Components/LockOnComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Public/Components/LockOnComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Enemies/AlienSoldier/BlendSpaces/BS_GroundLocomotion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Animations/Enemies/AlienSoldier/BlendSpaces/BS_GroundLocomotion.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Enemies/AlienSoldier/StandaloneAnimations/Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Enemies/AlienSoldier/StandaloneAnimations/Walk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/ABP_AlienSoldier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemies/AlienSoldier/ABP_AlienSoldier.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Mixamo/AlienSoldier/Animations/Idle_Combat_Seq.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Characters/GameCharacter.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +122,7 @@
       <workItem from="1683901663556" duration="25047000" />
       <workItem from="1683987559384" duration="9253000" />
       <workItem from="1684085444452" duration="9968000" />
-      <workItem from="1684164863982" duration="19055000" />
+      <workItem from="1684164863982" duration="20349000" />
     </task>
     <servers />
   </component>

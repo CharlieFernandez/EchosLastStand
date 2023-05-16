@@ -243,6 +243,7 @@ float AGameCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageE
 
 void AGameCharacter::Die()
 {
+	AnimInstance->Montage_Stop(0);
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
