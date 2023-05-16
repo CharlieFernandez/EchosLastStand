@@ -270,7 +270,8 @@ void AOpenWorldCharacter::FlyDown(const FInputActionValue& Value)
 
 void AOpenWorldCharacter::LeftToggleInput()
 {
-   // LockOnComponent->L
+   LockOnComponent->SwitchTargetLeft();
+   CombatTarget = LockOnComponent->LockedOnTarget;
 }
 
 void AOpenWorldCharacter::RightToggleInput()

@@ -114,39 +114,45 @@ void ULockOnComponent::Lock()
 	ActivateTargetingVFX();
 }
 
-void ULockOnComponent::SwitchTarget()
+AEnemy* ULockOnComponent::FindEnemyToTheRight(TArray<AEnemy*> EnemiesFound, SwitchTargetDirection Direction)
 {
-	
-}
-
-void ULockOnComponent::SwitchTargetRight()
-{
-	if(LockedOnTarget == nullptr) return;
-	
-	TArray<AEnemy*> EnemiesFound = FindAndFilterEnemies();
-
 	FVector2D PotentialTargetScreenPosition;
 	FVector2D LockedOnTargetLocationRelativeToScreen;
 	UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), LockedOnTarget->GetActorLocation(), LockedOnTargetLocationRelativeToScreen);
-	float CurrentSmallestDistance = FLT_MAX;
+
 	AEnemy* PotentialEnemyToTarget = nullptr;
+	float CurrentSmallestDistance = FLT_MAX;
+	
 	
 	for(AEnemy* Enemy: EnemiesFound)
 	{
 		if(Enemy == LockedOnTarget) continue;
 
-		if(UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), Enemy->GetActorLocation(), PotentialTargetScreenPosition))
+		UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), Enemy->GetActorLocation(), PotentialTargetScreenPosition);
+
+		if(FMath::Abs(PotentialTargetScreenPosition.X - LockedOnTargetLocationRelativeToScreen.X) < CurrentSmallestDistance)
 		{
-			if(LockedOnTargetLocationRelativeToScreen.X < PotentialTargetScreenPosition.X && FMath::Abs(PotentialTargetScreenPosition.X - LockedOnTargetLocationRelativeToScreen.X) < CurrentSmallestDistance)
+			if(
+				(Direction == SwitchTargetDirection::Right && LockedOnTargetLocationRelativeToScreen.X < PotentialTargetScreenPosition.X) ||
+				(Direction == SwitchTargetDirection::Left && LockedOnTargetLocationRelativeToScreen.X > PotentialTargetScreenPosition.X)
+			)
 			{
 				CurrentSmallestDistance = FMath::Abs(PotentialTargetScreenPosition.X - LockedOnTargetLocationRelativeToScreen.X);
 				PotentialEnemyToTarget = Enemy;
-			}
+			}	
 		}
 	}
 
+	return PotentialEnemyToTarget;
+}
+
+AEnemy* ULockOnComponent::FindEnemyToTheLeft(TArray<AEnemy*> EnemiesFound, AEnemy*& PotentialEnemyToTarget, SwitchTargetDirection Direction)
+{
 	if(PotentialEnemyToTarget == nullptr)
 	{
+		FVector2D PotentialTargetScreenPosition;
+		FVector2D LockedOnTargetLocationRelativeToScreen;
+		UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), LockedOnTarget->GetActorLocation(), LockedOnTargetLocationRelativeToScreen);
 		float MinScreenX = LockedOnTargetLocationRelativeToScreen.X;
 
 		for(AEnemy* Enemy: EnemiesFound)
@@ -155,7 +161,8 @@ void ULockOnComponent::SwitchTargetRight()
 
 			if(UGameplayStatics::ProjectWorldToScreen(GetWorld()->GetFirstPlayerController(), Enemy->GetActorLocation(), PotentialTargetScreenPosition))
 			{
-				if(PotentialTargetScreenPosition.X < MinScreenX)
+				if((Direction == SwitchTargetDirection::Left && PotentialTargetScreenPosition.X < MinScreenX ) ||
+					(Direction == SwitchTargetDirection::Right && PotentialTargetScreenPosition.X > MinScreenX ))
 				{
 					MinScreenX = PotentialTargetScreenPosition.X;
 					PotentialEnemyToTarget = Enemy;
@@ -164,6 +171,11 @@ void ULockOnComponent::SwitchTargetRight()
 		}
 	}
 
+	return PotentialEnemyToTarget;
+}
+
+void ULockOnComponent::ReplaceFormerTargetWithNewTarget(AEnemy* PotentialEnemyToTarget)
+{
 	if(PotentialEnemyToTarget)
 	{
 		LockedOnTarget = PotentialEnemyToTarget;
@@ -172,6 +184,27 @@ void ULockOnComponent::SwitchTargetRight()
 		const ULockableComponent* LockableComponent = Cast<ULockableComponent>(PotentialEnemyToTarget->GetComponentByClass(ULockableComponent::StaticClass()));
 		CurrentlyUsedLockOnNC = LockableComponent->ActivateLockOnNS();
 	}
+}
+
+void ULockOnComponent::SwitchTarget(SwitchTargetDirection Direction)
+{
+	if(LockedOnTarget == nullptr) return;
+	
+	const TArray<AEnemy*> EnemiesFound = FindAndFilterEnemies();	
+	AEnemy* PotentialEnemyToTarget = FindEnemyToTheRight(EnemiesFound, Direction);
+	const SwitchTargetDirection OppositeDirection = Direction == SwitchTargetDirection::Left ? Right : Left;
+	PotentialEnemyToTarget = FindEnemyToTheLeft(EnemiesFound, PotentialEnemyToTarget,  OppositeDirection);
+	ReplaceFormerTargetWithNewTarget(PotentialEnemyToTarget);
+}
+
+void ULockOnComponent::SwitchTargetRight()
+{
+	SwitchTarget(SwitchTargetDirection::Right);
+}
+
+void ULockOnComponent::SwitchTargetLeft()
+{
+	SwitchTarget(SwitchTargetDirection::Left);
 }
 
 void ULockOnComponent::Unlock()

@@ -13,6 +13,13 @@ class USpringArmComponent;
 class UCameraComponent;
 class AEnemy;
 
+UENUM()
+enum SwitchTargetDirection
+{
+	Left,
+	Right
+};
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class OPENWORLD3D_API ULockOnComponent : public UActorComponent
 {
@@ -57,9 +64,10 @@ private:
 	TObjectPtr<USpringArmComponent> SpringArmComponent;	
 	TObjectPtr<UCameraComponent> CameraComponent;
 	void EvaluateSpringArmAndCameraProperties();
-	void SwitchTarget();
-
-	
+	void SwitchTarget(SwitchTargetDirection Direction);
+	AEnemy* FindEnemyToTheRight(TArray<AEnemy*> EnemiesFound, SwitchTargetDirection Direction);
+	AEnemy* FindEnemyToTheLeft(TArray<AEnemy*> EnemiesFound, AEnemy*& PotentialEnemyToTarget, SwitchTargetDirection Direction);
+	void ReplaceFormerTargetWithNewTarget(AEnemy* PotentialEnemyToTarget);
 	TArray<AEnemy*> FindAndFilterEnemies() const;
 	void SetLockOnTarget(const TArray<AEnemy*>Enemies);
 
