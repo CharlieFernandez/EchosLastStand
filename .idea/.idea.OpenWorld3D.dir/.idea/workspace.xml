@@ -4,10 +4,7 @@
     <projectFile>OpenWorld3D.uproject</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85d95ede-8dec-4f3c-a753-7be151ff65a1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OpenWorld3D.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/OpenWorld3D/Private/Items/Weapons/Weapon.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="85d95ede-8dec-4f3c-a753-7be151ff65a1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -117,7 +114,7 @@
       <workItem from="1683901663556" duration="25047000" />
       <workItem from="1683987559384" duration="9253000" />
       <workItem from="1684085444452" duration="9968000" />
-      <workItem from="1684164863982" duration="22190000" />
+      <workItem from="1684164863982" duration="22783000" />
     </task>
     <servers />
   </component>
