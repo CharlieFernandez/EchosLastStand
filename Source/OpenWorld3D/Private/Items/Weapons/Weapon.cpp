@@ -39,6 +39,6 @@ void AWeapon::SetToHeldItem()
 
 	if(UncollectedParticlesInGame)
 	{
-		UncollectedParticlesInGame->Deactivate();
+		UncollectedParticlesInGame->DestroyInstance();
 	}
 }
